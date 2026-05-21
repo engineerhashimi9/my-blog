@@ -32,11 +32,13 @@
         <div class="my-5">
           <!-- * * * * * * * * * * * * * * *-->
           <!-- * * Simplified SB Contact Form for the Tutorial* *-->
+
           <form
             id="contactForm"
             name="sentMessage"
-            action="{{ url_for('contact') }}"
+            action="mailto:yourgmail@gmail.com?subject=Contact From Blog"
             method="post"
+            enctype="text/plain"
           >
             <div class="form-floating">
               <input
@@ -88,7 +90,7 @@
               id="submitButton"
               type="submit"
             >
-              NOT USED in Day 69
+              Send
             </button>
           </form>
         </div>
