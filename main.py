@@ -108,7 +108,12 @@ with app.app_context():
     db.create_all()
 
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
