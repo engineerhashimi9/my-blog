@@ -52,7 +52,7 @@ class Base(DeclarativeBase):
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-    "DB_URl", "sqlite:///blog.db")
+    "DB_URl", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -230,7 +230,7 @@ def edit_post(post_id):
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
-        post.author = current_user.id
+        post.author = current_user
         post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
