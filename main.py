@@ -148,9 +148,8 @@ def login():
         if form.validate_on_submit():
             user = db.session.execute(
                 db.select(Users).where(Users.email == form.email.data)
-            )
+            ).scalar()
             if user:
-                user = user.scalar()
                 if check_password_hash(user.password, form.password.data):
                     login_user(user)
                     return redirect(url_for("get_all_posts"))
