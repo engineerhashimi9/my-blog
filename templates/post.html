@@ -1,4 +1,5 @@
 {% include "header.html" %}
+{% from "includes/editor.html" import editor_assets, rich_editor %}
 
 <header
   class="masthead post-hero"
@@ -49,11 +50,11 @@
           <form
             action="{{ url_for('save_comment', p=post.id) }}"
             method="post"
+            novalidate
           >
-            {% from 'bootstrap5/form.html' import render_form %}
-            {{ ckeditor.load() }}
-            {{ ckeditor.config(name='body') }}
-            {{ render_form(comment_form, novalidate=True, button_map={"submit": "primary"}) }}
+            {{ comment_form.hidden_tag() }}
+            {{ rich_editor(comment_form.comment_text, mode='compact', label='Your comment') }}
+            {{ comment_form.submit(class_='btn btn-primary') }}
           </form>
           {% else %}
           <p class="text-muted">
@@ -85,4 +86,5 @@
   </div>
 </article>
 
+{% if current_user.is_authenticated %}{{ editor_assets() }}{% endif %}
 {% include "footer.html" %}

@@ -1,0 +1,21 @@
+{% macro editor_assets() %}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<link
+  href="{{ url_for('static', filename='css/quill-theme.css') }}"
+  rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="{{ url_for('static', filename='js/quill-editor.js') }}"></script>
+{% endmacro %}
+
+{% macro rich_editor(field, mode='full', label=None) %}
+<div class="quill-editor-wrap mb-4" data-mode="{{ mode }}">
+  {% if label %}
+  <label class="form-label quill-label" for="{{ field.id }}">{{ label }}</label>
+  {% endif %}
+  <div class="quill-shell">
+    <div class="quill-editor-host"></div>
+  </div>
+  {{ field(class='quill-sync-field d-none', id=field.id) }}
+</div>
+{% endmacro %}

@@ -9,8 +9,8 @@ from flask import (
     request,
     send_from_directory,
 )
+import bleach
 from flask_bootstrap import Bootstrap5
-from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
 from flask_login import (
     UserMixin,
@@ -91,9 +91,26 @@ SAMPLE_POSTS = [
 ]
 
 
+ALLOWED_HTML_TAGS = [
+    "p", "br", "strong", "em", "u", "s", "a", "ul", "ol", "li",
+    "h1", "h2", "h3", "blockquote", "pre", "code",
+]
+ALLOWED_HTML_ATTRS = {"a": ["href", "title", "target", "rel"]}
+
+
+def sanitize_html(content):
+    if not content:
+        return ""
+    return bleach.clean(
+        content,
+        tags=ALLOWED_HTML_TAGS,
+        attributes=ALLOWED_HTML_ATTRS,
+        strip=True,
+    )
+
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 # TODO: Configure Flask-Login
@@ -315,7 +332,7 @@ def add_new_post():
         new_post = BlogPosts(
             title=form.title.data,
             subtitle=form.subtitle.data,
-            body=form.body.data,
+            body=sanitize_html(form.body.data),
             img_url=form.img_url.data,
             author=current_user,
             date=date.today().strftime("%B %d, %Y"),
@@ -345,7 +362,7 @@ def edit_post(post_id):
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
         post.author = current_user
-        post.body = edit_form.body.data
+        post.body = sanitize_html(edit_form.body.data)
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
     return render_template("make-post.html", form=edit_form, is_edit=True)
@@ -369,11 +386,14 @@ def save_comment():
     post_id = request.args.get("p")
     form = CommentForm()
     if form.validate_on_submit():
-        with app.app_context():
-            print(form.comment_text, current_user.id, post_id)
-            db.session.add(
-                Comments(text=form.comment_text.data, author_id=current_user.id, post_id=post_id,),)
-            db.session.commit()
+        db.session.add(
+            Comments(
+                text=sanitize_html(form.comment_text.data),
+                author_id=current_user.id,
+                post_id=post_id,
+            )
+        )
+        db.session.commit()
     return redirect(url_for('show_post', post_id=post_id))
 
 

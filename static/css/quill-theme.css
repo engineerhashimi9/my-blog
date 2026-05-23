@@ -1,0 +1,110 @@
+/* Quill editor — dark theme matching Hashimi Blog */
+.quill-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+}
+
+.quill-shell {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: #0f172a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quill-shell:focus-within {
+  border-color: rgba(99, 102, 241, 0.55);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.quill-editor-wrap .ql-toolbar.ql-snow {
+  background: #1e293b;
+  border: none;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  font-family: "Inter", system-ui, sans-serif;
+  padding: 0.65rem 0.75rem;
+}
+
+.quill-editor-wrap .ql-container.ql-snow {
+  border: none;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1rem;
+  min-height: 140px;
+}
+
+.quill-editor-wrap[data-mode="full"] .ql-container.ql-snow {
+  min-height: 320px;
+}
+
+.quill-editor-wrap[data-mode="compact"] .ql-container.ql-snow {
+  min-height: 120px;
+}
+
+.quill-editor-wrap .ql-editor {
+  color: #e2e8f0;
+  line-height: 1.75;
+  padding: 1.25rem 1.5rem;
+}
+
+.quill-editor-wrap .ql-editor.ql-blank::before {
+  color: #64748b;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.quill-editor-wrap .ql-snow .ql-stroke {
+  stroke: #94a3b8;
+}
+
+.quill-editor-wrap .ql-snow .ql-fill {
+  fill: #94a3b8;
+}
+
+.quill-editor-wrap .ql-snow .ql-picker-label {
+  color: #94a3b8;
+}
+
+.quill-editor-wrap .ql-snow .ql-picker-options {
+  background: #1e293b;
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.quill-editor-wrap .ql-snow .ql-picker-item {
+  color: #e2e8f0;
+}
+
+.quill-editor-wrap .ql-toolbar.ql-snow .ql-picker-label:hover,
+.quill-editor-wrap .ql-toolbar.ql-snow .ql-picker-label.ql-active,
+.quill-editor-wrap .ql-toolbar.ql-snow button:hover,
+.quill-editor-wrap .ql-toolbar.ql-snow button.ql-active {
+  color: #a5b4fc;
+}
+
+.quill-editor-wrap .ql-toolbar.ql-snow button:hover .ql-stroke,
+.quill-editor-wrap .ql-toolbar.ql-snow button.ql-active .ql-stroke {
+  stroke: #a5b4fc;
+}
+
+.quill-editor-wrap .ql-toolbar.ql-snow button:hover .ql-fill,
+.quill-editor-wrap .ql-toolbar.ql-snow button.ql-active .ql-fill {
+  fill: #a5b4fc;
+}
+
+.quill-editor-wrap .ql-editor a {
+  color: #67e8f9;
+}
+
+.quill-editor-wrap .ql-editor blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1rem;
+  color: #94a3b8;
+}
+
+.quill-editor-wrap .ql-editor pre.ql-syntax {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
