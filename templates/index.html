@@ -1,66 +1,145 @@
 {% include "header.html" %}
 
-<!-- Page Header -->
-<header
-  class="masthead"
-  style="background-image: url('../static/assets/img/home-bg.jpg')"
->
+<section class="hero-modern">
+  <div
+    class="hero-bg"
+    style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80')"
+  ></div>
   <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="site-heading">
-          <h1>Hashimi's Blog</h1>
-          <span class="subheading">A Software Engineer's Journey</span>
+    <div class="hero-content">
+      <span class="hero-badge">Software Engineering · 2026</span>
+      <h1>Hashimi's Blog</h1>
+      <p class="hero-subtitle">
+        Thoughts on Python, full-stack development, AI tools, and building
+        software from Kabul to the cloud.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <strong>{{ all_posts|length }}</strong>
+          <span>Articles</span>
+        </div>
+        <div class="stat-item">
+          <strong>Flask</strong>
+          <span>Powered</span>
+        </div>
+        <div class="stat-item">
+          <strong>Open</strong>
+          <span>Source Mindset</span>
         </div>
       </div>
     </div>
   </div>
-</header>
-<!-- Main Content-->
-<div class="container px-4 px-lg-5">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
-    <div class="col-md-10 col-lg-8 col-xl-7">
-      <!-- Post preview-->
-      {% for post in all_posts %}
-      <div class="post-preview">
-        <a href="{{ url_for('show_post', post_id=post.id) }}">
-          <h2 class="post-title">{{ post.title }}</h2>
-          <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-        </a>
-        <p class="post-meta">
-          Posted by
-          <a href="#">{{post.author.name}}</a>
-          on {{post.date}}
-          <!-- TODO: Only show delete button if user id is 1 (admin user) -->
+</section>
 
-          {% if current_user.id==1 %}
+<main class="blog-main">
+  <div class="container px-4 px-lg-5">
+    {% if current_user.is_authenticated and current_user.id == 1 %}
+    <div class="admin-bar">
+      <a class="btn btn-primary" href="{{ url_for('add_new_post') }}">
+        <i class="fas fa-plus me-1"></i> Create New Post
+      </a>
+    </div>
+    {% endif %}
 
-          <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
-          {% endif %}
-        </p>
-      </div>
-      <!-- Divider-->
-      <hr class="my-4" />
-      {% endfor %}
-
-      <!-- New Post -->
-      <!-- TODO: Only show Create Post button if user id is 1 (admin user) -->
-      {% if current_user.id==1 %}
-      <div class="d-flex justify-content-end mb-4">
-        <a
-          class="btn btn-primary float-right"
-          href="{{url_for('add_new_post')}}"
-          >Create New Post</a
-        >
-      </div>
-      {% endif %}
-
-      <!-- Pager-->
-      <div class="d-flex justify-content-end mb-4">
-        <a class="btn btn-secondary text-uppercase" href="#!">Older Posts →</a>
+    {% if all_posts %}
+    {% set featured = all_posts[0] %}
+  <div class="row justify-content-center mb-5">
+      <div class="col-xl-10">
+        <p class="section-label">Latest</p>
+        <h2 class="section-title">Featured Story</h2>
+        <article class="featured-post">
+          <div
+            class="featured-post-image"
+            style="background-image: url('{{ featured.img_url }}')"
+          ></div>
+          <div class="featured-post-content">
+            <span class="featured-label">Just published</span>
+            <h2>
+              <a href="{{ url_for('show_post', post_id=featured.id) }}"
+                >{{ featured.title }}</a
+              >
+            </h2>
+            <p class="text-muted mb-3">{{ featured.subtitle }}</p>
+            <p class="post-card-meta mb-3 border-0 pt-0">
+              <span
+                >By <span class="author">{{ featured.author.name }}</span> ·
+                {{ featured.date }}</span
+              >
+            </p>
+            <a
+              class="btn btn-primary"
+              href="{{ url_for('show_post', post_id=featured.id) }}"
+              >Read full article <i class="fas fa-arrow-right ms-1"></i
+            ></a>
+            {% if current_user.is_authenticated and current_user.id == 1 %}
+            <a
+              class="delete-link ms-3"
+              href="{{ url_for('delete_post', post_id=featured.id) }}"
+              title="Delete post"
+              >Delete</a
+            >
+            {% endif %}
+          </div>
+        </article>
       </div>
     </div>
+
+    <div class="row justify-content-center">
+      <div class="col-xl-10">
+        <p class="section-label">Archive</p>
+        <h2 class="section-title">All Posts</h2>
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      {% for post in all_posts[1:] %}
+      <div class="col-md-6 col-lg-4">
+        <article class="post-card">
+          <a href="{{ url_for('show_post', post_id=post.id) }}">
+            <div
+              class="post-card-image"
+              style="background-image: url('{{ post.img_url }}')"
+            ></div>
+          </a>
+          <div class="post-card-body">
+            <span class="post-tag">Tech</span>
+            <h2>
+              <a href="{{ url_for('show_post', post_id=post.id) }}"
+                >{{ post.title }}</a
+              >
+            </h2>
+            <p class="post-excerpt">{{ post.subtitle }}</p>
+            <div class="post-card-meta">
+              <span
+                ><span class="author">{{ post.author.name }}</span> ·
+                {{ post.date }}</span
+              >
+              <a
+                class="btn-read"
+                href="{{ url_for('show_post', post_id=post.id) }}"
+                >Read <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+            {% if current_user.is_authenticated and current_user.id == 1 %}
+            <a
+              class="delete-link"
+              href="{{ url_for('delete_post', post_id=post.id) }}"
+              >Delete post</a
+            >
+            {% endif %}
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <p class="text-muted">No posts yet. Check back soon for new articles.</p>
+      </div>
+    </div>
+    {% endif %}
   </div>
-</div>
+</main>
 
 {% include "footer.html" %}

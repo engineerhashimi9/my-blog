@@ -1,16 +1,14 @@
 {% include "header.html" %}
 
-<!-- Page Header-->
 <header
-  class="masthead"
-  style="
-    background-image: url('https://i.postimg.cc/7ZdFP1mK/IMG-20260104-WA0017.jpg');
-  "
+  class="masthead post-hero"
+  style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80')"
 >
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="page-heading">
+          <span class="hero-badge d-inline-block mb-3">About</span>
           <h1>About Me</h1>
           <span class="subheading">Hi, I'm Hashimi.</span>
         </div>
@@ -18,62 +16,41 @@
     </div>
   </div>
 </header>
-<!-- Main Content-->
-<main class="mb-4">
+
+<main class="mb-5 pb-5">
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
-        <img
-          src="https://i.postimg.cc/9FT8t3p2/IMG-20240927-WA0002.jpg"
-          alt="About Me"
-          class="img-fluid mb-4 profile-image"
-        />
-        <p>
-          My name is <b>Sayed Mohammad Hashimi</b>, a passionate Software
-          Engineering student at Kabul University with a strong enthusiasm for
-          technology, programming, and continuous learning. I am an advanced
-          Python developer with solid experience in backend web development,
-          especially using modern frameworks such as Flask and Django. Alongside
-          Python, I also have experience working with Java, HTML, and CSS,
-          allowing me to build both functional backend systems and responsive
-          user interfaces.
-        </p>
-        <div class="container center px-5">
+        <div class="content-card">
           <img
-            src="https://i.postimg.cc/8PR8bKKk/IMG-20241220-WA0063.jpg"
-            class="img-fluid mb-4"
-            alt="About Me"
+            src="https://i.postimg.cc/9FT8t3p2/IMG-20240927-WA0002.jpg"
+            alt="Sayed Mohammad Hashimi"
+            class="img-fluid mb-4 profile-image"
           />
+          <p>
+            My name is <strong>Sayed Mohammad Hashimi</strong>, a passionate
+            Software Engineering student at Kabul University with a strong
+            enthusiasm for technology, programming, and continuous learning. I
+            am an advanced Python developer with solid experience in backend web
+            development, especially using modern frameworks such as Flask and
+            Django.
+          </p>
+          <p>
+            I graduated from Mahmood Tarzi High School in 2024 and earned a
+            place in the Software Engineering program at Kabul University with a
+            Kankor score of 340 out of 360. Today I build authentication
+            systems, database-driven apps, REST APIs, and deploy projects on
+            platforms like Render.
+          </p>
+          <p>
+            Beyond code, I enjoy chess, anime, and exploring how AI tools are
+            reshaping the way developers design and ship software. My goal is to
+            build impactful digital products and grow as a full-stack engineer.
+          </p>
+          <a class="btn btn-primary mt-2" href="{{ url_for('contact') }}"
+            >Get in touch</a
+          >
         </div>
-        <p>
-          I graduated from Mahmood Tarzi High School in 2024 with outstanding
-          academic performance. In the highly competitive Kankor national
-          university entrance exam, I achieved an impressive score of 340 out of
-          360, earning my place in the Software Engineering program at Kabul
-          University. This achievement reflects my dedication, discipline, and
-          commitment to academic excellence.
-        </p>
-        <p>
-          As a developer, I enjoy designing scalable web applications, solving
-          complex programming challenges, and learning modern software
-          development technologies. My backend development experience includes
-          building authentication systems, database-driven applications, RESTful
-          features, and deploying web applications using platforms like Render.
-          I am constantly improving my skills in clean architecture, APIs,
-          databases, and full-stack development.
-        </p>
-        <p>
-          Beyond programming, I am deeply interested in strategic thinking and
-          creativity. I enjoy playing Chess, which helps me strengthen my
-          analytical and problem-solving abilities. I am also a fan of Anime and
-          enjoy exploring inspiring stories, unique art styles, and creative
-          storytelling from different series.
-        </p>
-        <p>
-          My goal is to become a highly skilled software engineer who creates
-          impactful digital solutions, contributes to innovative projects, and
-          continues growing in the world of technology and software development.
-        </p>
       </div>
     </div>
   </div>

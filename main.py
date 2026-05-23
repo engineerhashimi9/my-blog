@@ -1,5 +1,4 @@
-from datetime import date
-from xml.etree.ElementTree import Comment
+from datetime import date, datetime
 from flask import (
     Flask,
     abort,
@@ -8,7 +7,7 @@ from flask import (
     url_for,
     flash,
     request,
-    abort,
+    send_from_directory,
 )
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
@@ -28,8 +27,68 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm, CommentForm
 from forms import CreatePostForm
-from functools import wraps
 import os
+
+
+SAMPLE_POSTS = [
+    {
+        "title": "Building AI-Assisted Web Apps with Flask in 2026",
+        "subtitle": "How LLM APIs and Flask fit together for practical side projects",
+        "date": "May 18, 2026",
+        "img_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
+        "body": (
+            "<p>Flask remains one of the fastest ways to ship a Python web app—and in 2026, "
+            "pairing it with AI APIs opens creative doors without heavy infrastructure.</p>"
+            "<p>Start with a thin service layer: keep prompts, model calls, and rate limiting "
+            "outside your route handlers. Use environment variables for API keys, cache common "
+            "responses, and always validate user input before sending it to a model.</p>"
+            "<p>For blog platforms like this one, AI can help draft outlines, suggest titles, "
+            "or summarize long posts—but the author's voice should stay in control. The best "
+            "AI-assisted apps feel fast, transparent, and respectful of user data.</p>"
+        ),
+    },
+    {
+        "title": "Python 3.13 and the Future of Backend Development",
+        "subtitle": "Performance gains, typing improvements, and what they mean for Flask devs",
+        "date": "May 12, 2026",
+        "img_url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80",
+        "body": (
+            "<p>Each Python release brings incremental wins for backend developers. "
+            "Faster startup, better error messages, and stronger typing support mean "
+            "cleaner Flask codebases with fewer surprises in production.</p>"
+            "<p>If you maintain a blog or API, schedule regular dependency updates, "
+            "pin versions in requirements.txt, and run smoke tests after upgrades. "
+            "Small, frequent updates beat painful yearly migrations.</p>"
+        ),
+    },
+    {
+        "title": "Deploying Flask on Render: A Student's Zero-Downtime Checklist",
+        "subtitle": "From local SQLite to a live URL without losing your mind",
+        "date": "May 05, 2026",
+        "img_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+        "body": (
+            "<p>Deploying your first Flask app is a milestone. Render makes it approachable: "
+            "connect your GitHub repo, set environment variables, and define a start command "
+            "in the Procfile.</p>"
+            "<p>Move from SQLite to PostgreSQL before going live, set SECRET_KEY and database "
+            "URLs in the dashboard, and enable automatic deploys only after your build passes "
+            "locally. Health checks and logging early will save hours of debugging later.</p>"
+        ),
+    },
+    {
+        "title": "Cursor, Copilot, and the New Developer Workflow",
+        "subtitle": "AI pair programming is here—how to use it without skipping the fundamentals",
+        "date": "April 28, 2026",
+        "img_url": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80",
+        "body": (
+            "<p>AI coding assistants are changing how we write software—but they do not replace "
+            "understanding architecture, security, or debugging skills.</p>"
+            "<p>Use them to explore APIs, generate boilerplate, and refactor repetitive code. "
+            "Always review suggestions, run tests, and learn why a solution works. The developers "
+            "who thrive in 2026 combine AI speed with solid computer science fundamentals.</p>"
+        ),
+    },
+]
 
 
 app = Flask(__name__)
@@ -104,8 +163,58 @@ class Comments(db.Model):
 # TODO: Create a User table for all your registered users.
 
 
+def ensure_author():
+    author = db.session.execute(db.select(Users).limit(1)).scalar_one_or_none()
+    if author:
+        return author
+    author = Users(
+        name="Sayed Mohammad Hashimi",
+        email="admin@hashimi.blog",
+        password=generate_password_hash(
+            os.getenv("DEMO_ADMIN_PASSWORD", "ChangeMe123!"),
+            salt_length=8,
+        ),
+    )
+    db.session.add(author)
+    db.session.commit()
+    return author
+
+
+def seed_sample_posts():
+    """Add demo articles when sample titles are missing."""
+    author = ensure_author()
+
+    existing_titles = {
+        title
+        for title in db.session.execute(db.select(BlogPosts.title)).scalars().all()
+    }
+
+    for post_data in SAMPLE_POSTS:
+        if post_data["title"] in existing_titles:
+            continue
+        db.session.add(
+            BlogPosts(
+                title=post_data["title"],
+                subtitle=post_data["subtitle"],
+                date=post_data["date"],
+                body=post_data["body"],
+                img_url=post_data["img_url"],
+                author=author,
+            )
+        )
+        existing_titles.add(post_data["title"])
+
+    db.session.commit()
+
+
 with app.app_context():
     db.create_all()
+    seed_sample_posts()
+
+
+@app.context_processor
+def inject_globals():
+    return {"now_year": datetime.now().year}
 
 
 @app.route('/sitemap.xml')
@@ -168,7 +277,9 @@ def logout():
 
 @app.route("/")
 def get_all_posts():
-    result = db.session.execute(db.select(BlogPosts))
+    result = db.session.execute(
+        db.select(BlogPosts).order_by(BlogPosts.id.desc())
+    )
     posts = result.scalars().all()
     return render_template("index.html", all_posts=posts)
 
@@ -187,12 +298,11 @@ def show_post(post_id):
 def only_admin(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if current_user:
-            if current_user.id == 1:
-                return func(*args, **kwargs)
-            else:
-                return abort(403)
-        return redirect(url_for("login"))
+        if not current_user.is_authenticated:
+            return redirect(url_for("login"))
+        if current_user.id == 1:
+            return func(*args, **kwargs)
+        return abort(403)
 
     return wrapper
 
