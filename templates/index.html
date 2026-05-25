@@ -3,7 +3,9 @@
 <section class="hero-modern">
   <div
     class="hero-bg"
-    style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80')"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80');
+    "
   ></div>
   <div class="container position-relative px-4 px-lg-5">
     <div class="hero-content">
@@ -33,17 +35,14 @@
 
 <main class="blog-main">
   <div class="container px-4 px-lg-5">
-    {% if current_user.is_authenticated and current_user.id == 1 %}
+    {% if current_user.is_authenticated and current_user.is_author == 1 %}
     <div class="admin-bar">
       <a class="btn btn-primary" href="{{ url_for('add_new_post') }}">
         <i class="fas fa-plus me-1"></i> Create New Post
       </a>
     </div>
-    {% endif %}
-
-    {% if all_posts %}
-    {% set featured = all_posts[0] %}
-  <div class="row justify-content-center mb-5">
+    {% endif %} {% if all_posts %} {% set featured = all_posts[0] %}
+    <div class="row justify-content-center mb-5">
       <div class="col-xl-10">
         <p class="section-label">Latest</p>
         <h2 class="section-title">Featured Story</h2>
@@ -62,8 +61,8 @@
             <p class="text-muted mb-3">{{ featured.subtitle }}</p>
             <p class="post-card-meta mb-3 border-0 pt-0">
               <span
-                >By <span class="author">{{ featured.author.name }}</span> ·
-                {{ featured.date }}</span
+                >By <span class="author">{{ featured.author.name }}</span> · {{
+                featured.date }}</span
               >
             </p>
             <a
@@ -71,7 +70,8 @@
               href="{{ url_for('show_post', post_id=featured.id) }}"
               >Read full article <i class="fas fa-arrow-right ms-1"></i
             ></a>
-            {% if current_user.is_authenticated and current_user.id == 1 %}
+            {% if current_user.is_authenticated and current_user.is_admin == 1
+            %}
             <a
               class="delete-link ms-3"
               href="{{ url_for('delete_post', post_id=featured.id) }}"
@@ -111,8 +111,8 @@
             <p class="post-excerpt">{{ post.subtitle }}</p>
             <div class="post-card-meta">
               <span
-                ><span class="author">{{ post.author.name }}</span> ·
-                {{ post.date }}</span
+                ><span class="author">{{ post.author.name }}</span> · {{
+                post.date }}</span
               >
               <a
                 class="btn-read"
@@ -120,7 +120,8 @@
                 >Read <i class="fas fa-arrow-right"></i
               ></a>
             </div>
-            {% if current_user.is_authenticated and current_user.id == 1 %}
+            {% if current_user.is_authenticated and current_user.is_admin == 1
+            %}
             <a
               class="delete-link"
               href="{{ url_for('delete_post', post_id=post.id) }}"
@@ -135,7 +136,9 @@
     {% else %}
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
-        <p class="text-muted">No posts yet. Check back soon for new articles.</p>
+        <p class="text-muted">
+          No posts yet. Check back soon for new articles.
+        </p>
       </div>
     </div>
     {% endif %}

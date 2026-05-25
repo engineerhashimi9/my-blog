@@ -1,5 +1,5 @@
-{% include "header.html" %}
-{% from "includes/editor.html" import editor_assets, rich_editor %}
+{% include "header.html" %} {% from "includes/editor.html" import editor_assets,
+rich_editor %}
 
 <header
   class="masthead post-hero"
@@ -29,7 +29,7 @@
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="post-content">{{ post.body|safe }}</div>
 
-        {% if current_user.is_authenticated and current_user.id == 1 %}
+        {% if current_user.is_authenticated and current_user.is_admin == 1 %}
         <div class="admin-bar mt-4">
           <a
             class="btn btn-primary"
@@ -52,17 +52,15 @@
             method="post"
             novalidate
           >
-            {{ comment_form.hidden_tag() }}
-            {{ rich_editor(comment_form.comment_text, mode='compact', label='Your comment') }}
-            {{ comment_form.submit(class_='btn btn-primary') }}
+            {{ comment_form.hidden_tag() }} {{
+            rich_editor(comment_form.comment_text, mode='compact', label='Your
+            comment') }} {{ comment_form.submit(class_='btn btn-primary') }}
           </form>
           {% else %}
           <p class="text-muted">
             <a href="{{ url_for('login') }}">Log in</a> to join the discussion.
           </p>
-          {% endif %}
-
-          {% if all_comments %}
+          {% endif %} {% if all_comments %}
           <ul class="commentList">
             {% for comment in all_comments %}
             <li>
@@ -74,7 +72,9 @@
               </div>
               <div class="commentText">
                 {{ comment.text|safe }}
-                <span class="date sub-text">{{ comment.author.name|title }}</span>
+                <span class="date sub-text"
+                  >{{ comment.author.name|title }}</span
+                >
               </div>
             </li>
             {% endfor %}
@@ -86,5 +86,5 @@
   </div>
 </article>
 
-{% if current_user.is_authenticated %}{{ editor_assets() }}{% endif %}
-{% include "footer.html" %}
+{% if current_user.is_authenticated %}{{ editor_assets() }}{% endif %} {%
+include "footer.html" %}

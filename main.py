@@ -143,6 +143,8 @@ class Users(db.Model, UserMixin):
     email: Mapped[str] = mapped_column(
         String(250), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(300), nullable=False)
+    is_author: Mapped[int] = mapped_column(Integer, default=0)
+    is_admin: Mapped[int] = mapped_column(Integer, default=0)
 
     # ralations
     posts = db.relationship("BlogPosts", back_populates="author")
@@ -317,7 +319,19 @@ def only_admin(func):
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated:
             return redirect(url_for("login"))
-        if current_user.id == 1:
+        if current_user.is_admin == 1:
+            return func(*args, **kwargs)
+        return abort(403)
+
+    return wrapper
+
+
+def only_author(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return redirect(url_for("login"))
+        if current_user.is_author == 1:
             return func(*args, **kwargs)
         return abort(403)
 
@@ -325,7 +339,7 @@ def only_admin(func):
 
 
 @app.route("/new-post", methods=["GET", "POST"])
-@only_admin
+@only_author
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
