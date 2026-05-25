@@ -161,6 +161,7 @@ class BlogPosts(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+    views: Mapped[int] = mapped_column(Integer, default=0)
 
     author = db.relationship("Users", back_populates="posts")
     comments = db.relationship("Comments", back_populates="post")
@@ -310,6 +311,8 @@ def show_post(post_id):
     all_comments = db.session.execute(
         db.select(Comments).where(Comments.post_id == post_id)).scalars()
     requested_post = db.get_or_404(BlogPosts, post_id)
+    requested_post.views += 1
+    db.session.commit()
     return render_template("post.html", post=requested_post, comment_form=make_comment, all_comments=all_comments, gravatar=gravatar)
 
 
