@@ -127,12 +127,8 @@ class Base(DeclarativeBase):
 gravatar = Gravatar(app, size=100, rating='g', default='retro')
 # CREATE DATABASE
 # Fetch variables
-USER = os.getenv("user")
-PASSWORD = os.getenv("password")
-HOST = os.getenv("host")
-DBNAME = os.getenv("dbname")
 
-DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:5432/{DBNAME}?sslmode=require"
+
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URl", DATABASE_URL)
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
