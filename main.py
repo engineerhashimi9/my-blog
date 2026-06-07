@@ -253,6 +253,7 @@ def register():
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
+            print(form.email.data)
             with app.app_context():
                 user = Users.query.filter_by(email=form.email.data).first()
                 if not user:
@@ -263,9 +264,13 @@ def register():
                         ),
                         name=form.name.data,
                     )
+
                     db.session.add(user)
+                    print(f"user added{user}")
                     db.session.commit()
+                    print(f"user commited{user}")
                     login_user(user)
+                    print(f"user logged in{user}")
                     return redirect(url_for("get_all_posts"))
                 else:
                     flash("This email has allready an acount")
