@@ -133,7 +133,7 @@ HOST = os.getenv("host")
 DBNAME = os.getenv("dbname")
 
 DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:5432/{DBNAME}?sslmode=require"
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URl", DATABASE_URL)
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
