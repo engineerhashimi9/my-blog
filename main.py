@@ -129,7 +129,7 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro')
 # Fetch variables
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URl", DATABASE_URL)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URl", DATABASE_URl)
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
