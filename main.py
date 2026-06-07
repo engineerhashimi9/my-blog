@@ -118,6 +118,11 @@ login_manager = LoginManager()
 login_manager.init_app(app=app)
 login_manager.login_view = "login"
 
+
+class Base(DeclarativeBase):
+    pass
+
+
 # Gravator
 gravatar = Gravatar(app, size=100, rating='g', default='retro')
 # CREATE DATABASE
@@ -132,10 +137,6 @@ DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-
-
-class Base(DeclarativeBase):
-    pass
 
 
 # CONFIGURE TABLES
