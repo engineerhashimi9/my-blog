@@ -250,6 +250,7 @@ def sitemap():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    print("DATABASE URL:", app.config["SQLALCHEMY_DATABASE_URI"])
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
