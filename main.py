@@ -128,7 +128,7 @@ class Base(DeclarativeBase):
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-    "NEW_DB_URL", "sqlite:///posts.db")
+    "NEW_DB_URL")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
