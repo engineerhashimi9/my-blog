@@ -30,65 +30,6 @@ from forms import CreatePostForm
 import os
 
 
-SAMPLE_POSTS = [
-    {
-        "title": "Building AI-Assisted Web Apps with Flask in 2026",
-        "subtitle": "How LLM APIs and Flask fit together for practical side projects",
-        "date": "May 18, 2026",
-        "img_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80",
-        "body": (
-            "<p>Flask remains one of the fastest ways to ship a Python web app—and in 2026, "
-            "pairing it with AI APIs opens creative doors without heavy infrastructure.</p>"
-            "<p>Start with a thin service layer: keep prompts, model calls, and rate limiting "
-            "outside your route handlers. Use environment variables for API keys, cache common "
-            "responses, and always validate user input before sending it to a model.</p>"
-            "<p>For blog platforms like this one, AI can help draft outlines, suggest titles, "
-            "or summarize long posts—but the author's voice should stay in control. The best "
-            "AI-assisted apps feel fast, transparent, and respectful of user data.</p>"
-        ),
-    },
-    {
-        "title": "Python 3.13 and the Future of Backend Development",
-        "subtitle": "Performance gains, typing improvements, and what they mean for Flask devs",
-        "date": "May 12, 2026",
-        "img_url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80",
-        "body": (
-            "<p>Each Python release brings incremental wins for backend developers. "
-            "Faster startup, better error messages, and stronger typing support mean "
-            "cleaner Flask codebases with fewer surprises in production.</p>"
-            "<p>If you maintain a blog or API, schedule regular dependency updates, "
-            "pin versions in requirements.txt, and run smoke tests after upgrades. "
-            "Small, frequent updates beat painful yearly migrations.</p>"
-        ),
-    },
-    {
-        "title": "Deploying Flask on Render: A Student's Zero-Downtime Checklist",
-        "subtitle": "From local SQLite to a live URL without losing your mind",
-        "date": "May 05, 2026",
-        "img_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
-        "body": (
-            "<p>Deploying your first Flask app is a milestone. Render makes it approachable: "
-            "connect your GitHub repo, set environment variables, and define a start command "
-            "in the Procfile.</p>"
-            "<p>Move from SQLite to PostgreSQL before going live, set SECRET_KEY and database "
-            "URLs in the dashboard, and enable automatic deploys only after your build passes "
-            "locally. Health checks and logging early will save hours of debugging later.</p>"
-        ),
-    },
-    {
-        "title": "Cursor, Copilot, and the New Developer Workflow",
-        "subtitle": "AI pair programming is here—how to use it without skipping the fundamentals",
-        "date": "April 28, 2026",
-        "img_url": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80",
-        "body": (
-            "<p>AI coding assistants are changing how we write software—but they do not replace "
-            "understanding architecture, security, or debugging skills.</p>"
-            "<p>Use them to explore APIs, generate boilerplate, and refactor repetitive code. "
-            "Always review suggestions, run tests, and learn why a solution works. The developers "
-            "who thrive in 2026 combine AI speed with solid computer science fundamentals.</p>"
-        ),
-    },
-]
 
 
 ALLOWED_HTML_TAGS = [
