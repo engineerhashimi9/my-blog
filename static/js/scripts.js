@@ -65,9 +65,35 @@
     });
   }
 
+  function initContactCopy() {
+    const copyBtn = document.getElementById("copyEmailBtn");
+    if (!copyBtn) return;
+
+    copyBtn.addEventListener("click", async () => {
+      const email = copyBtn.dataset.email || "engineerhashimi9@gmail.com";
+      const label = copyBtn.querySelector("span");
+
+      try {
+        await navigator.clipboard.writeText(email);
+        copyBtn.classList.add("is-copied");
+        if (label) label.textContent = "Copied!";
+        setTimeout(() => {
+          copyBtn.classList.remove("is-copied");
+          if (label) label.textContent = "Copy email";
+        }, 2000);
+      } catch (e) {
+        if (label) label.textContent = "Copy failed";
+        setTimeout(() => {
+          if (label) label.textContent = "Copy email";
+        }, 2000);
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     applyTheme(getSavedTheme());
     initThemeToggle();
     initNavScroll();
+    initContactCopy();
   });
 })();

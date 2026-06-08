@@ -1,77 +1,188 @@
 {% include "header.html" %}
 
-<header
-  class="masthead post-hero"
-  style="background-image: url('https://images.unsplash.com/photo-1423661639045-7e9ef2e5c9e8?w=1920&q=80')"
->
-  <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="page-heading">
-          <h1>Contact Me</h1>
-          <span class="subheading">Have questions? I have answers.</span>
-        </div>
-      </div>
-    </div>
+<section class="auth-page contact-page">
+  <div class="auth-orbs" aria-hidden="true">
+    <span class="auth-orb auth-orb--1"></span>
+    <span class="auth-orb auth-orb--2"></span>
+    <span class="auth-orb auth-orb--3"></span>
   </div>
-</header>
 
-<main class="mb-5 pb-5">
-  <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="content-card">
-          <p>
-            Want to collaborate, ask about a post, or discuss a project? Send a
-            message and I'll get back to you as soon as I can.
-          </p>
-          <form
-            id="contactForm"
-            action="mailto:engineerhashimi9@gmail.com?subject=Contact From Hashimi Blog"
-            method="post"
-            enctype="text/plain"
-          >
-            <div class="form-floating mb-3">
-              <input
-                class="form-control"
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Your name"
-                required
-              />
-              <label for="name">Name</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                class="form-control"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Your email"
-                required
-              />
-              <label for="email">Email address</label>
-            </div>
-            <div class="form-floating mb-3">
-              <textarea
-                class="form-control"
-                id="message"
-                name="message"
-                placeholder="Your message"
-                required
-                style="height: 10rem"
-              ></textarea>
-              <label for="message">Message</label>
-            </div>
-            <button class="btn btn-primary" type="submit">
-              Send message <i class="fas fa-paper-plane ms-1"></i>
+  <div class="auth-shell contact-shell">
+    <!-- Contact info panel -->
+    <aside class="auth-panel contact-panel">
+      <div>
+        <p class="auth-panel__brand">Let's Connect</p>
+        <p class="auth-panel__tagline">
+          Open to collaboration, project ideas &amp; tech discussions
+        </p>
+
+        <ul class="contact-cards">
+          <li>
+            <a
+              class="contact-card contact-card--highlight"
+              href="mailto:engineerhashimi9@gmail.com"
+            >
+              <span class="contact-card__icon" aria-hidden="true">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span class="contact-card__body">
+                <span class="contact-card__label">Email me</span>
+                <span class="contact-card__value">engineerhashimi9@gmail.com</span>
+              </span>
+              <i class="fas fa-arrow-right contact-card__arrow" aria-hidden="true"></i>
+            </a>
+            <button
+              class="contact-copy-btn"
+              id="copyEmailBtn"
+              type="button"
+              data-email="engineerhashimi9@gmail.com"
+              aria-label="Copy email address"
+            >
+              <i class="fas fa-copy" aria-hidden="true"></i>
+              <span>Copy email</span>
             </button>
-          </form>
-        </div>
+          </li>
+
+          <li>
+            <a
+              class="contact-card"
+              href="https://github.com/engineerhashimi9/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-card__icon" aria-hidden="true">
+                <i class="fab fa-github"></i>
+              </span>
+              <span class="contact-card__body">
+                <span class="contact-card__label">GitHub</span>
+                <span class="contact-card__value">@engineerhashimi9</span>
+              </span>
+              <i class="fas fa-external-link-alt contact-card__arrow" aria-hidden="true"></i>
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="contact-card"
+              href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-card__icon" aria-hidden="true">
+                <i class="fab fa-linkedin-in"></i>
+              </span>
+              <span class="contact-card__body">
+                <span class="contact-card__label">LinkedIn</span>
+                <span class="contact-card__value">Sayed Mohammad Hashimi</span>
+              </span>
+              <i class="fas fa-external-link-alt contact-card__arrow" aria-hidden="true"></i>
+            </a>
+          </li>
+
+          <li class="contact-card contact-card--static">
+            <span class="contact-card__icon" aria-hidden="true">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+            <span class="contact-card__body">
+              <span class="contact-card__label">Location</span>
+              <span class="contact-card__value">Kabul, Afghanistan</span>
+            </span>
+          </li>
+        </ul>
       </div>
+
+      <div class="auth-terminal contact-terminal">
+        <p><span class="tok-green">hashimi@dev</span><span class="tok-dim">:~$</span> echo $CONTACT</p>
+        <p class="tok-blue">engineerhashimi9@gmail.com</p>
+        <p style="margin-top: 0.5rem">
+          <span class="tok-purple">status</span><span class="tok-dim">: </span>
+          <span class="tok-green">available</span>
+        </p>
+      </div>
+    </aside>
+
+    <!-- Contact form -->
+    <div class="auth-form-side contact-form-side">
+      <a class="contact-mobile-email d-md-none" href="mailto:engineerhashimi9@gmail.com">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        engineerhashimi9@gmail.com
+      </a>
+
+      <p class="auth-form-side__eyebrow">Get in touch</p>
+      <h1>Send a Message</h1>
+      <p class="auth-form-side__sub">
+        Have a question about a post, want to collaborate, or discuss a project?
+        Fill out the form and I'll get back to you as soon as I can.
+      </p>
+
+      <form
+        class="auth-form contact-form"
+        id="contactForm"
+        action="mailto:engineerhashimi9@gmail.com?subject=Contact From Hashimi Blog"
+        method="post"
+        enctype="text/plain"
+      >
+        <div class="auth-field mb-3">
+          <label for="name">Your Name</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-user auth-field__icon" aria-hidden="true"></i>
+            <input
+              class="form-control"
+              id="name"
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="auth-field mb-3">
+          <label for="email">Your Email</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-envelope auth-field__icon" aria-hidden="true"></i>
+            <input
+              class="form-control"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="auth-field mb-3">
+          <label for="message">Message</label>
+          <div class="contact-textarea-wrap">
+            <i class="fas fa-comment-dots contact-textarea__icon" aria-hidden="true"></i>
+            <textarea
+              class="form-control contact-textarea"
+              id="message"
+              name="message"
+              placeholder="Tell me about your project or question..."
+              rows="5"
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+          Send Message <i class="fas fa-paper-plane ms-1" aria-hidden="true"></i>
+        </button>
+      </form>
+
+      <p class="contact-direct">
+        Prefer email?
+        <a href="mailto:engineerhashimi9@gmail.com">engineerhashimi9@gmail.com</a>
+      </p>
+
+      <a class="auth-back" href="{{ url_for('get_all_posts') }}">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        Back to blog
+      </a>
     </div>
   </div>
-</main>
+</section>
 
 {% include "footer.html" %}
