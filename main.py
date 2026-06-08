@@ -30,8 +30,6 @@ from forms import CreatePostForm
 import os
 
 
-
-
 ALLOWED_HTML_TAGS = [
     "p", "br", "strong", "em", "u", "s", "a", "ul", "ol", "li",
     "h1", "h2", "h3", "blockquote", "pre", "code",
@@ -142,36 +140,8 @@ def ensure_author():
     return author
 
 
-def seed_sample_posts():
-    """Add demo articles when sample titles are missing."""
-    author = ensure_author()
-
-    existing_titles = {
-        title
-        for title in db.session.execute(db.select(BlogPosts.title)).scalars().all()
-    }
-
-    for post_data in SAMPLE_POSTS:
-        if post_data["title"] in existing_titles:
-            continue
-        db.session.add(
-            BlogPosts(
-                title=post_data["title"],
-                subtitle=post_data["subtitle"],
-                date=post_data["date"],
-                body=post_data["body"],
-                img_url=post_data["img_url"],
-                author=author,
-            )
-        )
-        existing_titles.add(post_data["title"])
-
-    db.session.commit()
-
-
 with app.app_context():
     db.create_all()
-    seed_sample_posts()
 
 
 @app.context_processor
