@@ -4,7 +4,9 @@ include "header.html" %}
 <!-- Page Header -->
 <header
   class="masthead"
-  style="background-image: url('../static/assets/img/register-bg.jpg')"
+  style="
+    background-image: url(&quot;../static/assets/img/register-bg.jpg&quot;);
+  "
 >
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -29,7 +31,7 @@ include "header.html" %}
           {% endfor %}
         </div>
 
-        <form action="{{url_for('register')}}" method="post">
+        <form class="form card" action="{{url_for('register')}}" method="post">
           {%from 'bootstrap5/form.html' import render_form%}
           {{render_form(form)}}
         </form>
