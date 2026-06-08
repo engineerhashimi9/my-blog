@@ -1,40 +1,88 @@
-{% from "bootstrap5/form.html" import render_form %} {% block content %} {%
-include "header.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header.html" %}
 
-<!-- Page Header -->
-<header
-  class="masthead"
-  style="background-image: url('../static/assets/img/login-bg.jpg')"
->
-  <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="page-heading">
-          <h1>Log In</h1>
-          <span class="subheading">Welcome Back!</span>
+<section class="auth-page">
+  <div class="auth-orbs" aria-hidden="true">
+    <span class="auth-orb auth-orb--1"></span>
+    <span class="auth-orb auth-orb--2"></span>
+    <span class="auth-orb auth-orb--3"></span>
+  </div>
+
+  <div class="auth-shell">
+    <!-- Decorative panel -->
+    <aside class="auth-panel" aria-hidden="true">
+      <div>
+        <p class="auth-panel__brand">Hashimi's Blog</p>
+        <p class="auth-panel__tagline">Code · Create · Share</p>
+        <div class="auth-terminal">
+          <p><span class="tok-green">hashimi@dev</span><span class="tok-dim">:~$</span> flask run</p>
+          <p class="tok-dim"> * Serving Flask app 'main'</p>
+          <p class="tok-dim"> * Debug mode: on</p>
+          <p class="tok-blue"> → Ready on http://127.0.0.1:5002</p>
+          <p style="margin-top: 0.75rem">
+            <span class="tok-purple">await</span>
+            <span class="tok-blue"> login</span><span class="tok-dim">(user)</span>
+          </p>
         </div>
       </div>
-    </div>
-  </div>
-</header>
+      <p class="auth-panel__quote">
+        "The best way to learn is by creating real solutions to real problems."
+      </p>
+    </aside>
 
-<main class="mb-4">
-  <div class="container">
-    <div class="row">
-      <!-- TODO: add a flash message here for users registering twice -->
-      
-        <div class="error">
-          {% for error in get_flashed_messages()%}
-          <p>{{error}}</p>
-          {% endfor %}
-        </div>
-        <form class="form card" action="{{url_for('login')}}" method="post">
-          {%from 'bootstrap5/form.html' import render_form%}
-          {{render_form(form)}}
-        </form>
+    <!-- Login form -->
+    <div class="auth-form-side">
+      <p class="auth-form-side__eyebrow">Welcome back</p>
+      <h1>Sign In</h1>
+      <p class="auth-form-side__sub">
+        Log in to comment on posts and access your account.
+      </p>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="auth-flash" role="alert">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
       </div>
+      {% endif %}
+      {% endwith %}
+
+      <form class="auth-form" action="{{ url_for('login') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="auth-field mb-3">
+          <label for="email">{{ form.email.label.text }}</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-envelope auth-field__icon" aria-hidden="true"></i>
+            {{ form.email(class="form-control", placeholder="you@example.com", id="email") }}
+          </div>
+        </div>
+
+        <div class="auth-field mb-3">
+          <label for="password">{{ form.password.label.text }}</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-lock auth-field__icon" aria-hidden="true"></i>
+            {{ form.password(class="form-control", placeholder="••••••••", id="password", type="password") }}
+          </div>
+        </div>
+
+        {{ form.submit(class="btn btn-primary", value="Sign In") }}
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <p class="auth-switch">
+        Don't have an account?
+        <a href="{{ url_for('register') }}">Create one</a>
+      </p>
+
+      <a class="auth-back" href="{{ url_for('get_all_posts') }}">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        Back to blog
+      </a>
     </div>
   </div>
-</main>
+</section>
 
-{% include "footer.html" %} {% endblock %}
+{% include "footer.html" %}

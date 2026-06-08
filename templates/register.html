@@ -1,43 +1,98 @@
-{% from "bootstrap5/form.html" import render_form %} {% block content %} {%
-include "header.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% include "header.html" %}
 
-<!-- Page Header -->
-<header
-  class="masthead"
-  style="
-    background-image: url(&quot;../static/assets/img/register-bg.jpg&quot;);
-  "
->
-  <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="page-heading">
-          <h1>Register</h1>
-          <span class="subheading">Start Contributing to the Blog!</span>
+<section class="auth-page">
+  <div class="auth-orbs" aria-hidden="true">
+    <span class="auth-orb auth-orb--1"></span>
+    <span class="auth-orb auth-orb--2"></span>
+    <span class="auth-orb auth-orb--3"></span>
+  </div>
+
+  <div class="auth-shell">
+    <!-- Decorative panel -->
+    <aside class="auth-panel" aria-hidden="true">
+      <div>
+        <p class="auth-panel__brand">Join the Blog</p>
+        <p class="auth-panel__tagline">Start your developer journey</p>
+        <div class="auth-terminal">
+          <p><span class="tok-green">hashimi@dev</span><span class="tok-dim">:~$</span> git init</p>
+          <p class="tok-dim"> Initialized empty Git repository</p>
+          <p style="margin-top: 0.75rem">
+            <span class="tok-purple">const</span>
+            <span class="tok-blue"> user</span>
+            <span class="tok-dim"> = </span>
+            <span class="tok-purple">new</span>
+            <span class="tok-blue"> Developer</span><span class="tok-dim">()</span>
+          </p>
+          <p><span class="tok-green">→</span> <span class="tok-blue">user</span><span class="tok-dim">.register()</span></p>
         </div>
       </div>
-    </div>
-  </div>
-</header>
+      <p class="auth-panel__quote">
+        Build projects, share ideas, and grow with a community of learners.
+      </p>
+    </aside>
 
-<main class="mb-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <!--TODO: render your registration form here-->
-        <div class="error">
-          {% for message in get_flashed_messages()%}
-          <p>{{message}}</p>
-          {% endfor %}
+    <!-- Register form -->
+    <div class="auth-form-side">
+      <p class="auth-form-side__eyebrow">Get started</p>
+      <h1>Create Account</h1>
+      <p class="auth-form-side__sub">
+        Register to comment on posts and join the conversation.
+      </p>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="auth-flash" role="alert">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <form class="auth-form" action="{{ url_for('register') }}" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="auth-field mb-3">
+          <label for="name">{{ form.name.label.text }}</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-user auth-field__icon" aria-hidden="true"></i>
+            {{ form.name(class="form-control", placeholder="Your name", id="name") }}
+          </div>
         </div>
 
-        <form class="form card" action="{{url_for('register')}}" method="post">
-          {%from 'bootstrap5/form.html' import render_form%}
-          {{render_form(form)}}
-        </form>
-      </div>
+        <div class="auth-field mb-3">
+          <label for="email">{{ form.email.label.text }}</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-envelope auth-field__icon" aria-hidden="true"></i>
+            {{ form.email(class="form-control", placeholder="you@example.com", id="email") }}
+          </div>
+        </div>
+
+        <div class="auth-field mb-3">
+          <label for="password">{{ form.password.label.text }}</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-lock auth-field__icon" aria-hidden="true"></i>
+            {{ form.password(class="form-control", placeholder="••••••••", id="password", type="password") }}
+          </div>
+        </div>
+
+        {{ form.submit(class="btn btn-primary", value="Create Account") }}
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Sign in</a>
+      </p>
+
+      <a class="auth-back" href="{{ url_for('get_all_posts') }}">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        Back to blog
+      </a>
     </div>
   </div>
-</main>
+</section>
 
-{% include "footer.html" %} {% endblock %}
+{% include "footer.html" %}

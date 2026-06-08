@@ -20,6 +20,18 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>Hashimi Blog | Sayed Mohammad Hashimi</title>
+    <script>
+      (function () {
+        try {
+          var t =
+            localStorage.getItem("hashimi-theme") ||
+            (localStorage.getItem("hashimi-about-theme") === "light"
+              ? "light"
+              : "dark");
+          if (t === "light") document.documentElement.classList.add("theme-light");
+        } catch (e) {}
+      })();
+    </script>
     {% block styles %}
     {{ bootstrap.load_css() }}
     <link
@@ -34,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -113,6 +125,18 @@
                 href="{{ url_for('contact') }}"
                 >Contact</a
               >
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle light and dark mode"
+                title="Toggle theme"
+              >
+                <i class="fas fa-moon theme-icon-dark" aria-hidden="true"></i>
+                <i class="fas fa-sun theme-icon-light" aria-hidden="true"></i>
+              </button>
             </li>
           </ul>
         </div>

@@ -1,28 +1,73 @@
 /*!
-* Start Bootstrap - Clean Blog v6.0.9 (https://startbootstrap.com/theme/clean-blog)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
-*/
-window.addEventListener('DOMContentLoaded', () => {
-    let scrollPos = 0;
-    const mainNav = document.getElementById('mainNav');
-    const headerHeight = mainNav.clientHeight;
-    window.addEventListener('scroll', function() {
-        const currentTop = document.body.getBoundingClientRect().top * -1;
-        if ( currentTop < scrollPos) {
-            // Scrolling Up
-            if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
-                mainNav.classList.add('is-visible');
-            } else {
-                mainNav.classList.remove('is-visible', 'is-fixed');
-            }
-        } else {
-            // Scrolling Down
-            mainNav.classList.remove(['is-visible']);
-            if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
-                mainNav.classList.add('is-fixed');
-            }
-        }
-        scrollPos = currentTop;
+ * Hashimi Blog — nav scroll + global theme toggle
+ */
+(function () {
+  "use strict";
+
+  const THEME_KEY = "hashimi-theme";
+
+  function getSavedTheme() {
+    try {
+      return (
+        localStorage.getItem(THEME_KEY) ||
+        (localStorage.getItem("hashimi-about-theme") === "light" ? "light" : "dark")
+      );
+    } catch (e) {
+      return "dark";
+    }
+  }
+
+  function applyTheme(mode) {
+    const isLight = mode === "light";
+    document.documentElement.classList.toggle("theme-light", isLight);
+    try {
+      localStorage.setItem(THEME_KEY, isLight ? "light" : "dark");
+      localStorage.removeItem("hashimi-about-theme");
+    } catch (e) {}
+  }
+
+  function initThemeToggle() {
+    const toggle = document.getElementById("themeToggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", () => {
+      const next = document.documentElement.classList.contains("theme-light")
+        ? "dark"
+        : "light";
+      applyTheme(next);
     });
-})
+  }
+
+  function initNavScroll() {
+    const mainNav = document.getElementById("mainNav");
+    if (!mainNav) return;
+
+    let scrollPos = 0;
+    const headerHeight = mainNav.clientHeight;
+
+    window.addEventListener("scroll", () => {
+      const currentTop = document.body.getBoundingClientRect().top * -1;
+
+      if (currentTop < scrollPos) {
+        if (currentTop > 0 && mainNav.classList.contains("is-fixed")) {
+          mainNav.classList.add("is-visible");
+        } else {
+          mainNav.classList.remove("is-visible", "is-fixed");
+        }
+      } else {
+        mainNav.classList.remove("is-visible");
+        if (currentTop > headerHeight && !mainNav.classList.contains("is-fixed")) {
+          mainNav.classList.add("is-fixed");
+        }
+      }
+
+      scrollPos = currentTop;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    applyTheme(getSavedTheme());
+    initThemeToggle();
+    initNavScroll();
+  });
+})();

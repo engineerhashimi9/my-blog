@@ -1,59 +1,242 @@
 {% include "header.html" %}
 
-<header
-  class="masthead post-hero"
-  style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80')"
->
+<!-- About Me — developer portfolio section -->
+<section class="about-hero" aria-labelledby="about-heading">
+  <!-- Animated gradient orbs -->
+  <div class="about-orbs" aria-hidden="true">
+    <span class="about-orb about-orb--1"></span>
+    <span class="about-orb about-orb--2"></span>
+    <span class="about-orb about-orb--3"></span>
+  </div>
+
   <div class="container position-relative px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="page-heading">
-          <span class="hero-badge d-inline-block mb-3">About</span>
-          <h1>About Me</h1>
-          <span class="subheading">Hi, I'm Hashimi.</span>
-        </div>
+    <div class="about-hero__inner">
+      <div class="about-hero__badges">
+        <span class="about-badge about-badge--active">
+          <span class="about-badge__dot" aria-hidden="true"></span>
+          Active Learner
+        </span>
+        <span class="about-badge">2nd Semester · CS</span>
       </div>
+
+      <p class="about-hero__eyebrow">About Me</p>
+      <h1 id="about-heading" class="about-hero__title">
+        <span class="about-hero__gradient">Engineer Hashimi</span>
+      </h1>
+
+      <!-- Typing animation terminal line -->
+      <p class="about-typing" aria-live="polite">
+        <span class="about-typing__prompt" aria-hidden="true">$</span>
+        <span id="aboutTypingText" class="about-typing__text"></span>
+        <span class="about-typing__cursor" aria-hidden="true">_</span>
+      </p>
+
+      <p class="about-hero__subtitle">
+        Software Engineering student building real solutions with Python, Django,
+        and modern web technologies.
+      </p>
     </div>
   </div>
-</header>
+</section>
 
-<main class="mb-5 pb-5">
+<main class="about-main">
   <div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <div class="content-card">
-          <img
-            src="https://i.postimg.cc/9FT8t3p2/IMG-20240927-WA0002.jpg"
-            alt="Sayed Mohammad Hashimi"
-            class="img-fluid mb-4 profile-image"
-          />
-          <p>
-            My name is <strong>Sayed Mohammad Hashimi</strong>, a passionate
-            Software Engineering student at Kabul University with a strong
-            enthusiasm for technology, programming, and continuous learning. I
-            am an advanced Python developer with solid experience in backend web
-            development, especially using modern frameworks such as Flask and
-            Django.
-          </p>
-          <p>
-            I graduated from Mahmood Tarzi High School in 2024 and earned a
-            place in the Software Engineering program at Kabul University with a
-            Kankor score of 340 out of 360. Today I build authentication
-            systems, database-driven apps, REST APIs, and deploy projects on
-            platforms like Render.
-          </p>
-          <p>
-            Beyond code, I enjoy chess, anime, and exploring how AI tools are
-            reshaping the way developers design and ship software. My goal is to
-            build impactful digital products and grow as a full-stack engineer.
-          </p>
-          <a class="btn btn-primary mt-2" href="{{ url_for('contact') }}"
-            >Get in touch</a
-          >
+    <div class="about-grid">
+      <!-- Left column: bio, philosophy, personal info -->
+      <div class="about-col about-col--bio">
+        <!-- Profile card -->
+        <article class="about-glass about-profile reveal" data-reveal>
+          <figure class="about-profile__media">
+            <img
+              src="https://i.postimg.cc/9FT8t3p2/IMG-20240927-WA0002.jpg"
+              alt="Engineer Hashimi — Software Engineering student"
+              class="about-profile__img"
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+          </figure>
+          <div class="about-profile__info">
+            <h2 class="about-profile__name">Engineer Hashimi</h2>
+            <p class="about-profile__role">Software Engineering Student</p>
+            <ul class="about-profile__meta">
+              <li><i class="fas fa-birthday-cake" aria-hidden="true"></i> 18 years old</li>
+              <li><i class="fas fa-graduation-cap" aria-hidden="true"></i> 2nd Semester · Computer Science</li>
+              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kabul, Afghanistan</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Full bio -->
+        <article class="about-glass about-bio reveal" data-reveal>
+          <h2 class="about-section-title">Bio</h2>
+          <div class="about-bio__text">
+            <p>
+              I am an 18-year-old Software Engineering student currently in my
+              second semester of Computer Science studies.
+            </p>
+            <p>
+              I am passionate about technology and continuously work to improve
+              my skills in programming, web development, databases, artificial
+              intelligence, and mobile application development. My primary areas
+              of interest include Python, Django, PostgreSQL, Machine Learning,
+              Data Analysis, Computer Vision, and Android development with Kotlin.
+            </p>
+            <p>
+              I enjoy building practical projects because I believe the best way
+              to learn is by creating real solutions to real problems. In addition
+              to my technical studies, I am actively improving my English
+              communication skills to better collaborate with developers and access
+              international learning resources.
+            </p>
+            <p>
+              I am a motivated learner who values discipline, curiosity, and
+              continuous growth. My goal is to become a highly skilled software
+              engineer capable of developing innovative applications that make a
+              positive impact on people's lives.
+            </p>
+            <p>
+              I believe that every project, challenge, and mistake is an opportunity
+              to learn something new and become a better developer.
+            </p>
+          </div>
+        </article>
+
+        <!-- Philosophy terminal quote -->
+        <blockquote class="about-glass about-philosophy reveal" data-reveal>
+          <div class="about-philosophy__header">
+            <span class="about-philosophy__dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+            <span class="about-philosophy__label">philosophy.sh</span>
+          </div>
+          <pre class="about-philosophy__code"><code><span class="tok-comment"># Core belief</span>
+<span class="tok-keyword">echo</span> <span class="tok-string">"The best way to learn is by creating real solutions to real problems."</span></code></pre>
+        </blockquote>
+
+        <!-- Actions & social -->
+        <div class="about-actions reveal" data-reveal>
+          <a class="about-btn about-btn--primary" href="#" role="button">
+            <i class="fas fa-download" aria-hidden="true"></i>
+            Download Resume
+          </a>
+          <a class="about-btn about-btn--ghost" href="{{ url_for('contact') }}">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            Get in Touch
+          </a>
+          <div class="about-social">
+            <a
+              href="https://github.com/engineerhashimi9/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
+            >
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
+            >
+              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
       </div>
+
+      <!-- Right column: terminal, tech stack, stats -->
+      <aside class="about-col about-col--stack">
+        <!-- Interactive terminal -->
+        <div class="about-glass about-terminal reveal" data-reveal>
+          <div class="about-terminal__chrome">
+            <span class="about-terminal__dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+            <span class="about-terminal__title">hashimi@dev ~ %</span>
+          </div>
+          <div class="about-terminal__body" id="aboutTerminal">
+            <p><span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$ whoami</p>
+            <p class="tok-output">engineer_hashimi</p>
+            <p><span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$ cat about.md</p>
+            <p class="tok-output tok-output--dim">---</p>
+            <p class="tok-output">name: Engineer Hashimi</p>
+            <p class="tok-output">role: Software Engineering Student</p>
+            <p class="tok-output">semester: 2nd · Computer Science</p>
+            <p class="tok-output">focus: Python · Django · ML · Android</p>
+            <p class="tok-output tok-output--dim">---</p>
+            <p>
+              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$
+              <span class="about-terminal__blink" aria-hidden="true">▋</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Tech stack -->
+        <section class="about-glass about-stack reveal" data-reveal aria-labelledby="stack-heading">
+          <h2 id="stack-heading" class="about-section-title">Tech Stack</h2>
+          <ul class="about-skills">
+            <li class="about-skill" data-skill="python">
+              <i class="fab fa-python" aria-hidden="true"></i>
+              Python
+            </li>
+            <li class="about-skill" data-skill="django">
+              <i class="fas fa-server" aria-hidden="true"></i>
+              Django
+            </li>
+            <li class="about-skill" data-skill="postgres">
+              <i class="fas fa-database" aria-hidden="true"></i>
+              PostgreSQL
+            </li>
+            <li class="about-skill" data-skill="ml">
+              <i class="fas fa-brain" aria-hidden="true"></i>
+              Machine Learning
+            </li>
+            <li class="about-skill" data-skill="data">
+              <i class="fas fa-chart-line" aria-hidden="true"></i>
+              Data Analysis
+            </li>
+            <li class="about-skill" data-skill="cv">
+              <i class="fas fa-eye" aria-hidden="true"></i>
+              Computer Vision
+            </li>
+            <li class="about-skill" data-skill="kotlin">
+              <i class="fab fa-android" aria-hidden="true"></i>
+              Kotlin
+            </li>
+            <li class="about-skill" data-skill="web">
+              <i class="fas fa-code" aria-hidden="true"></i>
+              Web Development
+            </li>
+          </ul>
+        </section>
+
+        <!-- Developer stats dashboard -->
+        <section class="about-glass about-stats reveal" data-reveal aria-labelledby="stats-heading">
+          <h2 id="stats-heading" class="about-section-title">Developer Stats</h2>
+          <div class="about-stats__grid">
+            <div class="about-stat">
+              <span class="about-stat__value" data-count="15" data-suffix="+">0</span>
+              <span class="about-stat__label">Projects</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__value" data-count="5" data-suffix="">0</span>
+              <span class="about-stat__label">Languages</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__value" data-count="500" data-suffix="+">0</span>
+              <span class="about-stat__label">Commits</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__value" data-count="2" data-suffix="">0</span>
+              <span class="about-stat__label">Semesters</span>
+            </div>
+          </div>
+        </section>
+      </aside>
     </div>
   </div>
 </main>
 
+<script src="{{ url_for('static', filename='js/about.js') }}" defer></script>
 {% include "footer.html" %}
