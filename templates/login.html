@@ -28,7 +28,7 @@ include "header.html" %}
           <p>{{error}}</p>
           {% endfor %}
         </div>
-        <form action="{{url_for('login')}}" method="post">
+        <form class="form card" action="{{url_for('login')}}" method="post">
           {%from 'bootstrap5/form.html' import render_form%}
           {{render_form(form)}}
         </form>
