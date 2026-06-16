@@ -32,8 +32,8 @@
       </p>
 
       <p class="about-hero__subtitle">
-        Software Engineering student building real solutions with Python, Django,
-        and modern web technologies.
+        Software Engineering student building real solutions with Python,
+        Django, and modern web technologies.
       </p>
     </div>
   </div>
@@ -48,7 +48,7 @@
         <article class="about-glass about-profile reveal" data-reveal>
           <figure class="about-profile__media">
             <img
-              src="https://i.postimg.cc/9FT8t3p2/IMG-20240927-WA0002.jpg"
+              src="{{ url_for('static', filename='images/profile.jpg') }}"
               alt="Engineer Hashimi — Software Engineering student"
               class="about-profile__img"
               width="120"
@@ -60,9 +60,18 @@
             <h2 class="about-profile__name">Engineer Hashimi</h2>
             <p class="about-profile__role">Software Engineering Student</p>
             <ul class="about-profile__meta">
-              <li><i class="fas fa-birthday-cake" aria-hidden="true"></i> 18 years old</li>
-              <li><i class="fas fa-graduation-cap" aria-hidden="true"></i> 2nd Semester · Computer Science</li>
-              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kabul, Afghanistan</li>
+              <li>
+                <i class="fas fa-birthday-cake" aria-hidden="true"></i> 18 years
+                old
+              </li>
+              <li>
+                <i class="fas fa-graduation-cap" aria-hidden="true"></i> 2nd
+                Semester · Computer Science
+              </li>
+              <li>
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kabul,
+                Afghanistan
+              </li>
             </ul>
           </div>
         </article>
@@ -80,14 +89,15 @@
               my skills in programming, web development, databases, artificial
               intelligence, and mobile application development. My primary areas
               of interest include Python, Django, PostgreSQL, Machine Learning,
-              Data Analysis, Computer Vision, and Android development with Kotlin.
+              Data Analysis, Computer Vision, and Android development with
+              Kotlin.
             </p>
             <p>
               I enjoy building practical projects because I believe the best way
-              to learn is by creating real solutions to real problems. In addition
-              to my technical studies, I am actively improving my English
-              communication skills to better collaborate with developers and access
-              international learning resources.
+              to learn is by creating real solutions to real problems. In
+              addition to my technical studies, I am actively improving my
+              English communication skills to better collaborate with developers
+              and access international learning resources.
             </p>
             <p>
               I am a motivated learner who values discipline, curiosity, and
@@ -96,8 +106,8 @@
               positive impact on people's lives.
             </p>
             <p>
-              I believe that every project, challenge, and mistake is an opportunity
-              to learn something new and become a better developer.
+              I believe that every project, challenge, and mistake is an
+              opportunity to learn something new and become a better developer.
             </p>
           </div>
         </article>
@@ -110,7 +120,9 @@
             </span>
             <span class="about-philosophy__label">philosophy.sh</span>
           </div>
-          <pre class="about-philosophy__code"><code><span class="tok-comment"># Core belief</span>
+          <pre
+            class="about-philosophy__code"
+          ><code><span class="tok-comment"># Core belief</span>
 <span class="tok-keyword">echo</span> <span class="tok-string">"The best way to learn is by creating real solutions to real problems."</span></code></pre>
         </blockquote>
 
@@ -156,9 +168,17 @@
             <span class="about-terminal__title">hashimi@dev ~ %</span>
           </div>
           <div class="about-terminal__body" id="aboutTerminal">
-            <p><span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$ whoami</p>
+            <p>
+              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
+                >~</span
+              >$ whoami
+            </p>
             <p class="tok-output">engineer_hashimi</p>
-            <p><span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$ cat about.md</p>
+            <p>
+              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
+                >~</span
+              >$ cat about.md
+            </p>
             <p class="tok-output tok-output--dim">---</p>
             <p class="tok-output">name: Engineer Hashimi</p>
             <p class="tok-output">role: Software Engineering Student</p>
@@ -166,14 +186,20 @@
             <p class="tok-output">focus: Python · Django · ML · Android</p>
             <p class="tok-output tok-output--dim">---</p>
             <p>
-              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path">~</span>$
+              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
+                >~</span
+              >$
               <span class="about-terminal__blink" aria-hidden="true">▋</span>
             </p>
           </div>
         </div>
 
         <!-- Tech stack -->
-        <section class="about-glass about-stack reveal" data-reveal aria-labelledby="stack-heading">
+        <section
+          class="about-glass about-stack reveal"
+          data-reveal
+          aria-labelledby="stack-heading"
+        >
           <h2 id="stack-heading" class="about-section-title">Tech Stack</h2>
           <ul class="about-skills">
             <li class="about-skill" data-skill="python">
@@ -212,23 +238,37 @@
         </section>
 
         <!-- Developer stats dashboard -->
-        <section class="about-glass about-stats reveal" data-reveal aria-labelledby="stats-heading">
-          <h2 id="stats-heading" class="about-section-title">Developer Stats</h2>
+        <section
+          class="about-glass about-stats reveal"
+          data-reveal
+          aria-labelledby="stats-heading"
+        >
+          <h2 id="stats-heading" class="about-section-title">
+            Developer Stats
+          </h2>
           <div class="about-stats__grid">
             <div class="about-stat">
-              <span class="about-stat__value" data-count="15" data-suffix="+">0</span>
+              <span class="about-stat__value" data-count="15" data-suffix="+"
+                >0</span
+              >
               <span class="about-stat__label">Projects</span>
             </div>
             <div class="about-stat">
-              <span class="about-stat__value" data-count="5" data-suffix="">0</span>
+              <span class="about-stat__value" data-count="5" data-suffix=""
+                >0</span
+              >
               <span class="about-stat__label">Languages</span>
             </div>
             <div class="about-stat">
-              <span class="about-stat__value" data-count="500" data-suffix="+">0</span>
+              <span class="about-stat__value" data-count="500" data-suffix="+"
+                >0</span
+              >
               <span class="about-stat__label">Commits</span>
             </div>
             <div class="about-stat">
-              <span class="about-stat__value" data-count="2" data-suffix="">0</span>
+              <span class="about-stat__value" data-count="2" data-suffix=""
+                >0</span
+              >
               <span class="about-stat__label">Semesters</span>
             </div>
           </div>
