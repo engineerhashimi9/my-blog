@@ -140,8 +140,8 @@ def ensure_author():
     return author
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 @app.context_processor
