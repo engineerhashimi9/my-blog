@@ -69,6 +69,10 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro')
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URl")
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_pre_ping": True,
+    "pool_recycle": 280
+}
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -155,13 +159,18 @@ def sitemap():
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
 
 
+@app.teardown_appcontext
+def cleanup(exception=None):
+    db.session.remove()
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
     form = RegisterForm()
     if request.method == "POST":
         if form.validate_on_submit():
-      
+
             with app.app_context():
                 user = Users.query.filter_by(email=form.email.data).first()
                 if not user:
