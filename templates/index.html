@@ -1,30 +1,510 @@
 {% include "header.html" %}
 
-<section class="hero-modern">
-  <div
-    class="hero-bg"
-    style="
-      background-image: url(&quot;https://images.unsplash.com/photo-1719255416519-7c89f3547cf5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fHB5dGhvbiUyMGRldmVsb3BlcnxlbnwwfHwwfHx8MA%3D%3D&quot;);
-    "
-  ></div>
+<style>
+  /* ==========================================================================
+     Homepage Scoped Dark Glassmorphic Design
+     ========================================================================== */
+  .hero-modern-enhanced {
+    position: relative;
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 7rem 0 4.5rem;
+    background: var(--hb-bg);
+  }
+
+  .hero-mesh-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .hero-mesh-canvas::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  .hero-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.45;
+    animation: orbFloatAnim 16s ease-in-out infinite alternate;
+  }
+
+  .hero-glow-orb--1 {
+    width: 480px;
+    height: 480px;
+    background: #6366f1;
+    top: -15%;
+    left: -10%;
+  }
+
+  .hero-glow-orb--2 {
+    width: 380px;
+    height: 380px;
+    background: #06b6d4;
+    bottom: -10%;
+    right: -5%;
+    animation-delay: -5s;
+  }
+
+  .hero-glow-orb--3 {
+    width: 320px;
+    height: 320px;
+    background: #8b5cf6;
+    top: 30%;
+    left: 45%;
+    animation-delay: -9s;
+  }
+
+  @keyframes orbFloatAnim {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(35px, -25px) scale(1.08); }
+    100% { transform: translate(-20px, 20px) scale(0.96); }
+  }
+
+  html.theme-light .hero-glow-orb {
+    opacity: 0.2;
+  }
+
+  .hero-content-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .hero-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    color: #a5b4fc;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    backdrop-filter: blur(12px);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #06b6d4;
+    box-shadow: 0 0 10px #06b6d4;
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .hero-title-main {
+    font-family: var(--hb-font-display);
+    font-size: clamp(2.75rem, 6.5vw, 4.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  html.theme-light .hero-title-main {
+    background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle-text {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--hb-muted);
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .hero-stats-grid {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .hero-stat-card {
+    background: rgba(30, 30, 46, 0.6);
+    border: 1px solid var(--hb-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 1rem;
+    padding: 1rem 1.6rem;
+    min-width: 140px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  html.theme-light .hero-stat-card {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .hero-stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 12px 28px rgba(6, 182, 212, 0.15);
+  }
+
+  .hero-stat-card strong {
+    display: block;
+    font-family: "JetBrains Mono", var(--hb-font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: var(--hb-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+  }
+
+  .hero-stat-card span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--hb-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Admin bar banner */
+  .admin-bar-glass {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: rgba(30, 30, 46, 0.75);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(16px);
+  }
+
+  html.theme-light .admin-bar-glass {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(99, 102, 241, 0.25);
+  }
+
+  .admin-bar-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--hb-text);
+  }
+
+  /* Glass Cards */
+  .glass-post-card {
+    background: rgba(30, 30, 46, 0.65);
+    border: 1px solid var(--hb-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  html.theme-light .glass-post-card {
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.1);
+  }
+
+  .glass-post-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(99, 102, 241, 0.45);
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+  }
+
+  /* Featured Post Layout */
+  .featured-post-shell {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: rgba(30, 30, 46, 0.7);
+    border: 1px solid var(--hb-border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    margin-bottom: 4.5rem;
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  html.theme-light .featured-post-shell {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .featured-post-shell:hover {
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: 0 25px 55px -12px rgba(6, 182, 212, 0.2);
+  }
+
+  @media (min-width: 992px) {
+    .featured-post-shell {
+      grid-template-columns: 1.25fr 1fr;
+    }
+  }
+
+  .featured-img-wrap {
+    position: relative;
+    min-height: 340px;
+    overflow: hidden;
+  }
+
+  .featured-img-cover {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .featured-post-shell:hover .featured-img-cover {
+    transform: scale(1.05);
+  }
+
+  .featured-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 10, 15, 0.1) 0%, rgba(10, 10, 15, 0.85) 100%);
+  }
+
+  html.theme-light .featured-img-overlay {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(241, 245, 249, 0.85) 100%);
+  }
+
+  .featured-body-wrap {
+    padding: 2.75rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .featured-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    align-self: flex-start;
+    margin-bottom: 1.1rem;
+  }
+
+  .featured-post-title {
+    font-family: var(--hb-font-display);
+    font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
+
+  .featured-post-title a {
+    color: var(--hb-text);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  .featured-post-title a:hover {
+    color: #a5b4fc;
+  }
+
+  .featured-post-desc {
+    color: var(--hb-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-meta-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.84rem;
+    color: var(--hb-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hb-border);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .post-meta-strip .author-highlight {
+    font-weight: 600;
+    color: var(--hb-text);
+  }
+
+  /* Grid Post Cards */
+  .grid-card-media {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .grid-card-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+  }
+
+  .glass-post-card:hover .grid-card-img {
+    transform: scale(1.06);
+  }
+
+  .grid-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 30, 46, 0.95) 0%, rgba(30, 30, 46, 0.2) 60%, transparent 100%);
+  }
+
+  html.theme-light .grid-card-overlay {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.2) 60%, transparent 100%);
+  }
+
+  .grid-card-body {
+    padding: 1.6rem 1.6rem 1.4rem;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: var(--hb-accent);
+  }
+
+  .grid-post-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 0.85rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .grid-post-title a {
+    color: var(--hb-text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .grid-post-title a:hover {
+    color: #a5b4fc;
+  }
+
+  .grid-post-excerpt {
+    color: var(--hb-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Reveal animation baseline */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Empty State */
+  .empty-state-glass {
+    background: rgba(30, 30, 46, 0.6);
+    border: 1px solid var(--hb-border);
+    border-radius: 1.5rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(14px);
+  }
+</style>
+
+<!-- Hero Section with animated gradient mesh and stats -->
+<section class="hero-modern-enhanced">
+  <div class="hero-mesh-canvas" aria-hidden="true">
+    <span class="hero-glow-orb hero-glow-orb--1"></span>
+    <span class="hero-glow-orb hero-glow-orb--2"></span>
+    <span class="hero-glow-orb hero-glow-orb--3"></span>
+  </div>
+
   <div class="container position-relative px-4 px-lg-5">
-    <div class="hero-content">
-      <span class="hero-badge">Software Engineering · 2026</span>
-      <h1>Hashimi's Blog</h1>
-      <p class="hero-subtitle">
-        Thoughts on Python, full-stack development, AI tools, and building
-        software from Kabul to the cloud.
+    <div class="hero-content-wrap">
+      <div class="hero-badge-pill">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        <i class="fas fa-terminal me-1"></i> Software Engineering · 2026
+      </div>
+
+      <h1 class="hero-title-main">Hashimi's Blog</h1>
+
+      <p class="hero-subtitle-text">
+        Thoughts on Python, full-stack development, AI tools, and building software from Kabul to the cloud.
       </p>
-      <div class="hero-stats">
-        <div class="stat-item">
+
+      <div class="hero-stats-grid">
+        <div class="hero-stat-card">
           <strong>{{ all_posts|length }}</strong>
           <span>Articles</span>
         </div>
-        <div class="stat-item">
+        <div class="hero-stat-card">
           <strong>Flask</strong>
           <span>Powered</span>
         </div>
-        <div class="stat-item">
+        <div class="hero-stat-card">
           <strong>Open</strong>
           <span>Source Mindset</span>
         </div>
@@ -33,119 +513,173 @@
   </div>
 </section>
 
-<main class="blog-main">
+<!-- Main Article Feed -->
+<main class="blog-main py-5">
   <div class="container px-4 px-lg-5">
+
+    <!-- Admin Bar -->
     {% if current_user.is_authenticated and current_user.is_author == 1 %}
-    <div class="admin-bar">
+    <div class="admin-bar-glass reveal" data-reveal>
+      <div class="admin-bar-tag">
+        <i class="fas fa-shield-alt text-primary"></i>
+        <span>Author Dashboard &bull; Welcome back, {{ current_user.name }}</span>
+      </div>
       <a class="btn btn-primary" href="{{ url_for('add_new_post') }}">
         <i class="fas fa-plus me-1"></i> Create New Post
       </a>
     </div>
-    {% endif %} {% if all_posts %} {% set featured = all_posts[0] %}
-    <div class="row justify-content-center mb-5">
-      <div class="col-xl-10">
-        <p class="section-label">Latest</p>
-        <h2 class="section-title">Featured Story</h2>
-        <article class="featured-post">
-          <div
-            class="featured-post-image"
-            style="background-image: url('{{ featured.img_url }}')"
-          ></div>
-          <div class="featured-post-content">
-            <span class="featured-label">Just published</span>
-            <h2>
-              <a href="{{ url_for('show_post', post_id=featured.id) }}"
-                >{{ featured.title }}</a
-              >
+    {% endif %}
+
+    {% if all_posts %}
+    {% set featured = all_posts[0] %}
+
+    <!-- Featured Post Section -->
+    <div class="row justify-content-center">
+      <div class="col-xl-11">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <p class="section-label mb-1"><i class="fas fa-bolt me-1"></i> Latest Story</p>
+            <h2 class="section-title mb-0">Featured Post</h2>
+          </div>
+        </div>
+
+        <article class="featured-post-shell reveal" data-reveal>
+          <div class="featured-img-wrap">
+            <div class="featured-img-cover" style="background-image: url('{{ featured.img_url }}');"></div>
+            <div class="featured-img-overlay"></div>
+          </div>
+          <div class="featured-body-wrap">
+            <span class="featured-badge-tag">
+              <i class="fas fa-star me-1"></i> Just Published
+            </span>
+            <h2 class="featured-post-title">
+              <a href="{{ url_for('show_post', post_id=featured.id) }}">{{ featured.title }}</a>
             </h2>
-            <p class="text-muted mb-3">{{ featured.subtitle }}</p>
-            <p class="post-card-meta mb-3 border-0 pt-0">
-              <span
-                >By <span class="author">{{ featured.author.name }}</span> · {{
-                featured.date }}</span
+            <p class="featured-post-desc">{{ featured.subtitle }}</p>
+
+            <div class="post-meta-strip mb-4">
+              <span>By <span class="author-highlight">{{ featured.author.name }}</span> &bull; {{ featured.date }}</span>
+              <span><i class="far fa-eye me-1 text-cyan"></i> Views: {{ featured.views }}</span>
+            </div>
+
+            <div class="d-flex align-items-center flex-wrap gap-3">
+              <a class="btn btn-primary" href="{{ url_for('show_post', post_id=featured.id) }}">
+                Read full article <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+              {% if current_user.is_authenticated and current_user.is_admin == 1 %}
+              <a
+                class="delete-link btn btn-outline-danger btn-sm"
+                href="{{ url_for('delete_post', post_id=featured.id) }}"
+                onclick="return confirm('Are you sure you want to delete this featured post?');"
+                title="Delete post"
               >
-              <span>Views: {{ featured.views }}</span>
-            </p>
-            <a
-              class="btn btn-primary"
-              href="{{ url_for('show_post', post_id=featured.id) }}"
-              >Read full article <i class="fas fa-arrow-right ms-1"></i
-            ></a>
-            {% if current_user.is_authenticated and current_user.is_admin == 1
-            %}
-            <a
-              class="delete-link ms-3"
-              href="{{ url_for('delete_post', post_id=featured.id) }}"
-              title="Delete post"
-              >Delete</a
-            >
-            {% endif %}
+                <i class="fas fa-trash-alt me-1"></i> Delete
+              </a>
+              {% endif %}
+            </div>
           </div>
         </article>
       </div>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="col-xl-10">
-        <p class="section-label">Archive</p>
+    <!-- Post Grid Section -->
+    {% if all_posts|length > 1 %}
+    <div class="row justify-content-center mb-4">
+      <div class="col-xl-11">
+        <p class="section-label mb-1"><i class="fas fa-layer-group me-1"></i> Archive</p>
         <h2 class="section-title">All Posts</h2>
       </div>
     </div>
 
     <div class="row g-4 justify-content-center">
       {% for post in all_posts[1:] %}
-      <div class="col-md-6 col-lg-4">
-        <article class="post-card">
-          <a href="{{ url_for('show_post', post_id=post.id) }}">
-            <div
-              class="post-card-image"
-              style="background-image: url('{{ post.img_url }}')"
-            ></div>
+      <div class="col-md-6 col-lg-4 col-xl-4 d-flex">
+        <article class="glass-post-card w-100 d-flex flex-column reveal" data-reveal>
+          <a href="{{ url_for('show_post', post_id=post.id) }}" class="grid-card-media" aria-label="{{ post.title }}">
+            <div class="grid-card-img" style="background-image: url('{{ post.img_url }}');"></div>
+            <div class="grid-card-overlay"></div>
           </a>
-          <div class="post-card-body">
-            <span class="post-tag">Tech</span>
-            <h2>
-              <a href="{{ url_for('show_post', post_id=post.id) }}"
-                >{{ post.title }}</a
-              >
-            </h2>
-            <p class="post-excerpt">{{ post.subtitle }}</p>
-            <div class="post-card-meta">
-              <span
-                ><span class="author">{{ post.author.name }}</span> · {{
-                post.date }}</span
-              >
-              <span>Views: {{ post.views }}</span>
-              >
-              <a
-                class="btn-read"
-                href="{{ url_for('show_post', post_id=post.id) }}"
-                >Read <i class="fas fa-arrow-right"></i
-              ></a>
+          <div class="grid-card-body d-flex flex-column flex-grow-1">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="category-pill"><i class="fas fa-code me-1"></i> Tech</span>
+              <small class="text-muted"><i class="far fa-eye me-1"></i>{{ post.views }}</small>
             </div>
-            {% if current_user.is_authenticated and current_user.is_admin == 1
-            %}
-            <a
-              class="delete-link"
-              href="{{ url_for('delete_post', post_id=post.id) }}"
-              >Delete post</a
-            >
+            <h3 class="grid-post-title">
+              <a href="{{ url_for('show_post', post_id=post.id) }}">{{ post.title }}</a>
+            </h3>
+            <p class="grid-post-excerpt flex-grow-1">{{ post.subtitle }}</p>
+            <div class="post-meta-strip mt-auto pt-3">
+              <span class="small">
+                <span class="author-highlight">{{ post.author.name }}</span> &bull; {{ post.date }}
+              </span>
+              <a class="btn-read" href="{{ url_for('show_post', post_id=post.id) }}">
+                Read <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            {% if current_user.is_authenticated and current_user.is_admin == 1 %}
+            <div class="pt-2 mt-2 border-top text-end">
+              <a
+                class="delete-link text-danger small text-decoration-none"
+                href="{{ url_for('delete_post', post_id=post.id) }}"
+                onclick="return confirm('Are you sure you want to delete this post?');"
+              >
+                <i class="fas fa-trash-alt me-1"></i> Delete post
+              </a>
+            </div>
             {% endif %}
           </div>
         </article>
       </div>
       {% endfor %}
     </div>
+    {% endif %}
+
     {% else %}
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <p class="text-muted">
-          No posts yet. Check back soon for new articles.
-        </p>
+    <!-- Empty State -->
+    <div class="row justify-content-center py-5">
+      <div class="col-lg-8">
+        <div class="empty-state-glass reveal" data-reveal>
+          <i class="fas fa-feather-alt fa-3x text-primary mb-3"></i>
+          <h3 class="h4 mb-2">No Posts Yet</h3>
+          <p class="text-muted mb-4">
+            New insights, engineering guides, and thoughts are currently in the works. Check back soon!
+          </p>
+          {% if current_user.is_authenticated and current_user.is_author == 1 %}
+          <a class="btn btn-primary" href="{{ url_for('add_new_post') }}">
+            <i class="fas fa-plus me-1"></i> Write the first post
+          </a>
+          {% endif %}
+        </div>
       </div>
     </div>
     {% endif %}
+
   </div>
 </main>
+
+<!-- Scroll Reveal Observer -->
+<script>
+  (function () {
+    const reveals = document.querySelectorAll("[data-reveal]");
+    if (!reveals.length) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      reveals.forEach((el) => observer.observe(el));
+    } else {
+      reveals.forEach((el) => el.classList.add("is-visible"));
+    }
+  })();
+</script>
 
 {% include "footer.html" %}

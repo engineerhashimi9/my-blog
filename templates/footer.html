@@ -1,42 +1,344 @@
     <footer class="site-footer">
-      <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-          <div class="col-md-10 col-lg-8 col-xl-7">
-            <ul class="list-inline text-center mb-3">
-              <li class="list-inline-item">
-                <a
-                  href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="LinkedIn"
-                >
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href="https://github.com/engineerhashimi9/"
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="GitHub"
-                >
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-            </ul>
-            <p class="text-center copyright mb-0">
-              &copy; {{ now_year }} Hashimi Blog — Built with Flask
+      <div class="footer-gradient-divider"></div>
+      <div class="container px-4 px-lg-5 py-5">
+        <div class="row g-4 justify-content-between align-items-start">
+          <!-- Column 1: Brand + Description -->
+          <div class="col-12 col-md-5 col-lg-4 mb-4 mb-md-0">
+            <div class="footer-brand mb-3">
+              <span class="brand-bracket">&lt;</span><span class="brand-name">Hashimi</span><span class="brand-bracket">/&gt;</span>
+              <span class="brand-badge">Blog</span>
+            </div>
+            <p class="footer-desc text-muted mb-3">
+              Exploring modern web development, Python, Flask, Django, and software engineering architecture. Crafted with focus on high performance and clean code.
             </p>
+            <div class="footer-author-meta">
+              <span class="status-indicator"></span>
+              <span class="author-status text-muted">Sayed Mohammad Hashimi &bull; Kabul, Afghanistan</span>
+            </div>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div class="col-6 col-md-3 col-lg-3">
+            <h5 class="footer-heading mb-3">Quick Navigation</h5>
+            <ul class="footer-links list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="{{ url_for('get_all_posts') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>Home
+                </a>
+              </li>
+              <li class="mb-2">
+                <a href="{{ url_for('about') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>About Me
+                </a>
+              </li>
+              <li class="mb-2">
+                <a href="{{ url_for('contact') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>Get in Touch
+                </a>
+              </li>
+              {% if current_user.is_authenticated %}
+              <li class="mb-2">
+                <a href="{{ url_for('logout') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>Log Out ({{ current_user.name|title }})
+                </a>
+              </li>
+              {% else %}
+              <li class="mb-2">
+                <a href="{{ url_for('login') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>Login
+                </a>
+              </li>
+              <li class="mb-2">
+                <a href="{{ url_for('register') }}" class="footer-link">
+                  <i class="fas fa-chevron-right me-2 link-arrow"></i>Register
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+
+          <!-- Column 3: Connect & Socials -->
+          <div class="col-6 col-md-4 col-lg-4">
+            <h5 class="footer-heading mb-3">Connect</h5>
+            <p class="text-muted small mb-3">
+              Follow my latest projects, technical articles, and open-source contributions.
+            </p>
+            <div class="footer-social-group d-flex gap-2 mb-3">
+              <a
+                href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
+                target="_blank"
+                rel="noopener"
+                class="social-btn social-btn-linkedin"
+                aria-label="LinkedIn Profile"
+                title="Connect on LinkedIn"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a
+                href="https://github.com/engineerhashimi9/"
+                target="_blank"
+                rel="noopener"
+                class="social-btn social-btn-github"
+                aria-label="GitHub Profile"
+                title="Explore GitHub Repositories"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="mailto:engineerhashimi9@gmail.com"
+                class="social-btn social-btn-email"
+                aria-label="Send Email"
+                title="Send an Email"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+            <div class="footer-badge-tag">
+              <i class="fas fa-shield-alt text-primary me-1"></i> Production Ready
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Copyright Row -->
+        <div class="footer-bottom mt-5 pt-4 border-top border-opacity-10 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+          <p class="copyright mb-0 text-muted small">
+            &copy; {{ now_year }} Hashimi Blog &mdash; Built with Flask &#10084;&#65039;
+          </p>
+          <div class="footer-built-with small text-muted">
+            Designed with <span class="text-accent">Precision</span> &amp; Glassmorphism
           </div>
         </div>
       </div>
     </footer>
+
+    <!-- Floating Scroll-To-Top Button -->
+    <button
+      id="scrollToTopBtn"
+      class="scroll-to-top"
+      type="button"
+      aria-label="Scroll back to top"
+      title="Back to top"
+    >
+      <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <style>
+      /* Footer Styles */
+      .site-footer {
+        position: relative;
+        background: var(--hb-surface, #1e1e2e);
+        color: var(--hb-body-text, #cbd5e1);
+        margin-top: 4rem;
+        overflow: hidden;
+      }
+
+      html.theme-light .site-footer {
+        background: #ffffff;
+        box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .footer-gradient-divider {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #6366f1, #06b6d4, #8b5cf6);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+      }
+
+      .footer-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-size: 1.35rem;
+        font-weight: 700;
+      }
+
+      .footer-desc {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--hb-muted, #94a3b8) !important;
+        max-width: 320px;
+      }
+
+      .footer-author-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #10b981;
+        box-shadow: 0 0 8px #10b981;
+      }
+
+      .footer-heading {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--hb-text, #f1f5f9);
+      }
+
+      html.theme-light .footer-heading {
+        color: #0f172a;
+      }
+
+      .footer-links .footer-link {
+        display: inline-flex;
+        align-items: center;
+        color: var(--hb-muted, #94a3b8);
+        text-decoration: none;
+        font-size: 0.88rem;
+        transition: color 0.2s ease, transform 0.2s ease;
+      }
+
+      .footer-links .link-arrow {
+        font-size: 0.65rem;
+        color: var(--hb-accent, #06b6d4);
+        opacity: 0.7;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .footer-links .footer-link:hover {
+        color: var(--hb-text, #f1f5f9);
+        transform: translateX(4px);
+      }
+
+      html.theme-light .footer-links .footer-link:hover {
+        color: #0f172a;
+      }
+
+      .footer-links .footer-link:hover .link-arrow {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+
+      /* Social Buttons */
+      .social-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.7rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--hb-border, rgba(148, 163, 184, 0.15));
+        color: var(--hb-text, #f1f5f9);
+        font-size: 1.05rem;
+        text-decoration: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      html.theme-light .social-btn {
+        background: rgba(15, 23, 42, 0.04);
+        color: #334155;
+      }
+
+      .social-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .social-btn-linkedin:hover {
+        background: #0077b5;
+        border-color: #0077b5;
+        color: #ffffff;
+        box-shadow: 0 8px 18px rgba(0, 119, 181, 0.35);
+      }
+
+      .social-btn-github:hover {
+        background: #24292e;
+        border-color: #444d56;
+        color: #ffffff;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+      }
+
+      .social-btn-email:hover {
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        border-color: transparent;
+        color: #ffffff;
+        box-shadow: 0 8px 18px rgba(99, 102, 241, 0.4);
+      }
+
+      .footer-badge-tag {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        color: #a5b4fc;
+      }
+
+      .text-accent {
+        color: var(--hb-accent, #06b6d4);
+        font-weight: 600;
+      }
+
+      /* Scroll To Top Button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 2.85rem;
+        height: 2.85rem;
+        border-radius: 50%;
+        background: rgba(30, 30, 46, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: var(--hb-text, #f1f5f9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(15px);
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        z-index: 1020;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      html.theme-light .scroll-to-top {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(99, 102, 241, 0.25);
+        color: #1e1e2e;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      }
+
+      .scroll-to-top.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .scroll-to-top:hover {
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        color: #ffffff;
+        border-color: transparent;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        transform: translateY(-3px);
+      }
+
+      .scroll-to-top i {
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 576px) {
+        .scroll-to-top {
+          bottom: 1.25rem;
+          right: 1.25rem;
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>

@@ -20,6 +20,8 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>Hashimi Blog | Sayed Mohammad Hashimi</title>
+
+    <!-- Early theme detection to prevent flash of unstyled theme -->
     <script>
       (function () {
         try {
@@ -32,6 +34,7 @@
         } catch (e) {}
       })();
     </script>
+
     {% block styles %}
     {{ bootstrap.load_css() }}
     <link
@@ -46,7 +49,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -58,18 +61,277 @@
       rel="stylesheet"
     />
     {% endblock %}
+
+    <style>
+      /* Reading progress bar */
+      .reading-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: linear-gradient(90deg, #6366f1, #06b6d4, #8b5cf6);
+        z-index: 2000;
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
+        transition: width 0.08s ease-out;
+        pointer-events: none;
+      }
+
+      /* Background particle canvas */
+      .particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.6;
+        transition: opacity 0.4s ease;
+      }
+      html.theme-light .particle-canvas {
+        opacity: 0.35;
+      }
+
+      /* Make sure main content is rendered above particle canvas */
+      #mainNav, header, main, section, footer, .blog-main, .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Premium Glassmorphic Navbar */
+      #mainNav.navbar {
+        background: rgba(10, 10, 15, 0.75);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 0.85rem 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1030;
+      }
+
+      html.theme-light #mainNav.navbar {
+        background: rgba(241, 245, 249, 0.82);
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      }
+
+      #mainNav.navbar.is-scrolled,
+      #mainNav.navbar.is-fixed {
+        background: rgba(10, 10, 15, 0.92);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(99, 102, 241, 0.15);
+        padding: 0.6rem 0;
+      }
+
+      html.theme-light #mainNav.navbar.is-scrolled,
+      html.theme-light #mainNav.navbar.is-fixed {
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+      }
+
+      /* Brand logo styling */
+      .navbar-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+      }
+
+      .navbar-brand:hover {
+        transform: translateY(-1px);
+      }
+
+      .brand-bracket {
+        font-family: 'JetBrains Mono', monospace;
+        color: #06b6d4;
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+      }
+
+      .navbar-brand:hover .brand-bracket {
+        color: #6366f1;
+        text-shadow: 0 0 14px rgba(99, 102, 241, 0.8);
+      }
+
+      .brand-name {
+        background: linear-gradient(135deg, #f1f5f9 20%, #cbd5e1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      html.theme-light .brand-name {
+        background: linear-gradient(135deg, #0f172a 20%, #334155 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .brand-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 0.15rem 0.55rem;
+        margin-left: 0.35rem;
+        border-radius: 999px;
+        background: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+      }
+
+      html.theme-light .brand-badge {
+        background: rgba(99, 102, 241, 0.1);
+        color: #4f46e5;
+        border-color: rgba(99, 102, 241, 0.25);
+      }
+
+      /* Nav links */
+      .navbar-nav .nav-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-nav .nav-link {
+        position: relative;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: var(--hb-muted, #94a3b8) !important;
+        padding: 0.5rem 0.9rem !important;
+        border-radius: 0.5rem;
+        transition: color 0.25s ease, background-color 0.25s ease;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: var(--hb-text, #f1f5f9) !important;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      html.theme-light .navbar-nav .nav-link:hover {
+        background: rgba(15, 23, 42, 0.04);
+        color: #0f172a !important;
+      }
+
+      .navbar-nav .nav-link.active,
+      .navbar-nav .nav-link[aria-current="page"] {
+        color: #f1f5f9 !important;
+        font-weight: 600;
+      }
+
+      html.theme-light .navbar-nav .nav-link.active {
+        color: #0f172a !important;
+      }
+
+      .navbar-nav .nav-link.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0.15rem;
+        left: 0.9rem;
+        right: 0.9rem;
+        height: 2px;
+        background: linear-gradient(90deg, #6366f1, #06b6d4);
+        border-radius: 999px;
+        box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+      }
+
+      /* Mobile Hamburger Menu */
+      .custom-toggler {
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: rgba(30, 30, 46, 0.6);
+        padding: 0.45rem 0.65rem;
+        border-radius: 0.6rem;
+        color: var(--hb-text, #f1f5f9);
+        transition: all 0.25s ease;
+      }
+
+      .custom-toggler:hover,
+      .custom-toggler:focus {
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+        outline: none;
+      }
+
+      .custom-toggler i {
+        font-size: 1.1rem;
+        transition: transform 0.2s ease;
+      }
+
+      .custom-toggler[aria-expanded="true"] i {
+        transform: rotate(90deg);
+      }
+
+      @media (max-width: 991.98px) {
+        .navbar-collapse {
+          background: rgba(15, 15, 25, 0.96);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(148, 163, 184, 0.15);
+          border-radius: 1rem;
+          margin-top: 0.85rem;
+          padding: 1.25rem 1rem;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        html.theme-light .navbar-collapse {
+          background: rgba(255, 255, 255, 0.98);
+          border-color: rgba(15, 23, 42, 0.1);
+          box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+        }
+
+        .navbar-nav .nav-link {
+          padding: 0.65rem 1rem !important;
+        }
+
+        .navbar-nav .nav-link.active::after {
+          left: 1rem;
+          right: auto;
+          width: 24px;
+        }
+      }
+    </style>
   </head>
   <body class="modern-blog">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <!-- Top reading progress bar -->
+    <div
+      id="readingProgress"
+      class="reading-progress-bar"
+      role="progressbar"
+      aria-label="Reading Progress"
+      aria-valuenow="0"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    ></div>
+
+    <!-- Background interactive particle canvas -->
+    <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
       <div class="container px-4 px-lg-5">
         {% if current_user.is_authenticated %}
-        <a class="navbar-brand" href="/">{{ current_user.name|title }}'s Blog</a>
+        <a class="navbar-brand" href="/" title="{{ current_user.name|title }}'s Blog">
+          <span class="brand-bracket">&lt;</span><span class="brand-name">{{ current_user.name|title }}</span><span class="brand-bracket">/&gt;</span>
+          <span class="brand-badge">Blog</span>
+        </a>
         {% else %}
-        <a class="navbar-brand" href="/">Hashimi's Blog</a>
+        <a class="navbar-brand" href="/" title="Hashimi's Blog">
+          <span class="brand-bracket">&lt;</span><span class="brand-name">Hashimi</span><span class="brand-bracket">/&gt;</span>
+          <span class="brand-badge">Blog</span>
+        </a>
         {% endif %}
 
         <button
-          class="navbar-toggler"
+          class="navbar-toggler custom-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarResponsive"
@@ -79,11 +341,12 @@
         >
           <i class="fas fa-bars"></i>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ms-auto py-4 py-lg-0">
+          <ul class="navbar-nav ms-auto py-2 py-lg-0 align-items-lg-center">
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('get_all_posts') }}"
                 >Home</a
               >
@@ -91,7 +354,7 @@
             {% if current_user.is_authenticated %}
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('logout') }}"
                 >Log Out</a
               >
@@ -99,14 +362,14 @@
             {% else %}
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('login') }}"
                 >Login</a
               >
             </li>
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('register') }}"
                 >Register</a
               >
@@ -114,19 +377,19 @@
             {% endif %}
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('about') }}"
                 >About</a
               >
             </li>
             <li class="nav-item">
               <a
-                class="nav-link px-lg-3 py-3 py-lg-4"
+                class="nav-link"
                 href="{{ url_for('contact') }}"
                 >Contact</a
               >
             </li>
-            <li class="nav-item d-flex align-items-center">
+            <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
               <button
                 class="theme-toggle"
                 id="themeToggle"
