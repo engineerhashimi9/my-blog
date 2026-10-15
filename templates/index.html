@@ -2,17 +2,124 @@
 
 <style>
   /* ==========================================================================
-     Homepage Scoped Dark Glassmorphic Design
+     Portfolio & Blog Theme — Scoped Styles (Dark/Light Responsive)
      ========================================================================== */
-  .hero-modern-enhanced {
+
+  :root {
+    --port-violet: #7c3aed;
+    --port-violet-light: #9061f9;
+    --port-violet-glow: rgba(124, 58, 237, 0.45);
+    --port-cyan: #06b6d4;
+    --port-cyan-glow: rgba(6, 182, 212, 0.45);
+    --port-emerald: #10b981;
+    --port-emerald-glow: rgba(16, 185, 129, 0.45);
+    --port-surface: rgba(18, 18, 38, 0.72);
+    --port-surface-card: rgba(18, 18, 38, 0.65);
+    --port-surface-hover: rgba(26, 26, 54, 0.9);
+    --port-border: rgba(148, 163, 184, 0.12);
+    --port-border-hover: rgba(124, 58, 237, 0.45);
+    --port-text: #f8fafc;
+    --port-text-muted: #94a3b8;
+    --port-text-subtle: #64748b;
+  }
+
+  html.theme-light {
+    --port-surface: rgba(255, 255, 255, 0.88);
+    --port-surface-card: rgba(255, 255, 255, 0.92);
+    --port-surface-hover: rgba(255, 255, 255, 1);
+    --port-border: rgba(15, 23, 42, 0.08);
+    --port-border-hover: rgba(124, 58, 237, 0.35);
+    --port-text: #0f172a;
+    --port-text-muted: #475569;
+    --port-text-subtle: #64748b;
+  }
+
+  /* Text Gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 40%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  html.theme-light .text-gradient-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #64748b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section Headers with Tag lines */
+  .section-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .section-tag-line {
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: #7c3aed;
+    border-radius: 2px;
+  }
+
+  .section-tag-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #7c3aed;
+  }
+
+  html.theme-light .section-tag-text {
+    color: #6d28d9;
+  }
+
+  .section-heading-lg {
+    font-family: var(--hb-font-display, "Playfair Display", serif);
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 800;
+    color: var(--port-text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-subtitle-text {
+    font-size: 1.05rem;
+    color: var(--port-text-muted);
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  /* ==========================================================================
+     1. HERO SECTION
+     ========================================================================== */
+  .hero-portfolio {
     position: relative;
-    min-height: 75vh;
+    min-height: 94vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 7rem 0 4.5rem;
-    background: var(--hb-bg);
+    padding: 8rem 0 5rem;
+    background: var(--hb-bg, #050510);
   }
 
   .hero-mesh-canvas {
@@ -28,173 +135,820 @@
     position: absolute;
     inset: 0;
     background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: 0.7;
+    background-size: 32px 32px;
+    opacity: 0.75;
     z-index: 1;
   }
 
+  /* Floating glow orbs */
   .hero-glow-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(90px);
+    filter: blur(100px);
     opacity: 0.45;
-    animation: orbFloatAnim 16s ease-in-out infinite alternate;
+    animation: orbFloatAnim 18s ease-in-out infinite alternate;
   }
 
   .hero-glow-orb--1 {
-    width: 480px;
-    height: 480px;
-    background: #6366f1;
+    width: 520px;
+    height: 520px;
+    background: #7c3aed;
     top: -15%;
     left: -10%;
   }
 
   .hero-glow-orb--2 {
-    width: 380px;
-    height: 380px;
+    width: 440px;
+    height: 440px;
     background: #06b6d4;
-    bottom: -10%;
-    right: -5%;
-    animation-delay: -5s;
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -6s;
   }
 
   .hero-glow-orb--3 {
-    width: 320px;
-    height: 320px;
-    background: #8b5cf6;
-    top: 30%;
-    left: 45%;
-    animation-delay: -9s;
+    width: 360px;
+    height: 360px;
+    background: #ec4899;
+    top: 35%;
+    left: 55%;
+    opacity: 0.25;
+    animation-delay: -11s;
   }
 
   @keyframes orbFloatAnim {
     0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(35px, -25px) scale(1.08); }
-    100% { transform: translate(-20px, 20px) scale(0.96); }
+    50% { transform: translate(45px, -35px) scale(1.08); }
+    100% { transform: translate(-30px, 30px) scale(0.94); }
   }
 
   html.theme-light .hero-glow-orb {
     opacity: 0.2;
   }
 
+  /* Fade masks */
+  .hero-edge-mask-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    background: linear-gradient(to top, var(--hb-bg, #050510) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
   .hero-content-wrap {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     text-align: center;
     max-width: 860px;
     margin: 0 auto;
   }
 
-  .hero-badge-pill {
+  /* Status badge: Available for new projects */
+  .hero-status-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1.1rem;
-    border-radius: 999px;
+    gap: 0.6rem;
+    padding: 0.45rem 1.15rem;
+    border-radius: 9999px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
     font-size: 0.78rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.35);
-    color: #a5b4fc;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    letter-spacing: 0.02em;
     backdrop-filter: blur(12px);
-    margin-bottom: 1.5rem;
+    -webkit-backdrop-filter: blur(12px);
+    margin-bottom: 1.75rem;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
   }
 
-  .hero-badge-dot {
+  .status-ping-wrap {
+    position: relative;
+    display: flex;
+    width: 8px;
+    height: 8px;
+  }
+
+  .status-ping {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: #10b981;
+    opacity: 0.75;
+    animation: pingAnim 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .status-dot {
+    position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #06b6d4;
-    box-shadow: 0 0 10px #06b6d4;
-    animation: badgePulse 2s ease-in-out infinite;
+    background-color: #10b981;
   }
 
-  @keyframes badgePulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
+  @keyframes pingAnim {
+    75%, 100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
   }
 
-  .hero-title-main {
-    font-family: var(--hb-font-display);
-    font-size: clamp(2.75rem, 6.5vw, 4.75rem);
+  /* Hero Greeting */
+  .hero-greeting {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    color: var(--port-text-muted);
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-greeting-name {
+    color: var(--port-text);
+    font-weight: 700;
+  }
+
+  .wave-emoji {
+    display: inline-block;
+    animation: waveAnim 2.2s infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes waveAnim {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  /* Hero Main Headline */
+  .hero-main-title {
+    font-family: var(--hb-font-display, "Playfair Display", serif);
+    font-size: clamp(2.5rem, 6.2vw, 4.6rem);
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 1.25rem;
     letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-bottom: 1.5rem;
   }
 
-  html.theme-light .hero-title-main {
-    background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #64748b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-subtitle-text {
+  .hero-description {
     font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: var(--hb-muted);
+    color: var(--port-text-muted);
     max-width: 680px;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 2.25rem;
     line-height: 1.7;
     font-weight: 400;
   }
 
-  .hero-stats-grid {
+  /* Hero CTA Buttons */
+  .hero-actions {
     display: flex;
-    gap: 1.25rem;
+    align-items: center;
     justify-content: center;
+    gap: 1rem;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-bottom: 2.5rem;
   }
 
-  .hero-stat-card {
-    background: rgba(30, 30, 46, 0.6);
-    border: 1px solid var(--hb-border);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-radius: 1rem;
-    padding: 1rem 1.6rem;
-    min-width: 140px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  html.theme-light .hero-stat-card {
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  }
-
-  .hero-stat-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(6, 182, 212, 0.4);
-    box-shadow: 0 12px 28px rgba(6, 182, 212, 0.15);
-  }
-
-  .hero-stat-card strong {
-    display: block;
-    font-family: "JetBrains Mono", var(--hb-font-display);
-    font-size: 1.75rem;
-    font-weight: 700;
-    background: var(--hb-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2;
-  }
-
-  .hero-stat-card span {
-    font-size: 0.75rem;
+  .btn-port-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.85rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--hb-muted);
+    border-radius: 0.75rem;
+    color: #ffffff !important;
+    background: #7c3aed;
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-port-primary:hover {
+    background: #6d28d9;
+    box-shadow: 0 0 35px rgba(124, 58, 237, 0.65);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+  }
+
+  .btn-port-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.85rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    color: var(--port-text) !important;
+    background: rgba(18, 18, 38, 0.6);
+    border: 1px solid var(--port-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html.theme-light .btn-port-glass {
+    background: rgba(255, 255, 255, 0.85);
+    color: #0f172a !important;
+  }
+
+  .btn-port-glass:hover {
+    background: rgba(26, 26, 54, 0.9);
+    border-color: rgba(124, 58, 237, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+  }
+
+  html.theme-light .btn-port-glass:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  }
+
+  /* Location and Social Links Row */
+  .hero-meta-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    font-size: 0.84rem;
+    color: var(--port-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .hero-location-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--port-text-muted);
+  }
+
+  .hero-meta-divider {
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background: var(--port-border);
+  }
+
+  .hero-social-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .hero-social-link {
+    color: var(--port-text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .hero-social-link:hover {
+    color: #7c3aed;
+    transform: translateY(-1px);
+  }
+
+  /* Built with Tech Badges */
+  .hero-tech-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  .hero-tech-label {
+    color: var(--port-text-subtle);
+    margin-right: 0.25rem;
+  }
+
+  .tech-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.74rem;
+    font-weight: 500;
+    background: rgba(26, 26, 54, 0.6);
+    border: 1px solid var(--port-border);
+    color: var(--port-text-muted);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+  }
+
+  html.theme-light .tech-badge-pill {
+    background: rgba(241, 245, 249, 0.85);
+  }
+
+  .tech-badge-pill:hover {
+    border-color: rgba(124, 58, 237, 0.4);
+    color: var(--port-text);
+    transform: translateY(-2px);
+  }
+
+  /* Scroll Indicator */
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero-scroll-text {
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.2em;
+    color: var(--port-text-subtle);
+    font-weight: 600;
+  }
+
+  .hero-scroll-mouse {
+    width: 20px;
+    height: 34px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--port-border);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+  }
+
+  .hero-scroll-dot {
+    width: 4px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #7c3aed;
+    animation: mouseScrollDot 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes mouseScrollDot {
+    0% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(12px); opacity: 0.4; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ==========================================================================
+     2. STATS BAR SECTION
+     ========================================================================== */
+  .stats-bar-section {
+    position: relative;
+    padding: 3.5rem 0;
+    overflow: hidden;
+    background: var(--hb-bg, #050510);
+  }
+
+  .stats-divider-top,
+  .stats-divider-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5) 50%, transparent);
+  }
+
+  .stats-divider-top { top: 0; }
+  .stats-divider-bottom {
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.5) 50%, transparent);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  @media (min-width: 992px) {
+    .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .stat-card-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem;
+  }
+
+  .stat-number-wrap {
+    font-family: var(--hb-font-mono, "JetBrains Mono", monospace);
+    font-size: clamp(2.3rem, 4.5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .stat-label-text {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--port-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ==========================================================================
+     3. ABOUT ME SECTION
+     ========================================================================== */
+  .about-me-section {
+    position: relative;
+    padding: 6.5rem 0;
+    background: rgba(18, 18, 38, 0.35);
+  }
+
+  html.theme-light .about-me-section {
+    background: rgba(241, 245, 249, 0.5);
+  }
+
+  .about-bio-text {
+    font-size: 1.05rem;
+    color: var(--port-text-muted);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-bio-text strong {
+    color: var(--port-text);
+  }
+
+  .highlight-violet {
+    color: #9061f9;
+    font-weight: 600;
+  }
+
+  .highlight-cyan {
+    color: #06b6d4;
+    font-weight: 600;
+  }
+
+  /* 3 Mini Focus Cards */
+  .focus-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 576px) {
+    .focus-cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .focus-mini-card {
+    position: relative;
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .focus-mini-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--port-border-hover);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  .focus-card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  .icon-violet {
+    background: rgba(124, 58, 237, 0.12);
+    color: #9061f9;
+    border: 1px solid rgba(124, 58, 237, 0.25);
+  }
+
+  .icon-blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+  }
+
+  .icon-cyan {
+    background: rgba(6, 182, 212, 0.12);
+    color: #06b6d4;
+    border: 1px solid rgba(6, 182, 212, 0.25);
+  }
+
+  .focus-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--port-text);
+    margin-bottom: 0.35rem;
+  }
+
+  .focus-card-desc {
+    font-size: 0.78rem;
+    color: var(--port-text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Skill Bars Glass Card */
+  .skills-card-shell {
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1.25rem;
+    padding: 2.25rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  }
+
+  html.theme-light .skills-card-shell {
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+  }
+
+  .skills-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--port-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-item {
+    margin-bottom: 1.35rem;
+  }
+
+  .skill-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .skill-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .skill-name {
+    font-weight: 600;
+    color: var(--port-text);
+  }
+
+  .skill-percent {
+    font-family: var(--hb-font-mono, monospace);
+    color: var(--port-text-muted);
+    font-size: 0.78rem;
+  }
+
+  .skill-track {
+    width: 100%;
+    height: 7px;
+    border-radius: 9999px;
+    background: rgba(148, 163, 184, 0.12);
+    overflow: hidden;
+  }
+
+  .skill-progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    transition: width 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .skill-fill-cyan {
+    background: linear-gradient(90deg, #06b6d4, #10b981);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  }
+
+  /* ==========================================================================
+     4. FEATURED PROJECTS SECTION
+     ========================================================================== */
+  .projects-section {
+    position: relative;
+    padding: 6.5rem 0;
+    background: var(--hb-bg, #050510);
+  }
+
+  .project-card-glass {
+    position: relative;
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .project-card-glass:hover {
+    transform: translateY(-8px);
+    border-color: var(--port-border-hover);
+    box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.2);
+  }
+
+  /* Project Card Top Gradient Banner */
+  .project-banner-header {
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .project-watermark-num {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-family: var(--hb-font-mono, monospace);
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.08);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  html.theme-light .project-watermark-num {
+    color: rgba(15, 23, 42, 0.08);
+  }
+
+  .project-star-badge {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #fbbf24;
+    font-size: 0.72rem;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+
+  /* Specific Gradient Banners */
+  .banner-grad-1 {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%);
+  }
+  .banner-grad-2 {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%);
+  }
+  .banner-grad-3 {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(16, 185, 129, 0.25) 100%);
+  }
+  .banner-grad-4 {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(124, 58, 237, 0.25) 100%);
+  }
+  .banner-grad-5 {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.25) 0%, rgba(236, 72, 153, 0.25) 100%);
+  }
+  .banner-grad-6 {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%);
+  }
+
+  /* Card Body */
+  .project-card-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--port-text);
+    margin-bottom: 0.65rem;
+    transition: color 0.2s ease;
+  }
+
+  .project-card-glass:hover .project-title {
+    color: #9061f9;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--port-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .project-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tech-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.22rem 0.65rem;
+    border-radius: 9999px;
+    background: rgba(148, 163, 184, 0.08);
+    border: 1px solid var(--port-border);
+    color: var(--port-text-muted);
+  }
+
+  html.theme-light .project-tech-tag {
+    background: rgba(15, 23, 42, 0.04);
+  }
+
+  .project-links-strip {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--port-border);
+  }
+
+  .project-link-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--port-text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .project-link-item:hover {
+    color: #7c3aed;
+    transform: translateX(2px);
+  }
+
+  .btn-all-projects {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.75rem;
+    background: transparent;
+    color: #7c3aed;
+    border: 1.5px solid rgba(124, 58, 237, 0.4);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .btn-all-projects:hover {
+    background: rgba(124, 58, 237, 0.1);
+    border-color: #7c3aed;
+    color: #9061f9;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* ==========================================================================
+     5. LATEST BLOG POSTS SECTION
+     ========================================================================== */
+  .blog-posts-section {
+    position: relative;
+    padding: 6.5rem 0;
+    background: rgba(18, 18, 38, 0.35);
+  }
+
+  html.theme-light .blog-posts-section {
+    background: rgba(241, 245, 249, 0.5);
   }
 
   /* Admin bar banner */
@@ -204,88 +958,47 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 1rem;
-    background: rgba(30, 30, 46, 0.75);
-    border: 1px solid rgba(99, 102, 241, 0.35);
-    border-radius: 1rem;
-    padding: 1rem 1.5rem;
+    background: var(--port-surface-card);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    border-radius: 1.1rem;
+    padding: 1.1rem 1.6rem;
     margin-bottom: 3.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(16px);
   }
 
-  html.theme-light .admin-bar-glass {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(99, 102, 241, 0.25);
-  }
-
-  .admin-bar-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--hb-text);
-  }
-
-  /* Glass Cards */
-  .glass-post-card {
-    background: rgba(30, 30, 46, 0.65);
-    border: 1px solid var(--hb-border);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 1.25rem;
-    overflow: hidden;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
-  }
-
-  html.theme-light .glass-post-card {
-    background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.1);
-  }
-
-  .glass-post-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
-  }
-
   /* Featured Post Layout */
-  .featured-post-shell {
+  .featured-post-card {
     display: grid;
     grid-template-columns: 1fr;
-    background: rgba(30, 30, 46, 0.7);
-    border: 1px solid var(--hb-border);
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
     border-radius: 1.5rem;
     overflow: hidden;
     backdrop-filter: blur(16px);
-    margin-bottom: 4.5rem;
-    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.4);
+    margin-bottom: 4rem;
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.35);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  html.theme-light .featured-post-shell {
-    background: rgba(255, 255, 255, 0.92);
-  }
-
-  .featured-post-shell:hover {
-    border-color: rgba(6, 182, 212, 0.4);
+  .featured-post-card:hover {
+    border-color: rgba(6, 182, 212, 0.45);
     box-shadow: 0 25px 55px -12px rgba(6, 182, 212, 0.2);
   }
 
   @media (min-width: 992px) {
-    .featured-post-shell {
-      grid-template-columns: 1.25fr 1fr;
+    .featured-post-card {
+      grid-template-columns: 1.2fr 1fr;
     }
   }
 
-  .featured-img-wrap {
+  .featured-img-frame {
     position: relative;
-    min-height: 340px;
+    min-height: 320px;
     overflow: hidden;
   }
 
-  .featured-img-cover {
+  .featured-img-bg {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -293,28 +1006,28 @@
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .featured-post-shell:hover .featured-img-cover {
+  .featured-post-card:hover .featured-img-bg {
     transform: scale(1.05);
   }
 
-  .featured-img-overlay {
+  .featured-img-tint {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10, 10, 15, 0.1) 0%, rgba(10, 10, 15, 0.85) 100%);
+    background: linear-gradient(180deg, rgba(5, 5, 16, 0.15) 0%, rgba(5, 5, 16, 0.85) 100%);
   }
 
-  html.theme-light .featured-img-overlay {
+  html.theme-light .featured-img-tint {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(241, 245, 249, 0.85) 100%);
   }
 
-  .featured-body-wrap {
-    padding: 2.75rem 2.5rem;
+  .featured-content-side {
+    padding: 2.75rem 2.25rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .featured-badge-tag {
+  .featured-pill-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -326,62 +1039,82 @@
     background: rgba(251, 191, 36, 0.12);
     border: 1px solid rgba(251, 191, 36, 0.3);
     padding: 0.3rem 0.8rem;
-    border-radius: 999px;
+    border-radius: 9999px;
     align-self: flex-start;
-    margin-bottom: 1.1rem;
-  }
-
-  .featured-post-title {
-    font-family: var(--hb-font-display);
-    font-size: clamp(1.65rem, 3.2vw, 2.35rem);
-    font-weight: 700;
-    line-height: 1.25;
     margin-bottom: 1rem;
   }
 
-  .featured-post-title a {
-    color: var(--hb-text);
+  .featured-article-title {
+    font-family: var(--hb-font-display, "Playfair Display", serif);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+  }
+
+  .featured-article-title a {
+    color: var(--port-text);
     text-decoration: none;
-    transition: color 0.25s ease;
+    transition: color 0.2s ease;
   }
 
-  .featured-post-title a:hover {
-    color: #a5b4fc;
+  .featured-article-title a:hover {
+    color: #9061f9;
   }
 
-  .featured-post-desc {
-    color: var(--hb-muted);
-    font-size: 1.02rem;
+  .featured-article-desc {
+    color: var(--port-text-muted);
+    font-size: 0.98rem;
     line-height: 1.65;
     margin-bottom: 1.5rem;
   }
 
-  .post-meta-strip {
+  .blog-meta-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.84rem;
-    color: var(--hb-muted);
+    font-size: 0.82rem;
+    color: var(--port-text-muted);
     padding-top: 1.25rem;
-    border-top: 1px solid var(--hb-border);
+    border-top: 1px solid var(--port-border);
     flex-wrap: wrap;
     gap: 0.5rem;
   }
 
-  .post-meta-strip .author-highlight {
+  .author-badge-text {
     font-weight: 600;
-    color: var(--hb-text);
+    color: var(--port-text);
   }
 
-  /* Grid Post Cards */
-  .grid-card-media {
+  /* Regular Post Card Grid */
+  .blog-grid-card {
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-grid-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(124, 58, 237, 0.45);
+    box-shadow: 0 25px 50px -12px rgba(124, 58, 237, 0.2);
+  }
+
+  .blog-card-media {
     position: relative;
-    height: 220px;
+    height: 200px;
     overflow: hidden;
     display: block;
   }
 
-  .grid-card-img {
+  .blog-card-img {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -389,25 +1122,28 @@
     transition: transform 0.5s ease;
   }
 
-  .glass-post-card:hover .grid-card-img {
+  .blog-grid-card:hover .blog-card-img {
     transform: scale(1.06);
   }
 
-  .grid-card-overlay {
+  .blog-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(30, 30, 46, 0.95) 0%, rgba(30, 30, 46, 0.2) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(18, 18, 38, 0.95) 0%, rgba(18, 18, 38, 0.2) 60%, transparent 100%);
   }
 
-  html.theme-light .grid-card-overlay {
+  html.theme-light .blog-card-overlay {
     background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.2) 60%, transparent 100%);
   }
 
-  .grid-card-body {
-    padding: 1.6rem 1.6rem 1.4rem;
+  .blog-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
-  .category-pill {
+  .blog-card-tag {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -415,34 +1151,34 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
     background: rgba(6, 182, 212, 0.12);
     border: 1px solid rgba(6, 182, 212, 0.3);
-    color: var(--hb-accent);
+    color: #06b6d4;
   }
 
-  .grid-post-title {
-    font-size: 1.3rem;
+  .blog-card-title {
+    font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.35;
     margin-top: 0.85rem;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.5rem;
   }
 
-  .grid-post-title a {
-    color: var(--hb-text);
+  .blog-card-title a {
+    color: var(--port-text);
     text-decoration: none;
     transition: color 0.2s;
   }
 
-  .grid-post-title a:hover {
-    color: #a5b4fc;
+  .blog-card-title a:hover {
+    color: #9061f9;
   }
 
-  .grid-post-excerpt {
-    color: var(--hb-muted);
-    font-size: 0.92rem;
+  .blog-card-excerpt {
+    color: var(--port-text-muted);
+    font-size: 0.88rem;
     line-height: 1.6;
     margin-bottom: 1.25rem;
     display: -webkit-box;
@@ -451,78 +1187,552 @@
     overflow: hidden;
   }
 
-  /* Reveal animation baseline */
+  /* Empty state */
+  .blog-empty-glass {
+    background: var(--port-surface-card);
+    border: 1px solid var(--port-border);
+    border-radius: 1.5rem;
+    padding: 4.5rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(14px);
+  }
+
+  /* ==========================================================================
+     6. CTA SECTION
+     ========================================================================== */
+  .cta-section {
+    position: relative;
+    padding: 6.5rem 0 3.5rem;
+    background: var(--hb-bg, #050510);
+  }
+
+  .cta-glass-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(124, 58, 237, 0.12) 0%, rgba(18, 18, 38, 0.85) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.35);
+    border-radius: 1.75rem;
+    padding: 4.5rem 2.5rem;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px -15px rgba(124, 58, 237, 0.25);
+    overflow: hidden;
+  }
+
+  html.theme-light .cta-glass-card {
+    background: linear-gradient(145deg, rgba(124, 58, 237, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%);
+    box-shadow: 0 20px 45px rgba(124, 58, 237, 0.12);
+  }
+
+  .cta-top-glow-bar {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #7c3aed 50%, transparent);
+    box-shadow: 0 0 15px #7c3aed;
+  }
+
+  .cta-headline {
+    font-family: var(--hb-font-display, "Playfair Display", serif);
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--port-text);
+    margin-bottom: 1.15rem;
+  }
+
+  .cta-desc {
+    font-size: 1.1rem;
+    color: var(--port-text-muted);
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.65;
+  }
+
+  /* ==========================================================================
+     Scroll Reveal & Micro-Interactions
+     ========================================================================== */
   [data-reveal] {
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   [data-reveal].is-visible {
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Empty State */
-  .empty-state-glass {
-    background: rgba(30, 30, 46, 0.6);
-    border: 1px solid var(--hb-border);
-    border-radius: 1.5rem;
-    padding: 4rem 2rem;
-    text-align: center;
-    backdrop-filter: blur(14px);
-  }
 </style>
 
-<!-- Hero Section with animated gradient mesh and stats -->
-<section class="hero-modern-enhanced">
+<!-- ========================================================================
+     1. HERO SECTION
+     ======================================================================== -->
+<section class="hero-portfolio" id="hero">
   <div class="hero-mesh-canvas" aria-hidden="true">
     <span class="hero-glow-orb hero-glow-orb--1"></span>
     <span class="hero-glow-orb hero-glow-orb--2"></span>
     <span class="hero-glow-orb hero-glow-orb--3"></span>
   </div>
 
+  <div class="hero-edge-mask-bottom" aria-hidden="true"></div>
+
   <div class="container position-relative px-4 px-lg-5">
     <div class="hero-content-wrap">
-      <div class="hero-badge-pill">
-        <span class="hero-badge-dot" aria-hidden="true"></span>
-        <i class="fas fa-terminal me-1"></i> Software Engineering · 2026
+      <!-- Status Badge -->
+      <div class="reveal" data-reveal>
+        <div class="hero-status-pill">
+          <span class="status-ping-wrap" aria-hidden="true">
+            <span class="status-ping"></span>
+            <span class="status-dot"></span>
+          </span>
+          Available for new projects
+        </div>
       </div>
 
-      <h1 class="hero-title-main">Hashimi's Blog</h1>
+      <!-- Greeting & Main Headline -->
+      <div class="reveal" data-reveal style="transition-delay: 0.1s;">
+        <div class="hero-greeting">
+          Hi, I am <span class="hero-greeting-name">Hashimi</span> <span class="wave-emoji" aria-hidden="true">👋</span>
+        </div>
+        <h1 class="hero-main-title text-gradient-hero">
+          Software Engineering Student
+        </h1>
+      </div>
 
-      <p class="hero-subtitle-text">
-        Thoughts on Python, full-stack development, AI tools, and building software from Kabul to the cloud.
+      <!-- Subtitle Description -->
+      <p class="hero-description reveal" data-reveal style="transition-delay: 0.2s;">
+        A passionate developer specialized in Python, Flask, Django, and modern web architectures. Building clean, high-performance software from Kabul to the open-source community.
       </p>
 
-      <div class="hero-stats-grid">
-        <div class="hero-stat-card">
-          <strong>{{ all_posts|length }}</strong>
-          <span>Articles</span>
+      <!-- CTA Buttons -->
+      <div class="hero-actions reveal" data-reveal style="transition-delay: 0.3s;">
+        <a href="#projects" class="btn-port-primary">
+          <span>View My Work</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="{{ url_for('contact') }}" class="btn-port-glass">
+          <i class="far fa-paper-plane text-accent"></i>
+          <span>Let's Talk</span>
+        </a>
+      </div>
+
+      <!-- Location & Socials Strip -->
+      <div class="hero-meta-strip reveal" data-reveal style="transition-delay: 0.4s;">
+        <span class="hero-location-item">
+          <i class="fas fa-map-marker-alt text-cyan"></i>
+          <span>Kabul, Afghanistan</span>
+        </span>
+        <span class="hero-meta-divider" aria-hidden="true"></span>
+        <div class="hero-social-links">
+          <a href="https://github.com/engineerhashimi9/" target="_blank" rel="noopener noreferrer" class="hero-social-link">
+            <i class="fab fa-github me-1"></i>GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/" target="_blank" rel="noopener noreferrer" class="hero-social-link">
+            <i class="fab fa-linkedin me-1"></i>LinkedIn
+          </a>
         </div>
-        <div class="hero-stat-card">
-          <strong>Flask</strong>
-          <span>Powered</span>
+      </div>
+
+      <!-- Built with Tech Badges -->
+      <div class="hero-tech-strip reveal" data-reveal style="transition-delay: 0.5s;">
+        <span class="hero-tech-label">Built with:</span>
+        <span class="tech-badge-pill"><i class="fab fa-python text-warning"></i> Python</span>
+        <span class="tech-badge-pill"><i class="fas fa-pepper-hot text-danger"></i> Flask</span>
+        <span class="tech-badge-pill"><i class="fas fa-layer-group text-success"></i> Django</span>
+        <span class="tech-badge-pill"><i class="fas fa-database text-info"></i> PostgreSQL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Down Indicator -->
+  <div class="hero-scroll-indicator" aria-hidden="true">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-mouse">
+      <div class="hero-scroll-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     2. STATS BAR SECTION
+     ======================================================================== -->
+<section class="stats-bar-section">
+  <div class="stats-divider-top" aria-hidden="true"></div>
+  <div class="stats-divider-bottom" aria-hidden="true"></div>
+
+  <div class="container px-4 px-lg-5">
+    <div class="stats-grid">
+      <!-- Stat 1 -->
+      <div class="stat-card-item reveal" data-reveal>
+        <span class="stat-number-wrap text-gradient stat-counter" data-target="1" data-suffix="+">0</span>
+        <span class="stat-label-text">Years Learning</span>
+      </div>
+      <!-- Stat 2 -->
+      <div class="stat-card-item reveal" data-reveal style="transition-delay: 0.1s;">
+        <span class="stat-number-wrap text-gradient stat-counter" data-target="15" data-suffix="+">0</span>
+        <span class="stat-label-text">Projects Built</span>
+      </div>
+      <!-- Stat 3 -->
+      <div class="stat-card-item reveal" data-reveal style="transition-delay: 0.2s;">
+        <span class="stat-number-wrap text-gradient stat-counter" data-target="500" data-suffix="+">0</span>
+        <span class="stat-label-text">Commits</span>
+      </div>
+      <!-- Stat 4 -->
+      <div class="stat-card-item reveal" data-reveal style="transition-delay: 0.3s;">
+        <span class="stat-number-wrap text-gradient stat-counter-infinity">∞</span>
+        <span class="stat-label-text">Coffee Powered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     3. ABOUT ME SECTION
+     ======================================================================== -->
+<section class="about-me-section" id="about">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center mb-5 reveal" data-reveal>
+      <div class="section-tag-pill">
+        <span class="section-tag-line" aria-hidden="true"></span>
+        <span class="section-tag-text">About Me</span>
+        <span class="section-tag-line" aria-hidden="true"></span>
+      </div>
+      <h2 class="section-heading-lg">Who I Am</h2>
+      <p class="section-subtitle-text mx-auto">
+        Crafting modern software with a commitment to clean code, modular architecture, and great user experiences.
+      </p>
+    </div>
+
+    <div class="row g-5 align-items-center">
+      <!-- Left Column: Biography & 3 Mini Focus Cards -->
+      <div class="col-lg-6">
+        <div class="reveal" data-reveal>
+          <p class="about-bio-text">
+            I am a passionate software engineering student who loves engineering products that are both <span class="highlight-violet">visually polished</span> and <span class="highlight-cyan">architecturally robust</span>.
+          </p>
+          <p class="about-bio-text">
+            I specialize in the Python ecosystem, creating reliable REST APIs with <strong>Flask</strong> and <strong>Django</strong>, architecting scalable database models, and building clean interfaces.
+          </p>
+          <p class="about-bio-text">
+            Beyond coding, I write technical articles, document my learning journey, and contribute to open-source software from Kabul, Afghanistan.
+          </p>
+
+          <!-- 3 Mini Focus Cards -->
+          <div class="focus-cards-grid">
+            <div class="focus-mini-card">
+              <div class="focus-card-icon icon-violet">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3 class="focus-card-title">Frontend</h3>
+              <p class="focus-card-desc">Clean, responsive, modern UIs</p>
+            </div>
+            <div class="focus-mini-card">
+              <div class="focus-card-icon icon-blue">
+                <i class="fas fa-server"></i>
+              </div>
+              <h3 class="focus-card-title">Backend</h3>
+              <p class="focus-card-desc">Python Flask Django APIs</p>
+            </div>
+            <div class="focus-mini-card">
+              <div class="focus-card-icon icon-cyan">
+                <i class="fas fa-database"></i>
+              </div>
+              <h3 class="focus-card-title">Database</h3>
+              <p class="focus-card-desc">PostgreSQL &amp; MySQL</p>
+            </div>
+          </div>
         </div>
-        <div class="hero-stat-card">
-          <strong>Open</strong>
-          <span>Source Mindset</span>
+      </div>
+
+      <!-- Right Column: Skills Progress Bars Card -->
+      <div class="col-lg-6">
+        <div class="skills-card-shell reveal" data-reveal style="transition-delay: 0.15s;">
+          <div class="skills-group-title">
+            <i class="fas fa-terminal text-primary"></i>
+            <span>Core Technical Proficiency</span>
+          </div>
+
+          <!-- Python 90% -->
+          <div class="skill-item">
+            <div class="skill-meta">
+              <span class="skill-name">Python</span>
+              <span class="skill-percent">90%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-progress-fill" data-progress="90%"></div>
+            </div>
+          </div>
+
+          <!-- Flask 85% -->
+          <div class="skill-item">
+            <div class="skill-meta">
+              <span class="skill-name">Flask</span>
+              <span class="skill-percent">85%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-progress-fill" data-progress="85%"></div>
+            </div>
+          </div>
+
+          <!-- Django 80% -->
+          <div class="skill-item">
+            <div class="skill-meta">
+              <span class="skill-name">Django</span>
+              <span class="skill-percent">80%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-progress-fill" data-progress="80%"></div>
+            </div>
+          </div>
+
+          <!-- JavaScript 70% -->
+          <div class="skill-item">
+            <div class="skill-meta">
+              <span class="skill-name">JavaScript</span>
+              <span class="skill-percent">70%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-progress-fill skill-fill-cyan" data-progress="70%"></div>
+            </div>
+          </div>
+
+          <!-- PostgreSQL & SQL 82% -->
+          <div class="skill-item">
+            <div class="skill-meta">
+              <span class="skill-name">PostgreSQL &amp; SQLAlchemy</span>
+              <span class="skill-percent">82%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-progress-fill skill-fill-cyan" data-progress="82%"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Main Article Feed -->
-<main class="blog-main py-5">
+<!-- ========================================================================
+     4. FEATURED PROJECTS SECTION
+     ======================================================================== -->
+<section class="projects-section" id="projects">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center mb-5 reveal" data-reveal>
+      <div class="section-tag-pill">
+        <span class="section-tag-line" aria-hidden="true"></span>
+        <span class="section-tag-text">My Work</span>
+        <span class="section-tag-line" aria-hidden="true"></span>
+      </div>
+      <h2 class="section-heading-lg">Featured Projects</h2>
+      <p class="section-subtitle-text mx-auto">
+        Things I have built that I am proud of.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Project 1: School Project -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal>
+          <div class="project-banner-header banner-grad-1">
+            <span class="project-watermark-num">01</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">School Project</h3>
+            <p class="project-desc">
+              A student management system for schools with registration, grading, and attendance tracking.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">JavaScript</span>
+              <span class="project-tech-tag">Node.js</span>
+              <span class="project-tech-tag">Express</span>
+              <span class="project-tech-tag">MongoDB</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/schoolproject" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 2: Electric Library -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal style="transition-delay: 0.1s;">
+          <div class="project-banner-header banner-grad-2">
+            <span class="project-star-badge"><i class="fas fa-star"></i> 2</span>
+            <span class="project-watermark-num">02</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Electric Library</h3>
+            <p class="project-desc">
+              A digital library application for browsing, searching and managing electronic books.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">JavaScript</span>
+              <span class="project-tech-tag">Node.js</span>
+              <span class="project-tech-tag">Express</span>
+              <span class="project-tech-tag">MongoDB</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/electric-library" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 3: Hashimi Blog -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal style="transition-delay: 0.2s;">
+          <div class="project-banner-header banner-grad-3">
+            <span class="project-star-badge"><i class="fas fa-star"></i> 1</span>
+            <span class="project-watermark-num">03</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Hashimi Blog</h3>
+            <p class="project-desc">
+              A full-featured blog platform with user auth, comments, rich text editor, and dark/light themes.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">Flask</span>
+              <span class="project-tech-tag">PostgreSQL</span>
+              <span class="project-tech-tag">Bootstrap</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/my-blog" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+              <a href="https://hashimi-blog.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Live Demo</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 4: E-Commerce Website -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal>
+          <div class="project-banner-header banner-grad-4">
+            <span class="project-watermark-num">04</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">E-Commerce Website</h3>
+            <p class="project-desc">
+              A mini e-commerce platform with product listings, shopping cart, and order management.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">Flask</span>
+              <span class="project-tech-tag">SQLAlchemy</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/E-Commerce-website" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 5: Password Manager -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal style="transition-delay: 0.1s;">
+          <div class="project-banner-header banner-grad-5">
+            <span class="project-watermark-num">05</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Password Manager</h3>
+            <p class="project-desc">
+              A secure password manager desktop app for generating and storing passwords locally.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">Tkinter</span>
+              <span class="project-tech-tag">JSON</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/password-manager-" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 6: BMI Calculator -->
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="project-card-glass w-100 reveal" data-reveal style="transition-delay: 0.2s;">
+          <div class="project-banner-header banner-grad-6">
+            <span class="project-watermark-num">06</span>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">BMI Calculator</h3>
+            <p class="project-desc">
+              A health-focused BMI calculator built with Flutter for cross-platform mobile use.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tech-tag">Flutter</span>
+              <span class="project-tech-tag">Dart</span>
+              <span class="project-tech-tag">HTML</span>
+            </div>
+            <div class="project-links-strip">
+              <a href="https://github.com/engineerhashimi9/BMI-Calculator" target="_blank" rel="noopener noreferrer" class="project-link-item">
+                <i class="fab fa-github"></i>
+                <span>Code</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- View All Projects Button -->
+    <div class="text-center mt-5 reveal" data-reveal>
+      <a href="https://github.com/engineerhashimi9/" target="_blank" rel="noopener noreferrer" class="btn-all-projects">
+        <i class="fab fa-github"></i>
+        <span>View All Projects</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     5. LATEST BLOG POSTS SECTION
+     ======================================================================== -->
+<section class="blog-posts-section" id="blog">
   <div class="container px-4 px-lg-5">
 
-    <!-- Admin Bar -->
+    <!-- Section Header -->
+    <div class="text-center mb-5 reveal" data-reveal>
+      <div class="section-tag-pill">
+        <span class="section-tag-line" aria-hidden="true"></span>
+        <span class="section-tag-text">Writing &amp; Articles</span>
+        <span class="section-tag-line" aria-hidden="true"></span>
+      </div>
+      <h2 class="section-heading-lg">Latest Blog Posts</h2>
+      <p class="section-subtitle-text mx-auto">
+        Technical articles, architecture guides, and thoughts on modern software development.
+      </p>
+    </div>
+
+    <!-- Admin / Author Action Bar -->
     {% if current_user.is_authenticated and current_user.is_author == 1 %}
     <div class="admin-bar-glass reveal" data-reveal>
-      <div class="admin-bar-tag">
-        <i class="fas fa-shield-alt text-primary"></i>
-        <span>Author Dashboard &bull; Welcome back, {{ current_user.name }}</span>
+      <div class="d-flex align-items-center gap-2">
+        <i class="fas fa-shield-alt text-primary fa-lg"></i>
+        <span class="fw-semibold">Author Dashboard &bull; Welcome back, {{ current_user.name }}</span>
       </div>
       <a class="btn btn-primary" href="{{ url_for('add_new_post') }}">
         <i class="fas fa-plus me-1"></i> Create New Post
@@ -533,33 +1743,26 @@
     {% if all_posts %}
     {% set featured = all_posts[0] %}
 
-    <!-- Featured Post Section -->
+    <!-- Featured Post -->
     <div class="row justify-content-center">
       <div class="col-xl-11">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-          <div>
-            <p class="section-label mb-1"><i class="fas fa-bolt me-1"></i> Latest Story</p>
-            <h2 class="section-title mb-0">Featured Post</h2>
+        <article class="featured-post-card reveal" data-reveal>
+          <div class="featured-img-frame">
+            <div class="featured-img-bg" style="background-image: url('{{ featured.img_url }}');"></div>
+            <div class="featured-img-tint"></div>
           </div>
-        </div>
-
-        <article class="featured-post-shell reveal" data-reveal>
-          <div class="featured-img-wrap">
-            <div class="featured-img-cover" style="background-image: url('{{ featured.img_url }}');"></div>
-            <div class="featured-img-overlay"></div>
-          </div>
-          <div class="featured-body-wrap">
-            <span class="featured-badge-tag">
-              <i class="fas fa-star me-1"></i> Just Published
+          <div class="featured-content-side">
+            <span class="featured-pill-badge">
+              <i class="fas fa-bolt me-1"></i> Latest Story
             </span>
-            <h2 class="featured-post-title">
+            <h3 class="featured-article-title">
               <a href="{{ url_for('show_post', post_id=featured.id) }}">{{ featured.title }}</a>
-            </h2>
-            <p class="featured-post-desc">{{ featured.subtitle }}</p>
+            </h3>
+            <p class="featured-article-desc">{{ featured.subtitle }}</p>
 
-            <div class="post-meta-strip mb-4">
-              <span>By <span class="author-highlight">{{ featured.author.name }}</span> &bull; {{ featured.date }}</span>
-              <span><i class="far fa-eye me-1 text-cyan"></i> Views: {{ featured.views }}</span>
+            <div class="blog-meta-footer mb-4">
+              <span>By <span class="author-badge-text">{{ featured.author.name }}</span> &bull; {{ featured.date }}</span>
+              <span><i class="far fa-eye me-1 text-cyan"></i> {{ featured.views }} Views</span>
             </div>
 
             <div class="d-flex align-items-center flex-wrap gap-3">
@@ -568,7 +1771,7 @@
               </a>
               {% if current_user.is_authenticated and current_user.is_admin == 1 %}
               <a
-                class="delete-link btn btn-outline-danger btn-sm"
+                class="btn btn-outline-danger btn-sm"
                 href="{{ url_for('delete_post', post_id=featured.id) }}"
                 onclick="return confirm('Are you sure you want to delete this featured post?');"
                 title="Delete post"
@@ -582,35 +1785,28 @@
       </div>
     </div>
 
-    <!-- Post Grid Section -->
+    <!-- Remaining Posts Grid -->
     {% if all_posts|length > 1 %}
-    <div class="row justify-content-center mb-4">
-      <div class="col-xl-11">
-        <p class="section-label mb-1"><i class="fas fa-layer-group me-1"></i> Archive</p>
-        <h2 class="section-title">All Posts</h2>
-      </div>
-    </div>
-
     <div class="row g-4 justify-content-center">
       {% for post in all_posts[1:] %}
-      <div class="col-md-6 col-lg-4 col-xl-4 d-flex">
-        <article class="glass-post-card w-100 d-flex flex-column reveal" data-reveal>
-          <a href="{{ url_for('show_post', post_id=post.id) }}" class="grid-card-media" aria-label="{{ post.title }}">
-            <div class="grid-card-img" style="background-image: url('{{ post.img_url }}');"></div>
-            <div class="grid-card-overlay"></div>
+      <div class="col-md-6 col-lg-4 d-flex">
+        <article class="blog-grid-card w-100 reveal" data-reveal>
+          <a href="{{ url_for('show_post', post_id=post.id) }}" class="blog-card-media" aria-label="{{ post.title }}">
+            <div class="blog-card-img" style="background-image: url('{{ post.img_url }}');"></div>
+            <div class="blog-card-overlay"></div>
           </a>
-          <div class="grid-card-body d-flex flex-column flex-grow-1">
+          <div class="blog-card-body">
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <span class="category-pill"><i class="fas fa-code me-1"></i> Tech</span>
+              <span class="blog-card-tag"><i class="fas fa-code me-1"></i> Tech</span>
               <small class="text-muted"><i class="far fa-eye me-1"></i>{{ post.views }}</small>
             </div>
-            <h3 class="grid-post-title">
+            <h4 class="blog-card-title">
               <a href="{{ url_for('show_post', post_id=post.id) }}">{{ post.title }}</a>
-            </h3>
-            <p class="grid-post-excerpt flex-grow-1">{{ post.subtitle }}</p>
-            <div class="post-meta-strip mt-auto pt-3">
+            </h4>
+            <p class="blog-card-excerpt flex-grow-1">{{ post.subtitle }}</p>
+            <div class="blog-meta-footer mt-auto pt-3">
               <span class="small">
-                <span class="author-highlight">{{ post.author.name }}</span> &bull; {{ post.date }}
+                <span class="author-badge-text">{{ post.author.name }}</span> &bull; {{ post.date }}
               </span>
               <a class="btn-read" href="{{ url_for('show_post', post_id=post.id) }}">
                 Read <i class="fas fa-arrow-right"></i>
@@ -638,7 +1834,7 @@
     <!-- Empty State -->
     <div class="row justify-content-center py-5">
       <div class="col-lg-8">
-        <div class="empty-state-glass reveal" data-reveal>
+        <div class="blog-empty-glass reveal" data-reveal>
           <i class="fas fa-feather-alt fa-3x text-primary mb-3"></i>
           <h3 class="h4 mb-2">No Posts Yet</h3>
           <p class="text-muted mb-4">
@@ -655,29 +1851,145 @@
     {% endif %}
 
   </div>
-</main>
+</section>
 
-<!-- Scroll Reveal Observer -->
+<!-- ========================================================================
+     6. CTA SECTION
+     ======================================================================== -->
+<section class="cta-section">
+  <div class="container px-4 px-lg-5">
+    <div class="row justify-content-center">
+      <div class="col-xl-9 col-lg-10">
+        <div class="cta-glass-card reveal" data-reveal>
+          <div class="cta-top-glow-bar" aria-hidden="true"></div>
+
+          <div class="section-tag-pill justify-content-center">
+            <span class="section-tag-line" aria-hidden="true"></span>
+            <span class="section-tag-text">Open to Opportunities</span>
+            <span class="section-tag-line" aria-hidden="true"></span>
+          </div>
+
+          <h2 class="cta-headline">
+            Let's Build Something <span class="text-gradient">Amazing</span>
+          </h2>
+
+          <p class="cta-desc">
+            I am currently available for freelance projects, full-time positions, or interesting software collaborations. Let's talk!
+          </p>
+
+          <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+            <a href="{{ url_for('contact') }}" class="btn-port-primary">
+              <i class="far fa-envelope"></i>
+              <span>Get In Touch</span>
+            </a>
+            <a href="https://github.com/engineerhashimi9/" target="_blank" rel="noopener noreferrer" class="btn-port-glass">
+              <i class="fab fa-github"></i>
+              <span>View GitHub</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Interactive Scripts (Stat Counter, Skill Bars, Scroll Reveal)
+     ======================================================================== -->
 <script>
   (function () {
+    // 1. Scroll Reveal Observer
     const reveals = document.querySelectorAll("[data-reveal]");
-    if (!reveals.length) return;
+    if (reveals.length) {
+      if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+        reveals.forEach((el) => revealObserver.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add("is-visible"));
+      }
+    }
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12 }
-      );
-      reveals.forEach((el) => observer.observe(el));
-    } else {
-      reveals.forEach((el) => el.classList.add("is-visible"));
+    // 2. Animated Numerical Counters
+    const counters = document.querySelectorAll(".stat-counter");
+    if (counters.length) {
+      function animateCounter(el) {
+        const target = parseInt(el.getAttribute("data-target"), 10);
+        const suffix = el.getAttribute("data-suffix") || "";
+        const duration = 1600;
+        const start = performance.now();
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease-out cubic
+          const easeProgress = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(easeProgress * target);
+
+          el.textContent = current + suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = target + suffix;
+          }
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      if ("IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+        counters.forEach((el) => counterObserver.observe(el));
+      } else {
+        counters.forEach((el) => animateCounter(el));
+      }
+    }
+
+    // 3. Skill Bars Animation
+    const skillBars = document.querySelectorAll(".skill-progress-fill");
+    if (skillBars.length) {
+      if ("IntersectionObserver" in window) {
+        const skillObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const targetWidth = entry.target.getAttribute("data-progress");
+                if (targetWidth) {
+                  entry.target.style.width = targetWidth;
+                }
+                skillObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        skillBars.forEach((bar) => skillObserver.observe(bar));
+      } else {
+        skillBars.forEach((bar) => {
+          const targetWidth = bar.getAttribute("data-progress");
+          if (targetWidth) bar.style.width = targetWidth;
+        });
+      }
     }
   })();
 </script>
