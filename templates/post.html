@@ -493,7 +493,7 @@
               <i class="fas fa-comments text-cyan"></i> Discussion
             </h3>
             <span class="comments-count-badge">
-              {{ all_comments|length if all_comments else 0 }} comments
+              {{ all_comments|list|length if all_comments else 0 }} comments
             </span>
           </div>
 

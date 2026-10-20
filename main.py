@@ -66,7 +66,8 @@ import hashlib
 
 def gravatar_url(email, size=100, default='retro', rating='g'):
     """Generate a Gravatar URL for the given email address."""
-    email_hash = hashlib.md5(email.lower().strip().encode('utf-8')).hexdigest()
+    safe_email = str(email or "").lower().strip().encode('utf-8')
+    email_hash = hashlib.md5(safe_email).hexdigest()
     return f"https://www.gravatar.com/avatar/{email_hash}?s={size}&d={default}&r={rating}"
 # CREATE DATABASE
 # Fetch variables
@@ -154,12 +155,18 @@ def ensure_author():
 
 @app.context_processor
 def inject_globals():
-    return {"now_year": datetime.now().year}
+    return {"now_year": datetime.now().year, "gravatar": gravatar_url}
 
 
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory('static', 'sitemap.xml')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'assets'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
 
 
@@ -237,9 +244,9 @@ def get_all_posts():
 def show_post(post_id):
     make_comment = CommentForm()
     all_comments = db.session.execute(
-        db.select(Comments).where(Comments.post_id == post_id)).scalars()
+        db.select(Comments).where(Comments.post_id == post_id)).scalars().all()
     requested_post = db.get_or_404(BlogPosts, post_id)
-    requested_post.views += 1
+    requested_post.views = (requested_post.views or 0) + 1
     db.session.commit()
     return render_template("post.html", post=requested_post, comment_form=make_comment, all_comments=all_comments, gravatar=gravatar_url)
 

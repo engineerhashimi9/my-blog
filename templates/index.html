@@ -1786,7 +1786,7 @@
     </div>
 
     <!-- Remaining Posts Grid -->
-    {% if all_posts|length > 1 %}
+    {% if all_posts|list|length > 1 %}
     <div class="row g-4 justify-content-center">
       {% for post in all_posts[1:] %}
       <div class="col-md-6 col-lg-4 d-flex">
