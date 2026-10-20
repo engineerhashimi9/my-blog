@@ -1,286 +1,1876 @@
 {% include "header.html" %}
 
-<!-- About Me — developer portfolio section -->
-<section class="about-hero" aria-labelledby="about-heading">
-  <!-- Animated gradient orbs -->
-  <div class="about-orbs" aria-hidden="true">
-    <span class="about-orb about-orb--1"></span>
-    <span class="about-orb about-orb--2"></span>
-    <span class="about-orb about-orb--3"></span>
+<style>
+  /* ==========================================================================
+     Hashimi Portfolio — About Page Scoped Theme & Glassmorphism
+     Inspired by premium dark-themed developer portfolio (abdulkhalil.vercel.app)
+     ========================================================================== */
+
+  :root {
+    --hb-primary: #7c3aed;
+    --hb-primary-light: #9061f9;
+    --hb-primary-glow: rgba(124, 58, 237, 0.35);
+    --hb-accent: #06b6d4;
+    --hb-accent-glow: rgba(6, 182, 212, 0.35);
+    --hb-emerald: #10b981;
+    --hb-emerald-glow: rgba(16, 185, 129, 0.35);
+    --hb-amber: #f59e0b;
+    --hb-rose: #f43f5e;
+    --hb-bg: #050510;
+    --hb-bg-elevated: rgba(18, 18, 38, 0.65);
+    --hb-bg-card: rgba(18, 18, 38, 0.72);
+    --hb-glass-bg: rgba(18, 18, 38, 0.6);
+    --hb-glass-border: rgba(148, 163, 184, 0.12);
+    --hb-text: #f8fafc;
+    --hb-text-heading: #ffffff;
+    --hb-muted: #94a3b8;
+    --hb-subtle: #64748b;
+    --hb-border: rgba(148, 163, 184, 0.12);
+    --hb-border-hover: rgba(124, 58, 237, 0.45);
+  }
+
+  html.theme-light {
+    --hb-primary: #7c3aed;
+    --hb-primary-light: #6d28d9;
+    --hb-primary-glow: rgba(124, 58, 237, 0.2);
+    --hb-accent: #0891b2;
+    --hb-accent-glow: rgba(8, 145, 178, 0.2);
+    --hb-emerald: #059669;
+    --hb-emerald-glow: rgba(5, 150, 105, 0.2);
+    --hb-amber: #d97706;
+    --hb-rose: #e11d48;
+    --hb-bg: #f8fafc;
+    --hb-bg-elevated: rgba(255, 255, 255, 0.88);
+    --hb-bg-card: rgba(255, 255, 255, 0.94);
+    --hb-glass-bg: rgba(255, 255, 255, 0.85);
+    --hb-glass-border: rgba(15, 23, 42, 0.08);
+    --hb-text: #0f172a;
+    --hb-text-heading: #0f172a;
+    --hb-muted: #475569;
+    --hb-subtle: #64748b;
+    --hb-border: rgba(15, 23, 42, 0.08);
+    --hb-border-hover: rgba(124, 58, 237, 0.35);
+  }
+
+  /* Explicitly disable particle canvas on this page */
+  #particleCanvas {
+    display: none !important;
+  }
+
+  /* Base Page Wrapper */
+  .about-page-wrap {
+    background-color: var(--hb-bg);
+    color: var(--hb-text);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Ambient Glowing Background Elements */
+  .about-ambient-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.22;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  html.theme-light .ambient-orb {
+    opacity: 0.12;
+    filter: blur(140px);
+  }
+
+  .ambient-orb--violet {
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+    top: 5%;
+    left: -10%;
+  }
+
+  .ambient-orb--cyan {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+    top: 45%;
+    right: -10%;
+  }
+
+  .ambient-orb--emerald {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, #10b981 0%, transparent 70%);
+    bottom: 5%;
+    left: 15%;
+  }
+
+  /* All main sections are layered above ambient glow */
+  .about-section {
+    position: relative;
+    z-index: 1;
+    padding: 4.5rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      padding: 3rem 0;
+    }
+  }
+
+  /* Section Tag Pill (Abdulkhalil & Index Pattern) */
+  .section-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.95rem;
+  }
+
+  .section-tag-line {
+    display: inline-block;
+    width: 26px;
+    height: 2px;
+    background: var(--hb-primary);
+    border-radius: 2px;
+  }
+
+  .section-tag-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--hb-primary);
+  }
+
+  html.theme-light .section-tag-text {
+    color: #6d28d9;
+  }
+
+  /* Typography & Headings */
+  .section-heading-lg {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 800;
+    color: var(--hb-text-heading);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading-md {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--hb-text-heading);
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.85rem;
+  }
+
+  .section-lead-text {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--hb-muted);
+    max-width: 680px;
+    margin-bottom: 0;
+  }
+
+  /* Text Gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glassmorphic Card Styling */
+  .glass-card {
+    position: relative;
+    background: var(--hb-bg-card);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--hb-border);
+    border-radius: 1.25rem;
+    padding: 1.85rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+
+  /* Hairline Top Light Beam */
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    pointer-events: none;
+  }
+
+  html.theme-light .glass-card::before {
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.25), transparent);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--hb-border-hover);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 25px -5px var(--hb-primary-glow);
+  }
+
+  html.theme-light .glass-card:hover {
+    box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.12), 0 0 20px -5px var(--hb-primary-glow);
+  }
+
+  /* Scroll Reveal Animation Classes */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Delay utility classes for staggered reveals */
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ==========================================================================
+     Hero Section
+     ========================================================================== */
+  .about-hero {
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-badges-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background: rgba(18, 18, 38, 0.65);
+    border: 1px solid var(--hb-border);
+    color: var(--hb-muted);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+  }
+
+  html.theme-light .hero-badge-item {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .hero-badge-item i {
+    color: var(--hb-primary);
+  }
+
+  .hero-badge-status {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--hb-emerald);
+    font-weight: 600;
+  }
+
+  .status-dot-container {
+    position: relative;
+    display: inline-flex;
+    width: 8px;
+    height: 8px;
+  }
+
+  .status-dot-ping {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--hb-emerald);
+    opacity: 0.75;
+    animation: pingDot 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .status-dot-core {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--hb-emerald);
+  }
+
+  @keyframes pingDot {
+    75%, 100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  /* Social Links & CTA Buttons */
+  .hero-actions-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .btn-gradient-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 0.94rem;
+    padding: 0.72rem 1.65rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px var(--hb-primary-glow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: none;
+  }
+
+  .btn-gradient-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--hb-primary-glow), 0 0 15px var(--hb-accent-glow);
+    color: #ffffff !important;
+  }
+
+  .btn-glass-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: rgba(18, 18, 38, 0.6);
+    border: 1px solid var(--hb-border);
+    color: var(--hb-text) !important;
+    font-weight: 600;
+    font-size: 0.94rem;
+    padding: 0.72rem 1.4rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+  }
+
+  html.theme-light .btn-glass-ghost {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .btn-glass-ghost:hover {
+    transform: translateY(-2px);
+    border-color: var(--hb-primary);
+    color: var(--hb-primary) !important;
+  }
+
+  .hero-social-links {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .social-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: var(--hb-bg-elevated);
+    border: 1px solid var(--hb-border);
+    color: var(--hb-muted) !important;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .social-icon-btn:hover {
+    transform: translateY(-3px);
+    color: #ffffff !important;
+    border-color: var(--hb-primary);
+    background: var(--hb-primary);
+    box-shadow: 0 8px 20px var(--hb-primary-glow);
+  }
+
+  /* Hero Visual Avatar Card (Right Column) */
+  .hero-profile-container {
+    position: relative;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .hero-profile-glow {
+    position: absolute;
+    inset: -15px;
+    border-radius: 2rem;
+    background: radial-gradient(circle, var(--hb-primary-glow) 0%, transparent 70%);
+    filter: blur(35px);
+    z-index: 0;
+  }
+
+  .hero-profile-card {
+    position: relative;
+    z-index: 1;
+    background: var(--hb-bg-card);
+    border: 1px solid var(--hb-border);
+    border-radius: 1.75rem;
+    padding: 2.5rem 2rem;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero-avatar-wrap {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 50%;
+    padding: 6px;
+    background: linear-gradient(135deg, var(--hb-primary), var(--hb-accent));
+    box-shadow: 0 10px 30px var(--hb-primary-glow);
+  }
+
+  .hero-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 4px solid var(--hb-bg);
+  }
+
+  .hero-profile-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--hb-text-heading);
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-profile-role {
+    font-size: 0.88rem;
+    color: var(--hb-primary);
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Terminal Typing Pill in Profile Card */
+  .hero-terminal-box {
+    background: rgba(10, 10, 20, 0.85);
+    border: 1px solid var(--hb-border);
+    border-radius: 0.85rem;
+    padding: 0.75rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html.theme-light .hero-terminal-box {
+    background: rgba(241, 245, 249, 0.95);
+    color: #0369a1;
+  }
+
+  .terminal-prompt-char {
+    color: var(--hb-emerald);
+    font-weight: 700;
+  }
+
+  .terminal-cursor-blink {
+    color: var(--hb-primary);
+    animation: blinkCursor 1s step-end infinite;
+  }
+
+  @keyframes blinkCursor {
+    50% { opacity: 0; }
+  }
+
+  /* Floating badges over hero card */
+  .hero-floating-badge {
+    position: absolute;
+    padding: 0.5rem 0.95rem;
+    border-radius: 0.85rem;
+    background: var(--hb-bg-elevated);
+    border: 1px solid var(--hb-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    font-size: 0.8rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+
+  html.theme-light .hero-floating-badge {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
+  }
+
+  .badge-pos-top-right {
+    top: -12px;
+    right: -15px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--hb-text);
+  }
+
+  .badge-pos-bottom-left {
+    bottom: -14px;
+    left: -15px;
+    font-weight: 600;
+    color: var(--hb-text);
+  }
+
+  @media (max-width: 576px) {
+    .hero-floating-badge {
+      display: none;
+    }
+  }
+
+  /* ==========================================================================
+     About Me & Bio Section (with Highlighted Keywords)
+     ========================================================================== */
+  .bio-text-paragraph {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--hb-muted);
+    margin-bottom: 1.35rem;
+  }
+
+  .bio-text-paragraph:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Highlighted Keyword Pills in Story */
+  .hl-keyword {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    margin: 0 0.1rem;
+    border-radius: 0.4rem;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: all 0.2s ease;
+  }
+
+  .hl-violet {
+    background: rgba(124, 58, 237, 0.14);
+    color: #c4b5fd;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+  }
+
+  html.theme-light .hl-violet {
+    background: rgba(124, 58, 237, 0.1);
+    color: #6d28d9;
+    border-color: rgba(124, 58, 237, 0.25);
+  }
+
+  .hl-cyan {
+    background: rgba(6, 182, 212, 0.14);
+    color: #67e8f9;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+
+  html.theme-light .hl-cyan {
+    background: rgba(6, 182, 212, 0.1);
+    color: #0e7490;
+    border-color: rgba(6, 182, 212, 0.25);
+  }
+
+  .hl-emerald {
+    background: rgba(16, 185, 129, 0.14);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  html.theme-light .hl-emerald {
+    background: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+
+  .hl-amber {
+    background: rgba(245, 158, 11, 0.14);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  html.theme-light .hl-amber {
+    background: rgba(245, 158, 11, 0.1);
+    color: #b45309;
+    border-color: rgba(245, 158, 11, 0.25);
+  }
+
+  /* Philosophy Terminal Quote Card */
+  .philosophy-terminal {
+    background: rgba(12, 12, 26, 0.85);
+    border: 1px solid var(--hb-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-top: 1.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  html.theme-light .philosophy-terminal {
+    background: #f1f5f9;
+  }
+
+  .philosophy-chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--hb-border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .chrome-dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .chrome-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .chrome-dots span:nth-child(1) { background-color: #ef4444; }
+  .chrome-dots span:nth-child(2) { background-color: #f59e0b; }
+  .chrome-dots span:nth-child(3) { background-color: #10b981; }
+
+  .chrome-file-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--hb-muted);
+  }
+
+  .philosophy-code-body {
+    padding: 1.25rem 1.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--hb-text);
+  }
+
+  .code-dim { color: var(--hb-subtle); }
+  .code-kw { color: #f43f5e; font-weight: 600; }
+  .code-str { color: #34d399; }
+
+  /* Developer Stats Dashboard */
+  .about-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-glass-box {
+    background: var(--hb-bg-elevated);
+    border: 1px solid var(--hb-border);
+    border-radius: 1rem;
+    padding: 1.35rem 1.15rem;
+    text-align: center;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .stat-glass-box:hover {
+    transform: translateY(-3px);
+    border-color: var(--hb-primary);
+  }
+
+  .about-stat__value {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--hb-text-heading);
+    line-height: 1.2;
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label-text {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hb-muted);
+    margin-top: 0.35rem;
+  }
+
+  /* Quick Info List in Sidebar Card */
+  .info-meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .info-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--hb-text);
+  }
+
+  .info-meta-item i {
+    width: 1.25rem;
+    color: var(--hb-primary);
+    text-align: center;
+  }
+
+  /* ==========================================================================
+     My Journey Timeline Section
+     ========================================================================== */
+  .journey-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 992px) {
+    .journey-cards-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .journey-milestone-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 1.65rem 1.35rem;
+  }
+
+  .milestone-index-watermark {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: rgba(148, 163, 184, 0.08);
+    user-select: none;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  html.theme-light .milestone-index-watermark {
+    color: rgba(15, 23, 42, 0.06);
+  }
+
+  .milestone-emoji {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .milestone-year-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(124, 58, 237, 0.15);
+    color: #c4b5fd;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    margin-bottom: 0.65rem;
+    width: fit-content;
+  }
+
+  html.theme-light .milestone-year-badge {
+    background: rgba(124, 58, 237, 0.1);
+    color: #6d28d9;
+  }
+
+  .milestone-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--hb-text-heading);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .milestone-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--hb-muted);
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     Technical Skills Section with Progress Bars
+     ========================================================================== */
+  .skills-category-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .category-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--hb-border);
+  }
+
+  .category-icon-wrap {
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+  }
+
+  .cat-icon-violet {
+    background: rgba(124, 58, 237, 0.14);
+    color: #c4b5fd;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+  }
+
+  .cat-icon-cyan {
+    background: rgba(6, 182, 212, 0.14);
+    color: #67e8f9;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+
+  .cat-icon-emerald {
+    background: rgba(16, 185, 129, 0.14);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .category-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--hb-text-heading);
+    margin: 0;
+  }
+
+  .category-subtitle {
+    font-size: 0.78rem;
+    color: var(--hb-muted);
+    margin: 0;
+  }
+
+  .skills-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+
+  .skill-item-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .skill-item-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .skill-name-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .skill-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--hb-text-heading);
+  }
+
+  .skill-topic-dim {
+    font-size: 0.75rem;
+    color: var(--hb-subtle);
+  }
+
+  .skill-pct-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--hb-muted);
+  }
+
+  /* Progress Bar Track & Fill */
+  .skill-progress-track {
+    width: 100%;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  html.theme-light .skill-progress-track {
+    background: rgba(15, 23, 42, 0.08);
+  }
+
+  .skill-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fill-violet {
+    background: linear-gradient(90deg, #7c3aed 0%, #06b6d4 100%);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+  }
+
+  .fill-cyan {
+    background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  }
+
+  .fill-emerald {
+    background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  /* ==========================================================================
+     Tech Stack Cloud Tags Section
+     ========================================================================== */
+  .stack-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stack-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.15rem;
+    border-radius: 999px;
+    background: var(--hb-bg-elevated);
+    border: 1px solid var(--hb-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--hb-text);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+
+  html.theme-light .stack-tag-pill {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .stack-tag-pill i {
+    color: var(--hb-primary);
+    font-size: 1rem;
+    transition: transform 0.25s ease;
+  }
+
+  .stack-tag-pill:hover {
+    transform: translateY(-3px);
+    border-color: var(--hb-primary);
+    background: var(--hb-primary-glow);
+    box-shadow: 0 10px 20px -5px var(--hb-primary-glow);
+  }
+
+  .stack-tag-pill:hover i {
+    transform: scale(1.15);
+  }
+
+  /* ==========================================================================
+     Core Values Section (What I Believe)
+     ========================================================================== */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .value-card {
+    text-align: center;
+    padding: 2.2rem 1.65rem;
+  }
+
+  .value-icon-circle {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 1.35rem auto;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .value-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--hb-text-heading);
+    margin-bottom: 0.65rem;
+  }
+
+  .value-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--hb-muted);
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     Bottom CTA Banner Section
+     ========================================================================== */
+  .about-cta-card {
+    position: relative;
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.12) 0%, var(--hb-bg-card) 75%);
+    border: 1px solid var(--hb-border);
+    border-radius: 1.75rem;
+  }
+
+  html.theme-light .about-cta-card {
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.08) 0%, rgba(255, 255, 255, 0.95) 75%);
+  }
+
+  .cta-title {
+    font-size: clamp(1.85rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    color: var(--hb-text-heading);
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+  }
+
+  .cta-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--hb-muted);
+    max-width: 620px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .cta-buttons-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--hb-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .cta-contact-email:hover {
+    color: var(--hb-primary);
+  }
+</style>
+
+<div class="about-page-wrap">
+  <!-- Ambient Atmospheric Glowing Orbs -->
+  <div class="about-ambient-glow" aria-hidden="true">
+    <div class="ambient-orb ambient-orb--violet"></div>
+    <div class="ambient-orb ambient-orb--cyan"></div>
+    <div class="ambient-orb ambient-orb--emerald"></div>
   </div>
 
-  <div class="container position-relative px-4 px-lg-5">
-    <div class="about-hero__inner">
-      <div class="about-hero__badges">
-        <span class="about-badge about-badge--active">
-          <span class="about-badge__dot" aria-hidden="true"></span>
-          Active Learner
-        </span>
-        <span class="about-badge">2nd Semester · CS</span>
+  <!-- SECTION 1: HERO -->
+  <section class="about-section about-hero" aria-labelledby="about-hero-title">
+    <div class="container px-4 px-lg-5">
+      <div class="row align-items-center g-5">
+        <!-- Hero Left Info -->
+        <div class="col-12 col-lg-7">
+          <div class="section-tag-pill reveal" data-reveal>
+            <span class="section-tag-line"></span>
+            <span class="section-tag-text">ABOUT ME</span>
+            <span class="section-tag-line"></span>
+          </div>
+
+          <h1 id="about-hero-title" class="section-heading-lg reveal reveal-delay-1" data-reveal>
+            I turn ideas into <span class="text-gradient">real software solutions</span>
+          </h1>
+
+          <p class="section-lead-text reveal reveal-delay-2" data-reveal>
+            I am Sayed Mohammad Hashimi (Engineer Hashimi), an 18-year-old Software Engineering student currently in my 2nd semester of Computer Science in Kabul, Afghanistan. I build clean, reliable backend architectures, intelligent data applications, and modern web platforms.
+          </p>
+
+          <!-- Status & Attribute Badges -->
+          <div class="hero-badges-wrap mt-4 reveal reveal-delay-3" data-reveal>
+            <div class="hero-badge-item">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+              Kabul, Afghanistan
+            </div>
+            <div class="hero-badge-item">
+              <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+              2nd Semester · CS
+            </div>
+            <div class="hero-badge-item">
+              <i class="fas fa-birthday-cake" aria-hidden="true"></i>
+              18 Years Old
+            </div>
+            <div class="hero-badge-item hero-badge-status">
+              <span class="status-dot-container" aria-hidden="true">
+                <span class="status-dot-ping"></span>
+                <span class="status-dot-core"></span>
+              </span>
+              Available for new opportunities
+            </div>
+          </div>
+
+          <!-- Hero Actions & Socials -->
+          <div class="hero-actions-wrap reveal reveal-delay-4" data-reveal>
+            <a href="{{ url_for('contact') }}" class="btn-gradient-primary">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i>
+              Get in Touch
+            </a>
+            <a href="{{ url_for('get_all_posts') }}#projects" class="btn-glass-ghost">
+              <i class="fas fa-folder-open" aria-hidden="true"></i>
+              View Projects
+            </a>
+            <div class="hero-social-links ms-lg-2">
+              <a
+                href="https://github.com/engineerhashimi9/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-btn"
+                aria-label="GitHub Profile"
+                title="GitHub"
+              >
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-btn"
+                aria-label="LinkedIn Profile"
+                title="LinkedIn"
+              >
+                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+              </a>
+              <a
+                href="mailto:engineerhashimi9@gmail.com"
+                class="social-icon-btn"
+                aria-label="Email Engineer Hashimi"
+                title="Email"
+              >
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Right Avatar & Glass Card -->
+        <div class="col-12 col-lg-5">
+          <div class="hero-profile-container reveal reveal-delay-2" data-reveal>
+            <div class="hero-profile-glow" aria-hidden="true"></div>
+
+            <!-- Floating Badges -->
+            <div class="hero-floating-badge badge-pos-top-right">
+              <span class="code-kw">const</span> dev = <span class="code-str">"hashimi"</span>;
+            </div>
+            <div class="hero-floating-badge badge-pos-bottom-left">
+              <span>⚡ 15+ Projects Built</span>
+            </div>
+
+            <!-- Inner Profile Card -->
+            <div class="hero-profile-card">
+              <div class="hero-avatar-wrap">
+                <img
+                  src="{{ url_for('static', filename='assets/img/profile.jpg') }}"
+                  alt="Sayed Mohammad Hashimi — Software Engineering Student"
+                  class="hero-avatar-img"
+                  width="170"
+                  height="170"
+                />
+              </div>
+
+              <h2 class="hero-profile-name">Engineer Hashimi</h2>
+              <p class="hero-profile-role">Software Engineering Student · CS</p>
+
+              <!-- Interactive typing terminal -->
+              <div class="hero-terminal-box" aria-live="polite">
+                <span class="terminal-prompt-char">$</span>
+                <span id="aboutTypingText"></span>
+                <span class="terminal-cursor-blink">_</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <p class="about-hero__eyebrow">About Me</p>
-      <h1 id="about-heading" class="about-hero__title">
-        <span class="about-hero__gradient">Engineer Hashimi</span>
-      </h1>
-
-      <!-- Typing animation terminal line -->
-      <p class="about-typing" aria-live="polite">
-        <span class="about-typing__prompt" aria-hidden="true">$</span>
-        <span id="aboutTypingText" class="about-typing__text"></span>
-        <span class="about-typing__cursor" aria-hidden="true">_</span>
-      </p>
-
-      <p class="about-hero__subtitle">
-        Software Engineering student building real solutions with Python,
-        Django, and modern web technologies.
-      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-<main class="about-main">
-  <div class="container px-4 px-lg-5">
-    <div class="about-grid">
-      <!-- Left column: bio, philosophy, personal info -->
-      <div class="about-col about-col--bio">
-        <!-- Profile card -->
-        <article class="about-glass about-profile reveal" data-reveal>
-          <figure class="about-profile__media">
-            <img
-              src="{{ url_for('static', filename='assets/img/profile.jpg') }}"
-              alt="Engineer Hashimi — Software Engineering student"
-              class="about-profile__img"
-              width="120"
-              height="120"
-              loading="lazy"
-            />
-          </figure>
-          <div class="about-profile__info">
-            <h2 class="about-profile__name">Engineer Hashimi</h2>
-            <p class="about-profile__role">Software Engineering Student</p>
-            <ul class="about-profile__meta">
-              <li>
-                <i class="fas fa-birthday-cake" aria-hidden="true"></i> 18 years
-                old
+  <!-- SECTION 2: BIOGRAPHY & DEVELOPER STATS -->
+  <section class="about-section" aria-labelledby="bio-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="row g-5">
+        <!-- Left: Detailed Bio with Highlighted Keywords -->
+        <div class="col-12 col-lg-7">
+          <div class="section-tag-pill reveal" data-reveal>
+            <span class="section-tag-line"></span>
+            <span class="section-tag-text">BIOGRAPHY</span>
+            <span class="section-tag-line"></span>
+          </div>
+
+          <h2 id="bio-heading" class="section-heading-md reveal reveal-delay-1" data-reveal>
+            Engineering with <span class="text-gradient">Discipline & Curiosity</span>
+          </h2>
+
+          <div class="glass-card mt-4 reveal reveal-delay-2" data-reveal>
+            <p class="bio-text-paragraph">
+              I am an 18-year-old <span class="hl-keyword hl-violet">Software Engineering student</span> currently in my second semester of Computer Science at university in Kabul, Afghanistan. My journey began with an insatiable drive to understand how systems operate under the hood.
+            </p>
+            <p class="bio-text-paragraph">
+              My technical foundation revolves around <span class="hl-keyword hl-violet">Python</span>, building scalable web systems with <span class="hl-keyword hl-cyan">Flask</span> and <span class="hl-keyword hl-cyan">Django</span>, and modeling relational databases using <span class="hl-keyword hl-emerald">PostgreSQL & SQLAlchemy</span>. I take pride in crafting clean REST APIs, elegant server-side logic, and intuitive user experiences.
+            </p>
+            <p class="bio-text-paragraph">
+              Beyond standard web engineering, I actively explore <span class="hl-keyword hl-violet">Machine Learning</span>, <span class="hl-keyword hl-cyan">Data Analysis</span>, <span class="hl-keyword hl-emerald">Computer Vision</span>, and mobile development with <span class="hl-keyword hl-amber">Kotlin</span>. I believe hands-on construction is the supreme teacher—every project is an opportunity to solve genuine problems.
+            </p>
+            <p class="bio-text-paragraph">
+              Alongside code, I continuously strengthen my technical communication and English fluency to collaborate seamlessly across global engineering teams and open-source communities.
+            </p>
+
+            <!-- Philosophy Quote Terminal -->
+            <div class="philosophy-terminal">
+              <div class="philosophy-chrome">
+                <div class="chrome-dots" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+                <span class="chrome-file-title">philosophy.sh</span>
+              </div>
+              <pre class="philosophy-code-body"><code><span class="code-dim"># Core developer belief</span>
+<span class="code-kw">echo</span> <span class="code-str">"The best way to learn is by creating real solutions to real problems."</span></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Stats & Key Profile Info -->
+        <div class="col-12 col-lg-5">
+          <div class="section-tag-pill reveal" data-reveal>
+            <span class="section-tag-line"></span>
+            <span class="section-tag-text">AT A GLANCE</span>
+            <span class="section-tag-line"></span>
+          </div>
+
+          <h2 class="section-heading-md reveal reveal-delay-1" data-reveal>
+            Developer <span class="text-gradient">Metrics</span>
+          </h2>
+
+          <!-- Stats Grid with Counter Animations -->
+          <div class="about-stats-grid mt-4 reveal reveal-delay-2" data-reveal>
+            <div class="stat-glass-box">
+              <span class="about-stat__value" data-count="15" data-suffix="+">0</span>
+              <span class="stat-label-text">Projects Built</span>
+            </div>
+            <div class="stat-glass-box">
+              <span class="about-stat__value" data-count="8" data-suffix="+">0</span>
+              <span class="stat-label-text">Tech Stacks</span>
+            </div>
+            <div class="stat-glass-box">
+              <span class="about-stat__value" data-count="500" data-suffix="+">0</span>
+              <span class="stat-label-text">Git Commits</span>
+            </div>
+            <div class="stat-glass-box">
+              <span class="about-stat__value" data-count="2" data-suffix="nd">0</span>
+              <span class="stat-label-text">Semester CS</span>
+            </div>
+          </div>
+
+          <!-- Academic & Background Card -->
+          <div class="glass-card mt-4 reveal reveal-delay-3" data-reveal>
+            <h3 class="category-title mb-2">Education & Location</h3>
+            <p class="text-muted small mb-3">Foundational engineering background and contact points.</p>
+
+            <ul class="info-meta-list">
+              <li class="info-meta-item">
+                <i class="fas fa-university" aria-hidden="true"></i>
+                <span>Computer Science & Software Engineering</span>
               </li>
-              <li>
-                <i class="fas fa-graduation-cap" aria-hidden="true"></i> 2nd
-                Semester · Computer Science
+              <li class="info-meta-item">
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                <span>2nd Semester Undergraduate (2025 – Present)</span>
               </li>
-              <li>
-                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Kabul,
-                Afghanistan
+              <li class="info-meta-item">
+                <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                <span>Kabul, Afghanistan</span>
+              </li>
+              <li class="info-meta-item">
+                <i class="fas fa-language" aria-hidden="true"></i>
+                <span>English, Persian / Dari</span>
+              </li>
+              <li class="info-meta-item">
+                <i class="fas fa-code-branch" aria-hidden="true"></i>
+                <span>Active Open Source Contributor</span>
               </li>
             </ul>
           </div>
-        </article>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Full bio -->
-        <article class="about-glass about-bio reveal" data-reveal>
-          <h2 class="about-section-title">Bio</h2>
-          <div class="about-bio__text">
-            <p>
-              I am an 18-year-old Software Engineering student currently in my
-              second semester of Computer Science studies.
-            </p>
-            <p>
-              I am passionate about technology and continuously work to improve
-              my skills in programming, web development, databases, artificial
-              intelligence, and mobile application development. My primary areas
-              of interest include Python, Django, PostgreSQL, Machine Learning,
-              Data Analysis, Computer Vision, and Android development with
-              Kotlin.
-            </p>
-            <p>
-              I enjoy building practical projects because I believe the best way
-              to learn is by creating real solutions to real problems. In
-              addition to my technical studies, I am actively improving my
-              English communication skills to better collaborate with developers
-              and access international learning resources.
-            </p>
-            <p>
-              I am a motivated learner who values discipline, curiosity, and
-              continuous growth. My goal is to become a highly skilled software
-              engineer capable of developing innovative applications that make a
-              positive impact on people's lives.
-            </p>
-            <p>
-              I believe that every project, challenge, and mistake is an
-              opportunity to learn something new and become a better developer.
+  <!-- SECTION 3: MY JOURNEY (Milestones Timeline) -->
+  <section class="about-section" aria-labelledby="journey-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="text-center mb-5">
+        <div class="section-tag-pill reveal" data-reveal>
+          <span class="section-tag-line"></span>
+          <span class="section-tag-text">MY JOURNEY</span>
+          <span class="section-tag-line"></span>
+        </div>
+        <h2 id="journey-heading" class="section-heading-lg reveal reveal-delay-1" data-reveal>
+          Milestones & <span class="text-gradient">Key Chapters</span>
+        </h2>
+        <p class="section-lead-text mx-auto reveal reveal-delay-2" data-reveal>
+          A timeline of focused learning, technical breakthroughs, and shipping software from day one.
+        </p>
+      </div>
+
+      <!-- 5 Milestones Grid -->
+      <div class="journey-cards-grid">
+        <!-- Milestone 1 -->
+        <div class="reveal reveal-delay-1" data-reveal>
+          <div class="glass-card journey-milestone-card">
+            <span class="milestone-index-watermark" aria-hidden="true">01</span>
+            <span class="milestone-emoji" aria-hidden="true">🎓</span>
+            <span class="milestone-year-badge">2025</span>
+            <h3 class="milestone-title">Started CS</h3>
+            <p class="milestone-desc">
+              Enrolled in Computer Science at university in Kabul, immersing myself in algorithms, computer systems, and computational theory.
             </p>
           </div>
-        </article>
+        </div>
 
-        <!-- Philosophy terminal quote -->
-        <blockquote class="about-glass about-philosophy reveal" data-reveal>
-          <div class="about-philosophy__header">
-            <span class="about-philosophy__dots" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </span>
-            <span class="about-philosophy__label">philosophy.sh</span>
+        <!-- Milestone 2 -->
+        <div class="reveal reveal-delay-2" data-reveal>
+          <div class="glass-card journey-milestone-card">
+            <span class="milestone-index-watermark" aria-hidden="true">02</span>
+            <span class="milestone-emoji" aria-hidden="true">🐍</span>
+            <span class="milestone-year-badge">2025</span>
+            <h3 class="milestone-title">First Python Project</h3>
+            <p class="milestone-desc">
+              Authored my first standalone Python projects, discovering the power of clean code, automated workflows, and problem solving.
+            </p>
           </div>
-          <pre
-            class="about-philosophy__code"
-          ><code><span class="tok-comment"># Core belief</span>
-<span class="tok-keyword">echo</span> <span class="tok-string">"The best way to learn is by creating real solutions to real problems."</span></code></pre>
-        </blockquote>
+        </div>
 
-        <!-- Actions & social -->
-        <div class="about-actions reveal" data-reveal>
-          <a class="about-btn about-btn--primary" href="#" role="button">
-            <i class="fas fa-download" aria-hidden="true"></i>
-            Download Resume
-          </a>
-          <a class="about-btn about-btn--ghost" href="{{ url_for('contact') }}">
-            <i class="fas fa-envelope" aria-hidden="true"></i>
-            Get in Touch
-          </a>
-          <div class="about-social">
-            <a
-              href="https://github.com/engineerhashimi9/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub profile"
-            >
-              <i class="fab fa-github" aria-hidden="true"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/sayed-mohammad-hashimi-218b243ba/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn profile"
-            >
-              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-            </a>
+        <!-- Milestone 3 -->
+        <div class="reveal reveal-delay-3" data-reveal>
+          <div class="glass-card journey-milestone-card">
+            <span class="milestone-index-watermark" aria-hidden="true">03</span>
+            <span class="milestone-emoji" aria-hidden="true">⚡</span>
+            <span class="milestone-year-badge">2026</span>
+            <h3 class="milestone-title">First Flask App</h3>
+            <p class="milestone-desc">
+              Architected and deployed my first full-stack web application with Flask, handling dynamic routes, session auth, and templates.
+            </p>
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="reveal reveal-delay-4" data-reveal>
+          <div class="glass-card journey-milestone-card">
+            <span class="milestone-index-watermark" aria-hidden="true">04</span>
+            <span class="milestone-emoji" aria-hidden="true">🚀</span>
+            <span class="milestone-year-badge">2026</span>
+            <h3 class="milestone-title">Deployed Blog</h3>
+            <p class="milestone-desc">
+              Successfully launched Hashimi Blog into live production with PostgreSQL, REST APIs, glassmorphic UI, and multi-user administration.
+            </p>
+          </div>
+        </div>
+
+        <!-- Milestone 5 -->
+        <div class="reveal reveal-delay-4" data-reveal>
+          <div class="glass-card journey-milestone-card">
+            <span class="milestone-index-watermark" aria-hidden="true">05</span>
+            <span class="milestone-emoji" aria-hidden="true">🏆</span>
+            <span class="milestone-year-badge">2026</span>
+            <h3 class="milestone-title">15+ Projects Built</h3>
+            <p class="milestone-desc">
+              Completed over 15 distinct software projects spanning web platforms, database design, ML experiments, and Kotlin mobile development.
+            </p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Right column: terminal, tech stack, stats -->
-      <aside class="about-col about-col--stack">
-        <!-- Interactive terminal -->
-        <div class="about-glass about-terminal reveal" data-reveal>
-          <div class="about-terminal__chrome">
-            <span class="about-terminal__dots" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </span>
-            <span class="about-terminal__title">hashimi@dev ~ %</span>
+  <!-- SECTION 4: TECHNICAL SKILLS & PROGRESS BARS -->
+  <section class="about-section" aria-labelledby="skills-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="mb-5">
+        <div class="section-tag-pill reveal" data-reveal>
+          <span class="section-tag-line"></span>
+          <span class="section-tag-text">SKILLS & EXPERTISE</span>
+          <span class="section-tag-line"></span>
+        </div>
+        <h2 id="skills-heading" class="section-heading-lg reveal reveal-delay-1" data-reveal>
+          Proficiency & <span class="text-gradient">Technical Arsenal</span>
+        </h2>
+        <p class="section-lead-text reveal reveal-delay-2" data-reveal>
+          Accurate proficiency ratings based on practical project implementation, production experience, and daily engineering.
+        </p>
+      </div>
+
+      <!-- 3 Columns Grouped by Category -->
+      <div class="row g-4">
+        <!-- Category 1: Backend & Systems -->
+        <div class="col-12 col-lg-4 reveal reveal-delay-1" data-reveal>
+          <div class="glass-card skills-category-card">
+            <div class="category-card-header">
+              <div class="category-icon-wrap cat-icon-violet">
+                <i class="fas fa-server" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="category-title">Backend Architecture</h3>
+                <p class="category-subtitle">Python, APIs & Databases</p>
+              </div>
+            </div>
+
+            <div class="skills-items-list">
+              <!-- Python: 90% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Python</span>
+                    <span class="skill-topic-dim">OOP, Scripting, Logic</span>
+                  </div>
+                  <span class="skill-pct-label">90%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-violet" style="width: 90%;"></div>
+                </div>
+              </div>
+
+              <!-- Flask: 85% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Flask</span>
+                    <span class="skill-topic-dim">Blueprints, REST, Routing</span>
+                  </div>
+                  <span class="skill-pct-label">85%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-violet" style="width: 85%;"></div>
+                </div>
+              </div>
+
+              <!-- Django: 80% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Django</span>
+                    <span class="skill-topic-dim">ORM, Auth, Admin, Views</span>
+                  </div>
+                  <span class="skill-pct-label">80%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-violet" style="width: 80%;"></div>
+                </div>
+              </div>
+
+              <!-- PostgreSQL & SQLAlchemy: 82% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">PostgreSQL & SQLAlchemy</span>
+                    <span class="skill-topic-dim">Relations, Migrations</span>
+                  </div>
+                  <span class="skill-pct-label">82%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-violet" style="width: 82%;"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="about-terminal__body" id="aboutTerminal">
-            <p>
-              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
-                >~</span
-              >$ whoami
-            </p>
-            <p class="tok-output">engineer_hashimi</p>
-            <p>
-              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
-                >~</span
-              >$ cat about.md
-            </p>
-            <p class="tok-output tok-output--dim">---</p>
-            <p class="tok-output">name: Engineer Hashimi</p>
-            <p class="tok-output">role: Software Engineering Student</p>
-            <p class="tok-output">semester: 2nd · Computer Science</p>
-            <p class="tok-output">focus: Python · Django · ML · Android</p>
-            <p class="tok-output tok-output--dim">---</p>
-            <p>
-              <span class="tok-prompt">hashimi@dev</span>:<span class="tok-path"
-                >~</span
-              >$
-              <span class="about-terminal__blink" aria-hidden="true">▋</span>
+        </div>
+
+        <!-- Category 2: Frontend & UI -->
+        <div class="col-12 col-lg-4 reveal reveal-delay-2" data-reveal>
+          <div class="glass-card skills-category-card">
+            <div class="category-card-header">
+              <div class="category-icon-wrap cat-icon-cyan">
+                <i class="fas fa-palette" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="category-title">Frontend Engineering</h3>
+                <p class="category-subtitle">Interactive & Responsive UI</p>
+              </div>
+            </div>
+
+            <div class="skills-items-list">
+              <!-- HTML/CSS: 88% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">HTML / CSS</span>
+                    <span class="skill-topic-dim">Semantic, Flexbox, Grid</span>
+                  </div>
+                  <span class="skill-pct-label">88%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-cyan" style="width: 88%;"></div>
+                </div>
+              </div>
+
+              <!-- JavaScript: 70% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">JavaScript</span>
+                    <span class="skill-topic-dim">ES6+, DOM, Fetch API</span>
+                  </div>
+                  <span class="skill-pct-label">70%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-cyan" style="width: 70%;"></div>
+                </div>
+              </div>
+
+              <!-- Responsive Design: 86% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Responsive Design</span>
+                    <span class="skill-topic-dim">Mobile-First, Breakpoints</span>
+                  </div>
+                  <span class="skill-pct-label">86%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-cyan" style="width: 86%;"></div>
+                </div>
+              </div>
+
+              <!-- Glassmorphism & UI: 85% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Modern Dark UI</span>
+                    <span class="skill-topic-dim">Glassmorphism, Themes</span>
+                  </div>
+                  <span class="skill-pct-label">85%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-cyan" style="width: 85%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: Tools & Mobile -->
+        <div class="col-12 col-lg-4 reveal reveal-delay-3" data-reveal>
+          <div class="glass-card skills-category-card">
+            <div class="category-card-header">
+              <div class="category-icon-wrap cat-icon-emerald">
+                <i class="fas fa-tools" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="category-title">Tools & Mobile</h3>
+                <p class="category-subtitle">Workflow, Versioning & Android</p>
+              </div>
+            </div>
+
+            <div class="skills-items-list">
+              <!-- Git: 80% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Git</span>
+                    <span class="skill-topic-dim">Branching, Commits, GitHub</span>
+                  </div>
+                  <span class="skill-pct-label">80%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-emerald" style="width: 80%;"></div>
+                </div>
+              </div>
+
+              <!-- Kotlin: 60% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Kotlin</span>
+                    <span class="skill-topic-dim">Android Basics, Syntax</span>
+                  </div>
+                  <span class="skill-pct-label">60%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-emerald" style="width: 60%;"></div>
+                </div>
+              </div>
+
+              <!-- REST APIs: 85% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">RESTful APIs</span>
+                    <span class="skill-topic-dim">JSON, Endpoints, Auth</span>
+                  </div>
+                  <span class="skill-pct-label">85%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-emerald" style="width: 85%;"></div>
+                </div>
+              </div>
+
+              <!-- Linux & VS Code: 84% -->
+              <div class="skill-item-row">
+                <div class="skill-item-header">
+                  <div class="skill-name-group">
+                    <span class="skill-name">Dev Environment</span>
+                    <span class="skill-topic-dim">VS Code, Bash, Virtualenv</span>
+                  </div>
+                  <span class="skill-pct-label">84%</span>
+                </div>
+                <div class="skill-progress-track">
+                  <div class="skill-progress-fill fill-emerald" style="width: 84%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: TECH STACK CLOUD -->
+  <section class="about-section" aria-labelledby="stack-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="text-center mb-5">
+        <div class="section-tag-pill reveal" data-reveal>
+          <span class="section-tag-line"></span>
+          <span class="section-tag-text">TECHNOLOGY STACK</span>
+          <span class="section-tag-line"></span>
+        </div>
+        <h2 id="stack-heading" class="section-heading-lg reveal reveal-delay-1" data-reveal>
+          Core <span class="text-gradient">Technologies</span>
+        </h2>
+        <p class="section-lead-text mx-auto reveal reveal-delay-2" data-reveal>
+          A curated ecosystem of languages, frameworks, and technical domains I utilize.
+        </p>
+      </div>
+
+      <div class="stack-tags-cloud reveal reveal-delay-3" data-reveal>
+        <span class="stack-tag-pill">
+          <i class="fab fa-python" aria-hidden="true"></i> Python
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-server" aria-hidden="true"></i> Django
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-flask" aria-hidden="true"></i> Flask
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-database" aria-hidden="true"></i> PostgreSQL
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-table" aria-hidden="true"></i> MySQL
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-brain" aria-hidden="true"></i> Machine Learning
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-chart-line" aria-hidden="true"></i> Data Analysis
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-eye" aria-hidden="true"></i> Computer Vision
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fab fa-android" aria-hidden="true"></i> Kotlin
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fas fa-laptop-code" aria-hidden="true"></i> Web Development
+        </span>
+        <span class="stack-tag-pill">
+          <i class="fab fa-js" aria-hidden="true"></i> JavaScript
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: CORE VALUES (What I Believe) -->
+  <section class="about-section" aria-labelledby="values-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="text-center mb-5">
+        <div class="section-tag-pill reveal" data-reveal>
+          <span class="section-tag-line"></span>
+          <span class="section-tag-text">WHAT I BELIEVE</span>
+          <span class="section-tag-line"></span>
+        </div>
+        <h2 id="values-heading" class="section-heading-lg reveal reveal-delay-1" data-reveal>
+          Guiding <span class="text-gradient">Principles</span>
+        </h2>
+        <p class="section-lead-text mx-auto reveal reveal-delay-2" data-reveal>
+          The core engineering philosophies that direct how I write software, architect databases, and solve problems.
+        </p>
+      </div>
+
+      <div class="values-grid">
+        <!-- Value 1 -->
+        <div class="reveal reveal-delay-1" data-reveal>
+          <div class="glass-card value-card">
+            <div class="value-icon-circle cat-icon-violet">
+              <i class="fas fa-bolt" aria-hidden="true"></i>
+            </div>
+            <h3 class="value-title">Performance First</h3>
+            <p class="value-desc">
+              Fast software delivers superior user experience and operational reliability. I focus on optimized database queries and low overhead.
             </p>
           </div>
         </div>
 
-        <!-- Tech stack -->
-        <section
-          class="about-glass about-stack reveal"
-          data-reveal
-          aria-labelledby="stack-heading"
-        >
-          <h2 id="stack-heading" class="about-section-title">Tech Stack</h2>
-          <ul class="about-skills">
-            <li class="about-skill" data-skill="python">
-              <i class="fab fa-python" aria-hidden="true"></i>
-              Python
-            </li>
-            <li class="about-skill" data-skill="django">
-              <i class="fas fa-server" aria-hidden="true"></i>
-              Django
-            </li>
-            <li class="about-skill" data-skill="postgres">
-              <i class="fas fa-database" aria-hidden="true"></i>
-              PostgreSQL
-            </li>
-            <li class="about-skill" data-skill="mysql">
-              <i class="fas fa-database" aria-hidden="true"></i>
-              MySQL
-            </li>
-            <li class="about-skill" data-skill="ml">
-              <i class="fas fa-brain" aria-hidden="true"></i>
-              Machine Learning
-            </li>
-            <li class="about-skill" data-skill="data">
-              <i class="fas fa-chart-line" aria-hidden="true"></i>
-              Data Analysis
-            </li>
-            <li class="about-skill" data-skill="cv">
-              <i class="fas fa-eye" aria-hidden="true"></i>
-              Computer Vision
-            </li>
-            <li class="about-skill" data-skill="kotlin">
-              <i class="fab fa-android" aria-hidden="true"></i>
-              Kotlin
-            </li>
-            <li class="about-skill" data-skill="web">
-              <i class="fas fa-code" aria-hidden="true"></i>
-              Web Development
-            </li>
-          </ul>
-        </section>
-
-        <!-- Developer stats dashboard -->
-        <section
-          class="about-glass about-stats reveal"
-          data-reveal
-          aria-labelledby="stats-heading"
-        >
-          <h2 id="stats-heading" class="about-section-title">
-            Developer Stats
-          </h2>
-          <div class="about-stats__grid">
-            <div class="about-stat">
-              <span class="about-stat__value" data-count="15" data-suffix="+"
-                >0</span
-              >
-              <span class="about-stat__label">Projects</span>
+        <!-- Value 2 -->
+        <div class="reveal reveal-delay-2" data-reveal>
+          <div class="glass-card value-card">
+            <div class="value-icon-circle cat-icon-cyan">
+              <i class="fas fa-bullseye" aria-hidden="true"></i>
             </div>
-            <div class="about-stat">
-              <span class="about-stat__value" data-count="5" data-suffix=""
-                >0</span
-              >
-              <span class="about-stat__label">Languages</span>
-            </div>
-            <div class="about-stat">
-              <span class="about-stat__value" data-count="500" data-suffix="+"
-                >0</span
-              >
-              <span class="about-stat__label">Commits</span>
-            </div>
-            <div class="about-stat">
-              <span class="about-stat__value" data-count="2" data-suffix=""
-                >0</span
-              >
-              <span class="about-stat__label">Semesters</span>
-            </div>
+            <h3 class="value-title">Real-World Utility</h3>
+            <p class="value-desc">
+              Software exists to solve real human problems. Code is only as good as the value and accessibility it provides to its users.
+            </p>
           </div>
-        </section>
-      </aside>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="reveal reveal-delay-3" data-reveal>
+          <div class="glass-card value-card">
+            <div class="value-icon-circle cat-icon-emerald">
+              <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            </div>
+            <h3 class="value-title">Clean Code</h3>
+            <p class="value-desc">
+              Maintainability and clarity trump clever shortcuts. Readable, tested, and documented logic saves engineering hours.
+            </p>
+          </div>
+        </div>
+
+        <!-- Value 4 -->
+        <div class="reveal reveal-delay-4" data-reveal>
+          <div class="glass-card value-card">
+            <div class="value-icon-circle cat-icon-violet">
+              <i class="fas fa-lightbulb" aria-hidden="true"></i>
+            </div>
+            <h3 class="value-title">Always Learning</h3>
+            <p class="value-desc">
+              Technology progresses swiftly. I treat every bug and challenging architecture as an opportunity to sharpen my skill set.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</main>
+  </section>
+
+  <!-- SECTION 7: CALL TO ACTION (CTA) -->
+  <section class="about-section" aria-labelledby="cta-heading">
+    <div class="container px-4 px-lg-5">
+      <div class="glass-card about-cta-card reveal" data-reveal>
+        <div class="section-tag-pill">
+          <span class="section-tag-line"></span>
+          <span class="section-tag-text">LET'S CONNECT</span>
+          <span class="section-tag-line"></span>
+        </div>
+
+        <h2 id="cta-heading" class="cta-title">
+          Ready to turn ideas into <span class="text-gradient">impactful software?</span>
+        </h2>
+
+        <p class="cta-desc">
+          I am currently open to exciting software projects, junior software engineering opportunities, and technical collaborations. Let’s connect and create something remarkable.
+        </p>
+
+        <div class="cta-buttons-wrap">
+          <a href="{{ url_for('contact') }}" class="btn-gradient-primary">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            Get In Touch
+          </a>
+          <a href="{{ url_for('get_all_posts') }}#projects" class="btn-glass-ghost">
+            <i class="fas fa-folder-open" aria-hidden="true"></i>
+            Explore Projects
+          </a>
+        </div>
+
+        <div>
+          <a href="mailto:engineerhashimi9@gmail.com" class="cta-contact-email">
+            <i class="fas fa-envelope text-primary" aria-hidden="true"></i>
+            engineerhashimi9@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <script src="{{ url_for('static', filename='js/about.js') }}" defer></script>
 {% include "footer.html" %}

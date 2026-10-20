@@ -1,98 +1,502 @@
-{% from "bootstrap5/form.html" import render_form %}
 {% include "header.html" %}
+{% from "bootstrap5/form.html" import render_form %}
 
-<section class="auth-page">
-  <div class="auth-orbs" aria-hidden="true">
-    <span class="auth-orb auth-orb--1"></span>
-    <span class="auth-orb auth-orb--2"></span>
-    <span class="auth-orb auth-orb--3"></span>
+<style>
+  /* ==========================================================================
+     Hashimi Portfolio — Register Page (abdulkhalil.vercel.app aesthetic)
+     Theme: Obsidian Depth, Centered Glass Card, Glowing Violet / Cyan Accents
+     ========================================================================== */
+
+  .auth-viewport {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 1.5rem 5rem;
+    overflow: hidden;
+    background-color: var(--hb-bg, #050510);
+    color: var(--hb-text, #f8fafc);
+  }
+
+  /* Floating Background Orbs */
+  .auth-ambient-orbs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .auth-floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.38;
+    will-change: transform;
+    animation: authOrbFloat 20s ease-in-out infinite alternate;
+  }
+
+  .auth-orb-primary {
+    top: 5%;
+    right: 12%;
+    width: 440px;
+    height: 440px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0) 70%);
+  }
+
+  .auth-orb-accent {
+    bottom: 8%;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0) 70%);
+    animation-delay: -7s;
+  }
+
+  .auth-orb-neon {
+    top: 45%;
+    left: 35%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0) 70%);
+    animation-delay: -13s;
+  }
+
+  @keyframes authOrbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -25px) scale(1.08); }
+    100% { transform: translate(-25px, 20px) scale(0.95); }
+  }
+
+  /* Centered Auth Card Container */
+  .auth-card-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 490px;
+    margin: 0 auto;
+  }
+
+  .auth-glass-card {
+    position: relative;
+    border-radius: 1.5rem;
+    background: rgba(18, 18, 38, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 3rem 2.25rem;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+  }
+
+  @media (min-width: 576px) {
+    .auth-glass-card {
+      padding: 3.5rem 2.75rem;
+    }
+  }
+
+  /* Gradient Top Border (Signature abdulkhalil style) */
+  .auth-glass-card__top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #7c3aed 25%, #06b6d4 75%, transparent);
+    pointer-events: none;
+  }
+
+  /* Header inside Card */
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .auth-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #a78bfa;
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+    transition: transform 0.25s ease;
+  }
+
+  .auth-glass-card:hover .auth-icon-badge {
+    transform: scale(1.06);
+  }
+
+  .auth-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--hb-accent, #06b6d4);
+    margin-bottom: 0.35rem;
+  }
+
+  .auth-title {
+    font-family: var(--hb-font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+    color: var(--hb-text, #f8fafc);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #ffffff 30%, #a78bfa 70%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .auth-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--hb-muted, #94a3b8);
+    margin: 0;
+  }
+
+  /* Flash Alert Messages */
+  .auth-flash {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
+  }
+
+  /* Form Fields */
+  .auth-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .auth-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hb-muted, #94a3b8);
+  }
+
+  .auth-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .auth-field-icon {
+    position: absolute;
+    left: 1.15rem;
+    color: var(--hb-muted, #64748b);
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: color 0.2s ease;
+    z-index: 2;
+  }
+
+  .auth-input-wrap:focus-within .auth-field-icon {
+    color: var(--hb-accent, #06b6d4);
+  }
+
+  .auth-input {
+    width: 100%;
+    padding: 0.85rem 1.15rem 0.85rem 3rem;
+    border-radius: 0.75rem;
+    background: rgba(5, 5, 16, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    color: var(--hb-text, #f8fafc);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+
+  .auth-input::placeholder {
+    color: rgba(148, 163, 184, 0.4);
+  }
+
+  .auth-input:focus {
+    border-color: #7c3aed;
+    background: rgba(5, 5, 16, 0.9);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.22), 0 0 20px rgba(124, 58, 237, 0.25);
+  }
+
+  /* Submit Button */
+  .auth-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.9rem 1.75rem;
+    margin-top: 0.6rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #06b6d4 100%);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .auth-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(124, 58, 237, 0.65), 0 0 15px rgba(6, 182, 212, 0.4);
+    filter: brightness(1.08);
+  }
+
+  .auth-submit-btn:active {
+    transform: translateY(0);
+    scale: 0.99;
+  }
+
+  .auth-submit-btn i {
+    transition: transform 0.2s ease;
+  }
+
+  .auth-submit-btn:hover i {
+    transform: translateX(4px);
+  }
+
+  /* Divider */
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0;
+    color: var(--hb-muted, #64748b);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .auth-divider::before,
+  .auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.14);
+  }
+
+  /* Bottom Switch Link */
+  .auth-switch {
+    text-align: center;
+    font-size: 0.92rem;
+    color: var(--hb-muted, #94a3b8);
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-switch a {
+    color: var(--hb-accent, #06b6d4);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .auth-switch a:hover {
+    color: #a78bfa;
+    text-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+    text-decoration: underline;
+  }
+
+  /* Back to Blog */
+  .auth-back-wrap {
+    text-align: center;
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    padding-top: 1.25rem;
+  }
+
+  .auth-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--hb-muted, #64748b);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .auth-back-link:hover {
+    color: var(--hb-text, #f8fafc);
+    transform: translateX(-4px);
+  }
+
+  /* ==========================================================================
+     LIGHT MODE SUPPORT — html.theme-light
+     ========================================================================== */
+  html.theme-light .auth-viewport {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  html.theme-light .auth-orb-primary {
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, rgba(124, 58, 237, 0) 70%);
+  }
+
+  html.theme-light .auth-orb-accent {
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(6, 182, 212, 0) 70%);
+  }
+
+  html.theme-light .auth-glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(203, 213, 225, 0.7);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+  }
+
+  html.theme-light .auth-title {
+    color: #0f172a;
+  }
+
+  html.theme-light .gradient-text {
+    background: linear-gradient(135deg, #0f172a 30%, #7c3aed 75%, #0891b2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  html.theme-light .auth-input {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #0f172a;
+  }
+
+  html.theme-light .auth-input:focus {
+    background: #ffffff;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+  }
+
+  html.theme-light .auth-divider::before,
+  html.theme-light .auth-divider::after {
+    background: #e2e8f0;
+  }
+
+  html.theme-light .auth-back-wrap {
+    border-top-color: #e2e8f0;
+  }
+</style>
+
+<div class="auth-viewport">
+  <!-- Animated Floating Orbs in Background -->
+  <div class="auth-ambient-orbs" aria-hidden="true">
+    <div class="auth-floating-orb auth-orb-primary"></div>
+    <div class="auth-floating-orb auth-orb-accent"></div>
+    <div class="auth-floating-orb auth-orb-neon"></div>
   </div>
 
-  <div class="auth-shell">
-    <!-- Decorative panel -->
-    <aside class="auth-panel" aria-hidden="true">
-      <div>
-        <p class="auth-panel__brand">Join the Blog</p>
-        <p class="auth-panel__tagline">Start your developer journey</p>
-        <div class="auth-terminal">
-          <p><span class="tok-green">hashimi@dev</span><span class="tok-dim">:~$</span> git init</p>
-          <p class="tok-dim"> Initialized empty Git repository</p>
-          <p style="margin-top: 0.75rem">
-            <span class="tok-purple">const</span>
-            <span class="tok-blue"> user</span>
-            <span class="tok-dim"> = </span>
-            <span class="tok-purple">new</span>
-            <span class="tok-blue"> Developer</span><span class="tok-dim">()</span>
-          </p>
-          <p><span class="tok-green">→</span> <span class="tok-blue">user</span><span class="tok-dim">.register()</span></p>
+  <div class="auth-card-container">
+    <div class="auth-glass-card">
+      <!-- Gradient Top Border Line -->
+      <div class="auth-glass-card__top-line" aria-hidden="true"></div>
+
+      <!-- Header with Icon & Create Account Title -->
+      <header class="auth-header">
+        <div class="auth-icon-badge" aria-hidden="true">
+          <i class="fas fa-user-plus"></i>
         </div>
-      </div>
-      <p class="auth-panel__quote">
-        Build projects, share ideas, and grow with a community of learners.
-      </p>
-    </aside>
+        <p class="auth-eyebrow">Get Started</p>
+        <h1 class="auth-title">
+          Create <span class="gradient-text">Account</span>
+        </h1>
+        <p class="auth-subtitle">
+          Join the developer blog to leave comments and participate in technical discussions.
+        </p>
+      </header>
 
-    <!-- Register form -->
-    <div class="auth-form-side">
-      <p class="auth-form-side__eyebrow">Get started</p>
-      <h1>Create Account</h1>
-      <p class="auth-form-side__sub">
-        Register to comment on posts and join the conversation.
-      </p>
-
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
+      <!-- Flash Messages -->
+      {% for msg in get_flashed_messages() %}
       <div class="auth-flash" role="alert">
-        {% for message in messages %}
-        <p>{{ message }}</p>
-        {% endfor %}
+        <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+        <span>{{ msg }}</span>
       </div>
-      {% endif %}
-      {% endwith %}
+      {% endfor %}
 
-      <form class="auth-form" action="{{ url_for('register') }}" method="post" novalidate>
+      <!-- Register Form -->
+      <form action="{{ url_for('register') }}" method="post" novalidate>
         {{ form.hidden_tag() }}
 
-        <div class="auth-field mb-3">
-          <label for="name">{{ form.name.label.text }}</label>
+        <!-- Name Field -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="name">
+            {{ form.name.label.text if form.name.label else "Full Name" }}
+          </label>
           <div class="auth-input-wrap">
-            <i class="fas fa-user auth-field__icon" aria-hidden="true"></i>
-            {{ form.name(class="form-control", placeholder="Your name", id="name") }}
+            <i class="fas fa-user auth-field-icon" aria-hidden="true"></i>
+            {{ form.name(class="auth-input", placeholder="Sayed Mohammad", id="name", required=True) }}
           </div>
         </div>
 
-        <div class="auth-field mb-3">
-          <label for="email">{{ form.email.label.text }}</label>
+        <!-- Email Field -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="email">
+            {{ form.email.label.text if form.email.label else "Email Address" }}
+          </label>
           <div class="auth-input-wrap">
-            <i class="fas fa-envelope auth-field__icon" aria-hidden="true"></i>
-            {{ form.email(class="form-control", placeholder="you@example.com", id="email") }}
+            <i class="fas fa-envelope auth-field-icon" aria-hidden="true"></i>
+            {{ form.email(class="auth-input", placeholder="name@example.com", id="email", type="email", required=True) }}
           </div>
         </div>
 
-        <div class="auth-field mb-3">
-          <label for="password">{{ form.password.label.text }}</label>
+        <!-- Password Field -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="password">
+            {{ form.password.label.text if form.password.label else "Password" }}
+          </label>
           <div class="auth-input-wrap">
-            <i class="fas fa-lock auth-field__icon" aria-hidden="true"></i>
-            {{ form.password(class="form-control", placeholder="••••••••", id="password", type="password") }}
+            <i class="fas fa-lock auth-field-icon" aria-hidden="true"></i>
+            {{ form.password(class="auth-input", placeholder="••••••••", id="password", type="password", required=True) }}
           </div>
         </div>
 
-        {{ form.submit(class="btn btn-primary", value="Create Account") }}
+        <!-- Submit Button -->
+        <button type="submit" class="auth-submit-btn">
+          <span>Create Account</span>
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
       </form>
 
-      <div class="auth-divider">or</div>
+      <!-- Divider -->
+      <div class="auth-divider" aria-hidden="true">
+        <span>or</span>
+      </div>
 
+      <!-- Switch to Login Link -->
       <p class="auth-switch">
-        Already have an account?
-        <a href="{{ url_for('login') }}">Sign in</a>
+        Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
       </p>
 
-      <a class="auth-back" href="{{ url_for('get_all_posts') }}">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i>
-        Back to blog
-      </a>
+      <!-- Back to Home Link -->
+      <div class="auth-back-wrap">
+        <a class="auth-back-link" href="{{ url_for('get_all_posts') }}">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          <span>Back to blog</span>
+        </a>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 {% include "footer.html" %}

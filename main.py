@@ -11,7 +11,6 @@ from flask import (
 )
 import bleach
 from flask_bootstrap import Bootstrap5
-from flask_gravatar import Gravatar
 from flask_login import (
     UserMixin,
     login_user,
@@ -62,8 +61,13 @@ class Base(DeclarativeBase):
     pass
 
 
-# Gravator
-gravatar = Gravatar(app, size=100, rating='g', default='retro')
+# Gravatar helper — generate URL from email
+import hashlib
+
+def gravatar_url(email, size=100, default='retro', rating='g'):
+    """Generate a Gravatar URL for the given email address."""
+    email_hash = hashlib.md5(email.lower().strip().encode('utf-8')).hexdigest()
+    return f"https://www.gravatar.com/avatar/{email_hash}?s={size}&d={default}&r={rating}"
 # CREATE DATABASE
 # Fetch variables
 
@@ -237,7 +241,7 @@ def show_post(post_id):
     requested_post = db.get_or_404(BlogPosts, post_id)
     requested_post.views += 1
     db.session.commit()
-    return render_template("post.html", post=requested_post, comment_form=make_comment, all_comments=all_comments, gravatar=gravatar)
+    return render_template("post.html", post=requested_post, comment_form=make_comment, all_comments=all_comments, gravatar=gravatar_url)
 
 
 # TODO: Use a decorator so only an admin user can create a new post
